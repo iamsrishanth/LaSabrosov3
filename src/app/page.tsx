@@ -8,8 +8,10 @@ import { MenuPreview } from "@/components/home/MenuPreview";
 import { Partners } from "@/components/home/Partners";
 import { Events } from "@/components/home/Events";
 import { Moments } from "@/components/home/Moments";
+import { InstagramFeed } from "@/components/home/InstagramFeed";
 import { Testimonials } from "@/components/home/Testimonials";
 import { ReserveCTA } from "@/components/home/ReserveCTA";
+import { FAQ } from "@/components/home/FAQ";
 import { Contact } from "@/components/home/Contact";
 
 /**
@@ -29,8 +31,10 @@ export default function HomePage() {
       <Partners />
       <Events />
       <Moments />
+      <InstagramFeed />
       <Testimonials />
       <ReserveCTA />
+      <FAQ />
       <Contact />
     </>
   );

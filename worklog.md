@@ -244,4 +244,60 @@ Contact → Footer. (13 sections.)
   lazy-image load timing during the scroll-through capture; section-level
   screenshots + DOM text checks confirm all sections render fully.
 
+---
+
+## Round 4 — FAQ + Instagram + Accessibility (webDevReview cron, 2026-09-01)
+
+**Phase: COMPLETE (verified).** Added 2 new sections + SVG wave dividers +
+skip-to-content accessibility link. VLM section scores: FAQ 9/10, Instagram
+9/10. Total page sections: 13 → 15.
+
+### New sections
+
+1. **FAQ section** (new `FAQ.tsx`, before Contact) — 2-col layout: left help
+   card (forest gradient, IG DM CTA "Still have a question?") + right accordion
+   of 6 common café questions (reservations, parking, pet-friendly, Wi-Fi, events,
+   payment). Each item has a Phosphor icon that turns forest→cream on expand.
+   Accordion open by default (first item). Icons: CalendarCheck, Car, PawPrint,
+   WifiHigh, Users, CreditCard. Data in `faqs` array in brand.ts.
+2. **InstagramFeed section** (new `InstagramFeed.tsx`, after Moments) — bento
+   grid of 6 real café photos (2 large + 4 small), each links to IG, hover
+   reveals likes (Heart icon) + caption overlay, top-right IG badge. Follow CTA
+   button `@lasabroso_cafe` in header. Bottom stats strip (~6K followers, live
+   menu drops, daily stories). Data in `instagramFeed` array in brand.ts.
+
+### Accessibility + polish
+
+3. **Skip-to-content link** — `sr-only` link in layout that becomes visible on
+   focus (fixed top-left, forest pill), jumps to `#top`. Standard a11y pattern.
+4. **Animated SVG wave dividers** (new `wave-divider.tsx`) — organic editorial
+   separators with a 12s drift animation (reduced-motion disabled). Two
+   variants: "dark" (forest-deep fill) and "light" (cream fill), flip option.
+   CSS keyframes in globals.css.
+5. **Food-img crop** applied to Instagram grid for consistent cropping.
+
+### Page composition (updated `page.tsx`)
+
+Hero → OfferStrip → Specialties → BrandStory → StatsBand → NeonSignBand →
+MenuPreview → Partners → Events → Moments → **InstagramFeed** → Testimonials →
+ReserveCTA → **FAQ** → Contact → Footer. (15 sections.)
+
+### Verification (agent-browser + VLM)
+
+- HTTP 200, **zero console errors** (desktop + mobile 390).
+- 15 sections render (was 13). FAQ + Instagram confirmed in SSR HTML.
+- FAQ accordion open by default. Instagram grid: 6 images. Skip-link present.
+- Mobile horizontal overflow: **0px**.
+- Lint clean.
+- VLM: FAQ 9/10, Instagram 9/10.
+
+### Files added/changed
+
+- `src/components/home/FAQ.tsx` (new) — accordion FAQ + help card.
+- `src/components/home/InstagramFeed.tsx` (new) — bento IG grid + follow CTA.
+- `src/components/site/wave-divider.tsx` (new) — animated SVG wave divider.
+- `src/data/brand.ts` — added `faqs` (6 items) + `instagramFeed` (6 posts).
+- `src/app/page.tsx` — added FAQ + InstagramFeed to composition.
+- `src/app/layout.tsx` — added skip-to-content link.
+- `src/app/globals.css` — `.wave-path` drift animation + reduced-motion guard.
 

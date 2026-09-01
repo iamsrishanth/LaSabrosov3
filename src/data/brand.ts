@@ -129,3 +129,69 @@ export const testimonials = [
     rating: 4,
   },
 ] as const;
+
+export const faqs = [
+  {
+    q: "Do you take reservations?",
+    a: "Yes. DM us on Instagram (@lasabroso_cafe) with your name, date, guest count and preferred time. We confirm within minutes during open hours and hold your table for 15 minutes past the booking.",
+    icon: "CalendarCheck" as const,
+  },
+  {
+    q: "Is parking available?",
+    a: "Yes. Two-wheeler and four-wheeler parking is available in the lane right outside the café. For larger groups, the Madhapur main road has ample paid parking within a 2-minute walk.",
+    icon: "Car" as const,
+  },
+  {
+    q: "Is the café pet-friendly?",
+    a: "Well-behaved, leashed pets are welcome in the outdoor courtyard seating. We keep a water bowl ready. Indoor seating is reserved for humans to keep the dessert lab counter hygienic.",
+    icon: "PawPrint" as const,
+  },
+  {
+    q: "Do you have free Wi-Fi?",
+    a: "Yes. Complimentary high-speed Wi-Fi for all guests. Ask the counter for the current password. Power outlets are available at most window seats, ideal for remote work over a cold brew.",
+    icon: "WifiHigh" as const,
+  },
+  {
+    q: "Can you host private events or bulk orders?",
+    a: "Absolutely. We cater corporate offsites, birthdays and team dinners for 20 to 60 guests, with up to 35% off on bulk. Custom menus, live counters and a dessert lab setup are all available.",
+    icon: "Users" as const,
+  },
+  {
+    q: "What payment methods do you accept?",
+    a: "All major UPI apps (GPay, PhonePe, Paytm), credit and debit cards, and cash. Dine-in deals from Zomato District and Swiggy Dineout give flat 10 to 35% off your bill.",
+    icon: "CreditCard" as const,
+  },
+] as const;
+
+export const instagramFeed = [
+  {
+    image: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/91d277b184a0.jpg",
+    caption: "Chocolate Khoma, fresh from the lab",
+    likes: 412,
+  },
+  {
+    image: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/89cf361c1b33.jpg",
+    caption: "Spanish latte, double shot",
+    likes: 328,
+  },
+  {
+    image: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/c3a7d4f5e18e.jpg",
+    caption: "Wood-fired, hand-tossed",
+    likes: 501,
+  },
+  {
+    image: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/13a0b1df40d7.jpg",
+    caption: "Courtyard evenings, fairy-lit",
+    likes: 389,
+  },
+  {
+    image: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/f6ca31dd8993.jpg",
+    caption: "The chandelier nook",
+    likes: 445,
+  },
+  {
+    image: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/ee070bf2768f.jpg",
+    caption: "Rolled ice cream, made live",
+    likes: 367,
+  },
+] as const;

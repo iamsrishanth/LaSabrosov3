@@ -214,6 +214,19 @@
 /* Mobile safe-area inset bottom padding */
 .safe-bottom { padding-bottom: max(env(safe-area-inset-bottom), 0px); }
 
+/* Animated SVG wave divider drift */
+@keyframes wave-drift {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-24px); }
+}
+.wave-path {
+  animation: wave-drift 12s ease-in-out infinite;
+  transform-origin: center;
+}
+@media (prefers-reduced-motion: reduce) {
+  .wave-path { animation: none; }
+}
+
 /* Reveal animation (CSS scroll-driven fallback under reduced motion off-path) */
 @media (prefers-reduced-motion: no-preference) {
   .reveal-up {
