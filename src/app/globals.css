@@ -1,0 +1,228 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================================
+   LaSabroso design tokens (v2 contract).
+   Hex literals live ONLY here — forbidden elsewhere.
+   ============================================================ */
+@theme inline {
+  /* Brand palette */
+  --color-cream: #FFFDD0;
+  --color-cream-soft: #FFFBE3;
+  --color-forest: #166534;
+  --color-forest-deep: #14532D;
+  --color-ink: #0F1710;
+  --color-muted: #4E584E;
+  --color-gold: #FFD700;
+  --color-mint: #D5F5E3;
+  --color-terracotta: #E57A4F;
+  --color-terracotta-deep: #C9623A;
+
+  /* shadcn semantic mapping (in-brand) */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-playfair), Georgia, serif;
+  --font-script: var(--font-dancing), "Brush Script MT", cursive;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+}
+
+:root {
+  --radius: 0.75rem;
+  --background: #FFFDD0;          /* cream */
+  --foreground: #0F1710;          /* ink */
+  --card: #FFFFFF;
+  --card-foreground: #0F1710;
+  --popover: #FFFFFF;
+  --popover-foreground: #0F1710;
+  --primary: #166534;             /* forest */
+  --primary-foreground: #FFFDD0; /* cream */
+  --secondary: #FFFBE3;           /* cream-soft */
+  --secondary-foreground: #166534;
+  --muted: #F4F1D8;
+  --muted-foreground: #4E584E;
+  --accent: #D5F5E3;              /* mint */
+  --accent-foreground: #14532D;
+  --destructive: #C9623A;
+  --border: rgba(22, 101, 52, 0.16);
+  --input: rgba(22, 101, 52, 0.22);
+  --ring: #166534;
+}
+
+.dark {
+  --background: #0F1710;
+  --foreground: #FFFDD0;
+  --card: #14532D;
+  --card-foreground: #FFFDD0;
+  --popover: #14532D;
+  --popover-foreground: #FFFDD0;
+  --primary: #FFFDD0;
+  --primary-foreground: #14532D;
+  --secondary: #166534;
+  --secondary-foreground: #FFFDD0;
+  --muted: #14532D;
+  --muted-foreground: #D5F5E3;
+  --accent: #166534;
+  --accent-foreground: #FFFDD0;
+  --destructive: #C9623A;
+  --border: rgba(255, 253, 208, 0.14);
+  --input: rgba(255, 253, 208, 0.20);
+  --ring: #FFFDD0;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "ss01", "cv01";
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: rgba(22, 101, 52, 0.85);
+    color: #FFFDD0;
+  }
+  /* Custom scrollbar */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: #FFFBE3; }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(22, 101, 52, 0.35);
+    border-radius: 999px;
+    border: 2px solid #FFFBE3;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(22, 101, 52, 0.6); }
+}
+
+/* ============================================================
+   Utility recipes
+   ============================================================ */
+@layer components {
+  .font-script { font-family: var(--font-script); }
+  .font-display { font-family: var(--font-display); }
+
+  /* Dotted leader for menu price rows */
+  .dotted-leader {
+    flex: 1;
+    border-bottom: 2px dotted rgba(22, 101, 52, 0.35);
+    margin: 0 0.6rem 0.35rem;
+    min-width: 1.5rem;
+  }
+
+  /* CSS neon fallback (when WebGL unavailable or reduced motion) */
+  .neon-css {
+    color: #FFFDD0;
+    text-shadow:
+      0 0 4px #FFFDD0,
+      0 0 11px #FFFDD0,
+      0 0 19px #166534,
+      0 0 40px #166534,
+      0 0 80px #166534,
+      0 0 110px #166534;
+  }
+
+  /* Subtle paper grain for cream sections */
+  .grain {
+    position: relative;
+  }
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: radial-gradient(rgba(22,101,52,0.6) 1px, transparent 1px);
+    background-size: 4px 4px;
+  }
+
+  .container-edge { @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12; }
+
+  /* Sticky footer helper */
+  .page-shell { @apply flex min-h-dvh flex-col; }
+  .page-main { @apply flex-1; }
+}
+
+/* Neon band ambient grain (hex lives here, not in tsx) */
+.neon-ambient {
+  background-image:
+    radial-gradient(circle at 20% 30%, #FFFDD0 0, transparent 40%),
+    radial-gradient(circle at 80% 70%, #166534 0, transparent 45%);
+}
+
+/* Partner brand tints (colored-text-chip fallback until licensed logos) */
+.partner-chip {
+  background-color: color-mix(in srgb, var(--tint) 12%, transparent);
+  color: var(--tint);
+}
+.partner-name { color: var(--tint); }
+.tint-zomato { --tint: #E23744; }
+.tint-swiggy { --tint: #FC8019; }
+.tint-magicpin { --tint: #E91E63; }
+.tint-zomato-district { --tint: #C8243B; }
+.tint-swiggy-dineout { --tint: #D76A2C; }
+
+/* Events aurora glow (hex lives here) */
+.events-aurora {
+  background-image:
+    radial-gradient(circle at 15% 20%, #FFFDD0 0, transparent 35%),
+    radial-gradient(circle at 85% 80%, #FFD700 0, transparent 30%);
+}
+
+/* Marquee edge fade mask */
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+
+/* Reveal animation (CSS scroll-driven fallback under reduced motion off-path) */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-up {
+    animation: reveal-up 0.6s ease-out both;
+  }
+  @keyframes reveal-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* Marquee */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: marquee 28s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+  html { scroll-behavior: auto; }
+}
