@@ -3,11 +3,13 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
-import { InstagramLogo as Instagram, Flame, Star, X } from "@phosphor-icons/react";
+import { InstagramLogo as Instagram, Flame, Star, X, Plus, Check } from "@phosphor-icons/react";
 import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogClose } from "@/components/ui/dialog";
 import { VegTag, Badge } from "@/components/site/primitives";
 import { brand } from "@/data/brand";
-import { categories, type Dish } from "@/data/menu";
+import { categories, ALLERGEN_LABELS, type Dish } from "@/data/menu";
+import { useCart } from "@/lib/cart-store";
+import { Timer } from "@phosphor-icons/react";
 
 /** Dish quick-view modal. Opens with full details + Instagram DM deep-link. */
 export function DishModal({
@@ -18,6 +20,9 @@ export function DishModal({
   onClose: () => void;
 }) {
   const open = dish !== null;
+  const add = useCart((s) => s.add);
+  const cartHas = useCart((s) => s.has);
+  const inCart = dish ? cartHas(dish.id) : false;
 
   // Build Instagram DM deep-link with pre-filled order message.
   const dmLink = dish
@@ -96,10 +101,30 @@ export function DishModal({
                     </p>
                   </div>
                   <div>
-                    <p className="text-[11px] uppercase tracking-wide text-muted">Made</p>
-                    <p className="text-sm font-bold text-forest">To order</p>
+                    <p className="text-[11px] uppercase tracking-wide text-muted">Prep time</p>
+                    <p className="inline-flex items-center gap-1 text-sm font-bold text-forest">
+                      <Timer size={13} weight="duotone" />
+                      {dish.prepTime} min
+                    </p>
                   </div>
                 </div>
+
+                {/* allergen tags */}
+                {dish.allergens && dish.allergens.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    <span className="text-[11px] font-semibold uppercase tracking-wide text-muted self-center">
+                      Contains:
+                    </span>
+                    {dish.allergens.map((a) => (
+                      <span
+                        key={a}
+                        className="inline-flex items-center rounded-full border border-terracotta/25 bg-terracotta/8 px-2 py-0.5 text-[10px] font-bold text-terracotta-deep"
+                      >
+                        {ALLERGEN_LABELS[a]}
+                      </span>
+                    ))}
+                  </div>
+                )}
 
                 <div className="mt-auto flex flex-col gap-2 pt-4">
                   <a
@@ -111,12 +136,39 @@ export function DishModal({
                     <Instagram size={16} weight="fill" />
                     Order on Instagram
                   </a>
-                  <a
-                    href={`tel:${brand.phone}`}
-                    className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-forest/25 px-5 py-2.5 text-sm font-semibold text-forest"
-                  >
-                    Or call {brand.phoneDisplay}
-                  </a>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() =>
+                        dish &&
+                        add({
+                          id: dish.id,
+                          name: dish.name,
+                          price: dish.price,
+                          image: dish.image,
+                          veg: dish.veg,
+                        })
+                      }
+                      disabled={inCart}
+                      className="inline-flex min-h-[44px] flex-1 items-center justify-center gap-2 rounded-full border border-forest/25 px-4 py-2.5 text-sm font-semibold text-forest transition-colors hover:bg-forest/5 disabled:opacity-60"
+                    >
+                      {inCart ? (
+                        <>
+                          <Check size={15} weight="bold" /> Added
+                        </>
+                      ) : (
+                        <>
+                          <Plus size={15} weight="bold" /> Add to list
+                        </>
+                      )}
+                    </button>
+                    <a
+                      href={`tel:${brand.phone}`}
+                      className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-forest/25 px-4 py-2.5 text-sm font-semibold text-forest"
+                      aria-label={`Call ${brand.phoneDisplay}`}
+                    >
+                      Or call
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>

@@ -301,3 +301,60 @@ ReserveCTA → **FAQ** → Contact → Footer. (15 sections.)
 - `src/app/layout.tsx` — added skip-to-content link.
 - `src/app/globals.css` — `.wave-path` drift animation + reduced-motion guard.
 
+---
+
+## Round 5 — Dish Cart + Allergens + Sort + Lightbox Nav (webDevReview cron, 2026-09-01)
+
+**Phase: COMPLETE (verified).** Added a full dish-cart/order-list system with
+Instagram DM checkout, allergen tags + prep times, menu sort dropdown, and
+keyboard-navigable gallery lightbox. VLM: dish modal confirmed all elements
+visible (allergens, prep time, add-to-list, Instagram button).
+
+### New features
+
+1. **Dish cart / order list** (new `cart-store.ts` + `cart-sheet.tsx` +
+   `cart-button.tsx`) — Zustand store with localStorage persistence. Floating
+   cart button (bottom-right, above back-to-top) shows a count badge that
+   springs on change. Slide-over panel lists selected dishes with thumbnails,
+   veg tags, prices, remove buttons. Footer shows estimated total + "Order all
+   on Instagram" button that builds a pre-filled DM message with all items
+   enumerated. Clear-list and indicative-price disclaimer included.
+2. **Allergen tags + prep time** (in `menu.ts`) — `inferAllergens()` enriches
+   each dish with allergen tags (gluten, dairy, nuts, egg, soy, caffeine)
+   inferred from name/description. `inferPrepTime()` assigns prep minutes by
+   category. DishModal displays "Contains: Gluten, Dairy, Soy" tags (terracotta
+   chips) + "Prep time: 10 min" (Timer icon) in the info grid.
+3. **Menu sort dropdown** (in `MenuPreview.tsx`) — custom dropdown with 4 sort
+   options: Default order, Price low→high, Price high→low, Chef's picks first.
+   Uses `useMemo` for efficient re-sort. Closes on outside click.
+4. **Keyboard-navigable lightbox** (in `Moments.tsx`) — prev/next arrow buttons
+   on the lightbox + keyboard arrow key navigation (← → Escape). Position
+   counter "1 / 6" badge in bottom-left corner.
+5. **Add-to-list buttons** on menu cards — each card has an "Add to list" /
+   "Added to list" toggle button (forest→mint state change) in a footer row.
+   DishModal also has an "Add to list" button alongside the Instagram order.
+
+### Verification (agent-browser + VLM)
+
+- HTTP 200, **zero console errors** (desktop + mobile 390).
+- Cart: button appears on scroll, badge shows count, slide-over opens with
+  items + "Order all on Instagram" checkout, add/remove works.
+- Dish modal: VLM confirmed allergen tags (Gluten, Dairy, Soy), prep time
+  (10 min), price, add-to-list + Instagram buttons all visible.
+- Sort dropdown: opens, 4 options, selection changes dish order.
+- Moments lightbox: prev/next nav buttons present, keyboard nav works.
+- Mobile horizontal overflow: **0px**.
+- Lint clean.
+
+### Files added/changed
+
+- `src/lib/cart-store.ts` (new) — Zustand cart store + localStorage.
+- `src/components/site/cart-sheet.tsx` (new) — slide-over panel with checkout.
+- `src/components/site/cart-button.tsx` (new) — floating button with badge.
+- `src/components/home/DishModal.tsx` — allergens, prep time, add-to-list.
+- `src/components/home/MenuPreview.tsx` — sort dropdown, add-to-list on cards.
+- `src/components/home/Moments.tsx` — keyboard nav + prev/next + counter.
+- `src/data/menu.ts` — `inferAllergens()` + `inferPrepTime()` + ALLERGEN_LABELS.
+- `src/app/layout.tsx` — added `<CartButton />`.
+
+

@@ -1,20 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
-import { MagnifyingGlass as Search, X, Sparkle, Leaf, Flame, Plus } from "@phosphor-icons/react";
+import { MagnifyingGlass as Search, X, Sparkle, Leaf, Flame, Plus, CaretDown, Check } from "@phosphor-icons/react";
 import { Section, SectionEyebrow } from "@/components/site/section";
 import { VegTag, Badge } from "@/components/site/primitives";
 import { categories, dishesByCategory, type DishCategory, type Dish, menu } from "@/data/menu";
 import { DishModal, useDishModal } from "@/components/home/DishModal";
+import { useCart } from "@/lib/cart-store";
 import { cn } from "@/lib/utils";
+
+type SortKey = "default" | "price-asc" | "price-desc" | "chef";
+
+const SORT_LABELS: Record<SortKey, string> = {
+  default: "Default order",
+  "price-asc": "Price: low to high",
+  "price-desc": "Price: high to low",
+  chef: "Chef's picks first",
+};
 
 /** Menu preview — La.Revi tabbed pattern. Default category SSR'd into HTML. */
 export function MenuPreview() {
   const [active, setActive] = useState<DishCategory>("signature");
   const [query, setQuery] = useState("");
   const [vegOnly, setVegOnly] = useState(false);
+  const [sort, setSort] = useState<SortKey>("default");
+  const [sortOpen, setSortOpen] = useState(false);
   const { dish, setDish } = useDishModal();
 
   const base = query
@@ -24,7 +36,16 @@ export function MenuPreview() {
           d.desc.toLowerCase().includes(query.toLowerCase())
       )
     : dishesByCategory(active);
-  const dishes = vegOnly ? base.filter((d) => d.veg) : base;
+  const filtered = vegOnly ? base.filter((d) => d.veg) : base;
+
+  const dishes = useMemo(() => {
+    const arr = [...filtered];
+    if (sort === "price-asc") arr.sort((a, b) => a.price - b.price);
+    else if (sort === "price-desc") arr.sort((a, b) => b.price - a.price);
+    else if (sort === "chef")
+      arr.sort((a, b) => (b.chefPick ? 1 : 0) - (a.chefPick ? 1 : 0));
+    return arr;
+  }, [filtered, sort]);
 
   return (
     <Section id="menu" className="py-20 sm:py-24 lg:py-28">
@@ -74,6 +95,42 @@ export function MenuPreview() {
             <Leaf size={15} weight="fill" />
             <span className="hidden sm:inline">Veg</span>
           </button>
+          {/* sort dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setSortOpen((v) => !v)}
+              aria-expanded={sortOpen}
+              aria-label="Sort dishes"
+              className="inline-flex h-11 shrink-0 items-center gap-1.5 rounded-full border border-forest/20 bg-cream-soft px-3.5 text-sm font-semibold text-muted transition-colors hover:text-forest"
+            >
+              <span className="hidden sm:inline">{SORT_LABELS[sort]}</span>
+              <CaretDown size={14} weight="bold" className={cn("transition-transform", sortOpen && "rotate-180")} />
+            </button>
+            {sortOpen && (
+              <>
+                <div className="fixed inset-0 z-40" onClick={() => setSortOpen(false)} />
+                <div className="absolute right-0 top-full z-50 mt-2 w-52 overflow-hidden rounded-2xl border border-forest/15 bg-white p-1 shadow-xl">
+                  {(Object.keys(SORT_LABELS) as SortKey[]).map((k) => (
+                    <button
+                      key={k}
+                      onClick={() => {
+                        setSort(k);
+                        setSortOpen(false);
+                      }}
+                      className={cn(
+                        "block w-full rounded-xl px-3 py-2.5 text-left text-sm font-medium transition-colors",
+                        sort === k
+                          ? "bg-forest text-cream"
+                          : "text-ink hover:bg-forest/8"
+                      )}
+                    >
+                      {SORT_LABELS[k]}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
 
@@ -146,6 +203,8 @@ export function MenuPreview() {
 
 /** Dish card — clickable, opens quick-view modal. Hover reveals "View" button. */
 function DishCard({ dish, onOpen }: { dish: Dish; onOpen: () => void }) {
+  const add = useCart((s) => s.add);
+  const inCart = useCart((s) => s.has(dish.id));
   return (
     <motion.article
       layout
@@ -203,6 +262,37 @@ function DishCard({ dish, onOpen }: { dish: Dish; onOpen: () => void }) {
           </div>
         </div>
       </button>
+      {/* add-to-list button */}
+      <div className="border-t border-forest/8 px-4 py-2.5">
+        <button
+          onClick={() =>
+            add({
+              id: dish.id,
+              name: dish.name,
+              price: dish.price,
+              image: dish.image,
+              veg: dish.veg,
+            })
+          }
+          disabled={inCart}
+          className={cn(
+            "inline-flex w-full items-center justify-center gap-1.5 rounded-full py-2 text-xs font-bold transition-all",
+            inCart
+              ? "bg-mint/50 text-forest-deep"
+              : "bg-forest/8 text-forest hover:bg-forest hover:text-cream"
+          )}
+        >
+          {inCart ? (
+            <>
+              <Check size={13} weight="bold" /> Added to list
+            </>
+          ) : (
+            <>
+              <Plus size={13} weight="bold" /> Add to list
+            </>
+          )}
+        </button>
+      </div>
     </motion.article>
   );
 }

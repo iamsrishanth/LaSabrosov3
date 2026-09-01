@@ -27,7 +27,20 @@ export interface Dish {
   bestseller?: boolean;
   spicy?: boolean;
   image: string;
+  allergens?: AllergenTag[];
+  prepTime?: number; // in minutes
 }
+
+export type AllergenTag = "gluten" | "dairy" | "nuts" | "egg" | "soy" | "caffeine";
+
+export const ALLERGEN_LABELS: Record<AllergenTag, string> = {
+  gluten: "Gluten",
+  dairy: "Dairy",
+  nuts: "Nuts",
+  egg: "Egg",
+  soy: "Soy",
+  caffeine: "Caffeine",
+};
 
 /** Real food photography, OSS-hosted (reachable). 2 variants per category. */
 export const CAT_IMG: Record<DishCategory, string[]> = {
@@ -449,13 +462,46 @@ const raw: RawDish[] = [
   },
 ];
 
-/** Assign images by category + position within category (2 variants). */
+/**
+ * Infer allergens + prep time from dish description + category.
+ * Keeps the raw data clean while enriching it at module load.
+ */
+function inferAllergens(d: RawDish): AllergenTag[] {
+  const text = `${d.name} ${d.desc}`.toLowerCase();
+  const tags: AllergenTag[] = [];
+  if (/(momo|dim.?sum|wheat|flour|nacho|bread|pasta|pizza|crust|base|pita)/.test(text))
+    tags.push("gluten");
+  if (/(cheese|cream|milk|mozzarella|mascarpone|condensed|yogurt|chaas|gelato|latte|caramel)/.test(text))
+    tags.push("dairy");
+  if (/(chocolate|hazelnut|praline|nut|walnut|almond|pistachio)/.test(text))
+    tags.push("nuts");
+  if (/(egg|ladyfinger)/.test(text)) tags.push("egg");
+  if (/(soy|schezwan|schezwan|soya)/.test(text)) tags.push("soy");
+  if (/(coffee|espresso|cold brew|caffe|mocha|cappuccino)/.test(text))
+    tags.push("caffeine");
+  return tags;
+}
+
+function inferPrepTime(d: RawDish): number {
+  if (d.category === "coffee" || d.category === "mocktails") return 5;
+  if (d.category === "desserts") return 8;
+  if (d.category === "momos") return 12;
+  if (d.category === "pizza" || d.category === "pasta") return 15;
+  return 10;
+}
+
+/** Assign images + allergens + prep time by category + position. */
 const countByCat: Record<string, number> = {};
 export const menu: Dish[] = raw.map((d) => {
   const idx = countByCat[d.category] ?? 0;
   countByCat[d.category] = idx + 1;
   const arr = CAT_IMG[d.category];
-  return { ...d, image: arr[idx % arr.length] };
+  return {
+    ...d,
+    image: arr[idx % arr.length],
+    allergens: inferAllergens(d),
+    prepTime: inferPrepTime(d),
+  };
 });
 
 /* ---- Asserted counts (spec: recompute from data after Petpooja re-extraction) ---- */

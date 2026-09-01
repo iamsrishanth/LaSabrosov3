@@ -6,6 +6,7 @@ import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
 import { Providers } from "@/components/site/providers";
 import { FloatingActions } from "@/components/site/floating-actions";
+import { CartButton } from "@/components/site/cart-button";
 import { neon } from "@/data/palette";
 import { cn } from "@/lib/utils";
 
@@ -103,6 +104,7 @@ export default function RootLayout({
           <Providers>
             <main className="page-main">{children}</main>
             <FloatingActions />
+            <CartButton />
           </Providers>
           <Footer />
         </div>

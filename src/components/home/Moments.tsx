@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
-import { X, Camera } from "@phosphor-icons/react";
+import { X, Camera, ArrowLeft, ArrowRight } from "@phosphor-icons/react";
 import { Section, SectionEyebrow } from "@/components/site/section";
 import { StaggerGroup, StaggerItem } from "@/components/site/reveal";
 import { moments } from "@/data/brand";
@@ -19,6 +19,25 @@ import { cn } from "@/lib/utils";
 /** Moments gallery — masonry, Radix Dialog lightbox with figcaption. */
 export function Moments() {
   const [open, setOpen] = useState<number | null>(null);
+
+  const goNext = useCallback(() => {
+    setOpen((p) => (p === null ? p : (p + 1) % moments.length));
+  }, []);
+  const goPrev = useCallback(() => {
+    setOpen((p) => (p === null ? p : (p - 1 + moments.length) % moments.length));
+  }, []);
+
+  // keyboard navigation: arrows + escape
+  useEffect(() => {
+    if (open === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight") goNext();
+      else if (e.key === "ArrowLeft") goPrev();
+      else if (e.key === "Escape") setOpen(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, goNext, goPrev]);
 
   return (
     <Section id="moments" className="py-20 sm:py-24 lg:py-28">
@@ -87,12 +106,33 @@ export function Moments() {
             )}
             <DialogClose asChild>
               <button
-                className="absolute right-3 top-3 grid h-10 w-10 place-items-center rounded-full bg-forest-deep/70 text-cream backdrop-blur-sm transition-colors hover:bg-forest-deep"
+                className="absolute right-3 top-3 z-20 grid h-10 w-10 place-items-center rounded-full bg-forest-deep/70 text-cream backdrop-blur-sm transition-colors hover:bg-forest-deep"
                 aria-label="Close"
               >
                 <X size={20} />
               </button>
             </DialogClose>
+            {/* prev / next nav */}
+            <button
+              onClick={goPrev}
+              className="absolute left-3 top-1/2 z-20 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-forest-deep/70 text-cream backdrop-blur-sm transition-all hover:scale-110 hover:bg-forest-deep"
+              aria-label="Previous photo"
+            >
+              <ArrowLeft size={20} weight="bold" />
+            </button>
+            <button
+              onClick={goNext}
+              className="absolute right-3 top-1/2 z-20 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-forest-deep/70 text-cream backdrop-blur-sm transition-all hover:scale-110 hover:bg-forest-deep"
+              aria-label="Next photo"
+            >
+              <ArrowRight size={20} weight="bold" />
+            </button>
+            {/* counter */}
+            {open !== null && (
+              <span className="absolute bottom-3 left-3 z-20 rounded-full bg-forest-deep/70 px-3 py-1 text-xs font-bold text-cream backdrop-blur-sm">
+                {open + 1} / {moments.length}
+              </span>
+            )}
           </div>
           {open !== null && (
             <div className="flex items-center justify-between gap-4 p-5">
