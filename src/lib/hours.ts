@@ -49,3 +49,56 @@ export function istNow(now: Date = new Date()): string {
   h = h % 12 || 12;
   return `${h}:${m.toString().padStart(2, "0")} ${ampm} IST`;
 }
+
+/**
+ * Happy hour — 4:00 PM to 7:00 PM IST daily (complimentary dessert on couples night Thu).
+ * Computes the countdown to the next happy-hour boundary.
+ */
+export const HAPPY_HOUR_START = 16; // 4 PM
+export const HAPPY_HOUR_END = 19; // 7 PM
+
+export interface HappyHourStatus {
+  active: boolean;
+  label: string;
+  /** seconds remaining to the next boundary (start or end) */
+  secondsLeft: number;
+  /** target label, e.g. "Happy hour ends in" or "Happy hour starts in" */
+  target: string;
+}
+
+export function getHappyHourStatus(now: Date = new Date()): HappyHourStatus {
+  const utcMs = now.getTime() + now.getTimezoneOffset() * 60_000;
+  const ist = new Date(utcMs + 5.5 * 3_600_000);
+  const totalSec = ist.getHours() * 3600 + ist.getMinutes() * 60 + ist.getSeconds();
+  const startSec = HAPPY_HOUR_START * 3600;
+  const endSec = HAPPY_HOUR_END * 3600;
+
+  if (totalSec >= startSec && totalSec < endSec) {
+    return {
+      active: true,
+      label: "Happy hour live",
+      secondsLeft: endSec - totalSec,
+      target: "ends in",
+    };
+  }
+  // not active — count down to next start
+  const nextStart =
+    totalSec < startSec
+      ? startSec - totalSec
+      : 24 * 3600 - totalSec + startSec;
+  return {
+    active: false,
+    label: "Happy hour soon",
+    secondsLeft: nextStart,
+    target: "starts in",
+  };
+}
+
+/** Format seconds as H:MM:SS or MM:SS. */
+export function formatCountdown(seconds: number): string {
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = seconds % 60;
+  const pad = (n: number) => n.toString().padStart(2, "0");
+  return h > 0 ? `${h}:${pad(m)}:${pad(s)}` : `${pad(m)}:${pad(s)}`;
+}

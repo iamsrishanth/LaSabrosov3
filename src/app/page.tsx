@@ -12,6 +12,7 @@ import { InstagramFeed } from "@/components/home/InstagramFeed";
 import { Testimonials } from "@/components/home/Testimonials";
 import { ReserveCTA } from "@/components/home/ReserveCTA";
 import { FAQ } from "@/components/home/FAQ";
+import { Newsletter } from "@/components/home/Newsletter";
 import { Contact } from "@/components/home/Contact";
 
 /**
@@ -35,6 +36,7 @@ export default function HomePage() {
       <Testimonials />
       <ReserveCTA />
       <FAQ />
+      <Newsletter />
       <Contact />
     </>
   );

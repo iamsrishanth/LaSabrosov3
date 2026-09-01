@@ -8,6 +8,7 @@ import { brand } from "@/data/brand";
 import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetClose } from "@/components/ui/sheet";
 import { OpenStatusPill } from "@/components/site/open-status";
+import { BusyLevel } from "@/components/site/busy-level";
 import { useScrollspy } from "@/hooks/use-scrollspy";
 
 const LINKS = [
@@ -96,6 +97,7 @@ export function Nav() {
         {/* CTAs */}
         <div className="flex items-center gap-2">
           <OpenStatusPill />
+          <BusyLevel />
           <a
             href={`tel:${brand.phone}`}
             className="hidden h-10 w-10 place-items-center rounded-full border border-forest/20 text-forest transition-colors hover:bg-forest/5 sm:grid"

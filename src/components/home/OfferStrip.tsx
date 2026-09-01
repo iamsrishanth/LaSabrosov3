@@ -2,8 +2,9 @@
 
 import { Tag, Percent } from "@phosphor-icons/react";
 import { offers } from "@/data/brand";
+import { HappyHourCountdown } from "@/components/site/happy-hour";
 
-/** Offer strip — cream band, dashed forest border, pill chips with numeric specials. */
+/** Offer strip — cream band, dashed forest border, pill chips + happy-hour countdown. */
 export function OfferStrip() {
   return (
     <section className="border-y border-dashed border-forest/30 bg-cream-soft">
@@ -22,6 +23,8 @@ export function OfferStrip() {
             <span className="text-muted">· {o.note}</span>
           </span>
         ))}
+        {/* live happy-hour countdown */}
+        <HappyHourCountdown />
       </div>
     </section>
   );

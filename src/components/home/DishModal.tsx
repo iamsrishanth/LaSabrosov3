@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
-import { InstagramLogo as Instagram, Flame, Star, X, Plus, Check } from "@phosphor-icons/react";
+import { InstagramLogo as Instagram, Flame, Star, X, Plus, Check, WhatsappLogo, LinkSimple, CheckCircle } from "@phosphor-icons/react";
 import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogClose } from "@/components/ui/dialog";
 import { VegTag, Badge } from "@/components/site/primitives";
 import { brand } from "@/data/brand";
@@ -169,6 +169,9 @@ export function DishModal({
                       Or call
                     </a>
                   </div>
+
+                  {/* share row */}
+                  <DishShare dish={dish} />
                 </div>
               </div>
             </div>
@@ -194,3 +197,57 @@ export function useDishModal() {
 }
 
 export { AnimatePresence };
+
+/** Share buttons — WhatsApp + copy link. */
+function DishShare({ dish }: { dish: Dish | null }) {
+  const [copied, setCopied] = useState(false);
+  if (!dish) return null;
+
+  const shareText = `Check out ${dish.name} (₹${dish.price}) at LaSabroso, Madhapur!`;
+  const waLink = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
+
+  const copyLink = async () => {
+    try {
+      const url = typeof window !== "undefined" ? window.location.href : "";
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // clipboard not available — silent fail
+    }
+  };
+
+  return (
+    <div className="flex items-center justify-between gap-2 pt-2">
+      <span className="text-[11px] font-semibold uppercase tracking-wide text-muted">
+        Share
+      </span>
+      <div className="flex items-center gap-2">
+        <a
+          href={waLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="grid h-9 w-9 place-items-center rounded-full border border-forest/15 text-forest transition-colors hover:bg-forest hover:text-cream"
+          aria-label="Share on WhatsApp"
+        >
+          <WhatsappLogo size={16} weight="fill" />
+        </a>
+        <button
+          onClick={copyLink}
+          className="inline-flex h-9 items-center gap-1.5 rounded-full border border-forest/15 px-3 text-xs font-bold text-forest transition-colors hover:bg-forest hover:text-cream"
+          aria-label="Copy link"
+        >
+          {copied ? (
+            <>
+              <CheckCircle size={14} weight="fill" /> Copied
+            </>
+          ) : (
+            <>
+              <LinkSimple size={14} /> Copy link
+            </>
+          )}
+        </button>
+      </div>
+    </div>
+  );
+}

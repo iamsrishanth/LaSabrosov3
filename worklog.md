@@ -357,4 +357,59 @@ visible (allergens, prep time, add-to-list, Instagram button).
 - `src/data/menu.ts` — `inferAllergens()` + `inferPrepTime()` + ALLERGEN_LABELS.
 - `src/app/layout.tsx` — added `<CartButton />`.
 
+---
+
+## Round 6 — Happy Hour + Share + Newsletter + Busy Level (webDevReview cron, 2026-09-01)
+
+**Phase: COMPLETE (verified).** Added a live happy-hour countdown, dish share
+buttons, a newsletter signup section, and a live busy-level indicator in the
+nav. VLM: Newsletter 10/10, Dish modal (with share) 9/10. Total sections: 16.
+
+### New features
+
+1. **Happy-hour countdown** (new `happy-hour.tsx` + `hours.ts` helpers) — live
+   ticking countdown to the next happy-hour boundary (4–7 PM IST daily). Shows
+   "Happy hour live · ends in 2:34:12" (mint, pulsing sparkle) when active, or
+   "Happy hour soon · starts in 5:12:30" (muted, clock icon) when not. Updates
+   every second; `formatCountdown()` formats as H:MM:SS or MM:SS. Integrated
+   into the OfferStrip as a live pill alongside the offer chips.
+2. **Dish share buttons** (in `DishModal.tsx`) — "Share" row at the bottom of
+   the dish modal with a WhatsApp share button (pre-fills "Check out {dish}
+   (₹{price}) at LaSabroso, Madhapur!") and a "Copy link" button that copies
+   the current page URL to clipboard with a 2s "Copied" success state. VLM 9/10.
+3. **Newsletter signup** (new `Newsletter.tsx`, before Contact) — forest-gradient
+   band with "Get the first sip of new drops" headline, email input + Subscribe
+   button (gold CTA), inline email validation, success state ("You are on the
+   list. Check your inbox to confirm."). VLM 10/10.
+4. **Live busy-level indicator** (new `busy-level.tsx` + `use-busy-level.ts`
+   hook) — nav pill showing "Quiet / Moderate / Busy" with animated signal bars
+   (1–3 bars, color-coded forest/gold/terracotta). Heuristic from IST hour: peak
+   6–9 PM = busy, lunch/afternoon = moderate, morning/late = quiet. Uses
+   `useSyncExternalStore` (re-evaluates every 5 min, no set-state-in-effect).
+   Desktop-only (lg+), SSR-safe.
+
+### Verification (agent-browser + VLM)
+
+- HTTP 200, **zero console errors** (desktop + mobile 390).
+- 16 sections (was 15). Happy-hour countdown, busy-level, newsletter, share
+  buttons all confirmed present in DOM.
+- Dish modal: VLM 9/10 — share row (WhatsApp + copy link), allergens (Gluten,
+  Dairy, Soy), prep time (10 min) all visible.
+- Newsletter: VLM 10/10 — headline, email input, subscribe button, forest bg.
+- Mobile horizontal overflow: **0px**.
+- Lint clean (fixed set-state-in-effect in BusyLevel via useSyncExternalStore).
+
+### Files added/changed
+
+- `src/lib/hours.ts` — `getHappyHourStatus()` + `formatCountdown()` + constants.
+- `src/components/site/happy-hour.tsx` (new) — live countdown pill.
+- `src/components/home/OfferStrip.tsx` — integrated `<HappyHourCountdown />`.
+- `src/components/home/DishModal.tsx` — `DishShare` component (WhatsApp + copy).
+- `src/components/home/Newsletter.tsx` (new) — email signup with validation.
+- `src/hooks/use-busy-level.ts` (new) — `useSyncExternalStore` busy-level hook.
+- `src/components/site/busy-level.tsx` (new) — nav busy indicator with bars.
+- `src/components/site/nav.tsx` — added `<BusyLevel />`.
+- `src/app/page.tsx` — added `<Newsletter />` to composition.
+
+
 
