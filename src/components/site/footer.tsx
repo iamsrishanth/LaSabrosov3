@@ -1,8 +1,10 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { InstagramLogo as Instagram, Phone, MapPin, Clock, Star } from "@phosphor-icons/react";
 import { brand, partners } from "@/data/brand";
+import { getOpenStatus } from "@/lib/hours";
 
 export function Footer() {
   return (
@@ -81,6 +83,10 @@ export function Footer() {
                 <span className="text-cream/55">{brand.hoursNote}</span>
               </span>
             </li>
+            {/* live today's-hours widget */}
+            <li>
+              <FooterHoursWidget />
+            </li>
             <li className="flex gap-3">
               <Phone size={18} weight="duotone" className="mt-0.5 shrink-0 text-gold" />
               <a href={`tel:${brand.phone}`} className="text-cream/80 hover:text-gold">
@@ -144,5 +150,42 @@ export function Footer() {
         </div>
       </div>
     </footer>
+  );
+}
+
+/** Live "today's hours" widget — shows open/closed + countdown to close (IST). */
+function FooterHoursWidget() {
+  const [status, setStatus] = useState<{ open: boolean; label: string; detail: string } | null>(null);
+
+  useEffect(() => {
+    const tick = () => setStatus(getOpenStatus());
+    tick();
+    const t = setInterval(tick, 60_000);
+    return () => clearInterval(t);
+  }, []);
+
+  if (!status) return null;
+
+  return (
+    <div
+      className={`flex items-center gap-2 rounded-xl border px-3 py-2 text-xs font-bold ${
+        status.open
+          ? "border-cream/15 bg-cream/8 text-mint"
+          : "border-cream/10 bg-cream/5 text-terracotta"
+      }`}
+    >
+      <span className="relative flex h-2 w-2">
+        {status.open && (
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-mint opacity-75" />
+        )}
+        <span
+          className={`relative inline-flex h-2 w-2 rounded-full ${
+            status.open ? "bg-mint" : "bg-terracotta"
+          }`}
+        />
+      </span>
+      <span className="text-cream/90">{status.label}</span>
+      <span className="text-cream/60">· {status.detail}</span>
+    </div>
   );
 }

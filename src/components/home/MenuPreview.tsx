@@ -1,14 +1,15 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
-import { MagnifyingGlass as Search, X, Sparkle, Leaf, Flame, Plus, CaretDown, Check } from "@phosphor-icons/react";
+import { MagnifyingGlass as Search, X, Sparkle, Leaf, Flame, Plus, CaretDown, Check, Star } from "@phosphor-icons/react";
 import { Section, SectionEyebrow } from "@/components/site/section";
 import { VegTag, Badge } from "@/components/site/primitives";
 import { categories, dishesByCategory, type DishCategory, type Dish, menu } from "@/data/menu";
 import { DishModal, useDishModal } from "@/components/home/DishModal";
 import { useCart } from "@/lib/cart-store";
+import { useCartWithToast } from "@/lib/use-cart-with-toast";
 import { cn } from "@/lib/utils";
 
 type SortKey = "default" | "price-asc" | "price-desc" | "chef";
@@ -27,7 +28,22 @@ export function MenuPreview() {
   const [vegOnly, setVegOnly] = useState(false);
   const [sort, setSort] = useState<SortKey>("default");
   const [sortOpen, setSortOpen] = useState(false);
+  const [maxPrice, setMaxPrice] = useState<number | null>(null);
   const { dish, setDish } = useDishModal();
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  // keyboard shortcut: '/' focuses the search, Esc clears it
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "/" && document.activeElement?.tagName !== "INPUT" && document.activeElement?.tagName !== "TEXTAREA") {
+        e.preventDefault();
+        searchRef.current?.focus();
+        searchRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
 
   const base = query
     ? menu.filter(
@@ -36,7 +52,8 @@ export function MenuPreview() {
           d.desc.toLowerCase().includes(query.toLowerCase())
       )
     : dishesByCategory(active);
-  const filtered = vegOnly ? base.filter((d) => d.veg) : base;
+  const filteredRaw = vegOnly ? base.filter((d) => d.veg) : base;
+  const filtered = maxPrice ? filteredRaw.filter((d) => d.price <= maxPrice) : filteredRaw;
 
   const dishes = useMemo(() => {
     const arr = [...filtered];
@@ -65,9 +82,10 @@ export function MenuPreview() {
               className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"
             />
             <input
+              ref={searchRef}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search dishes…"
+              placeholder="Search dishes…  (press /)"
               aria-label="Search dishes"
               className="h-11 w-full rounded-full border border-forest/20 bg-cream-soft pl-9 pr-9 text-sm text-ink placeholder:text-muted focus:border-forest focus:outline-none focus:ring-2 focus:ring-forest/20"
             />
@@ -168,6 +186,34 @@ export function MenuPreview() {
         </div>
       </div>
 
+      {/* price filter row */}
+      <div className="mb-6 flex flex-wrap items-center gap-2">
+        <span className="text-xs font-bold uppercase tracking-wide text-muted">Max price:</span>
+        {[
+          { label: "All", val: null },
+          { label: "≤ ₹200", val: 200 },
+          { label: "≤ ₹300", val: 300 },
+          { label: "≤ ₹400", val: 400 },
+        ].map((p) => {
+          const on = maxPrice === p.val;
+          return (
+            <button
+              key={p.label}
+              onClick={() => setMaxPrice(p.val)}
+              className={cn(
+                "rounded-full border px-3 py-1 text-xs font-semibold transition-colors",
+                on
+                  ? "border-forest bg-forest text-cream"
+                  : "border-forest/15 bg-cream-soft text-muted hover:text-forest"
+              )}
+              aria-pressed={on}
+            >
+              {p.label}
+            </button>
+          );
+        })}
+      </div>
+
       {/* dish grid */}
       <AnimatePresence mode="wait">
         <motion.div
@@ -196,14 +242,14 @@ export function MenuPreview() {
         </div>
       )}
 
-      <DishModal dish={dish} onClose={() => setDish(null)} />
+      <DishModal dish={dish} onClose={() => setDish(null)} onSelectDish={setDish} />
     </Section>
   );
 }
 
 /** Dish card — clickable, opens quick-view modal. Hover reveals "View" button. */
 function DishCard({ dish, onOpen }: { dish: Dish; onOpen: () => void }) {
-  const add = useCart((s) => s.add);
+  const { add } = useCartWithToast();
   const inCart = useCart((s) => s.has(dish.id));
   return (
     <motion.article
@@ -248,6 +294,16 @@ function DishCard({ dish, onOpen }: { dish: Dish; onOpen: () => void }) {
               </span>
             )}
           </div>
+          {/* rating row */}
+          {dish.rating && (
+            <div className="flex items-center gap-1.5">
+              <span className="inline-flex items-center gap-0.5">
+                <Star size={12} weight="fill" className="text-gold" />
+                <span className="text-xs font-bold text-forest">{dish.rating.toFixed(1)}</span>
+              </span>
+              <span className="text-[10px] text-muted">({dish.reviews})</span>
+            </div>
+          )}
           <p className="line-clamp-2 text-xs leading-relaxed text-muted">
             {dish.desc}
           </p>

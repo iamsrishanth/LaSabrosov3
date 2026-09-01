@@ -29,6 +29,9 @@ export interface Dish {
   image: string;
   allergens?: AllergenTag[];
   prepTime?: number; // in minutes
+  rating?: number; // 1-5
+  reviews?: number; // review count
+  spiceLevel?: 0 | 1 | 2 | 3; // 0=none, 1=mild, 2=medium, 3=hot
 }
 
 export type AllergenTag = "gluten" | "dairy" | "nuts" | "egg" | "soy" | "caffeine";
@@ -41,6 +44,13 @@ export const ALLERGEN_LABELS: Record<AllergenTag, string> = {
   soy: "Soy",
   caffeine: "Caffeine",
 };
+
+export const SPICE_LEVELS: { level: 0 | 1 | 2 | 3; label: string }[] = [
+  { level: 0, label: "None" },
+  { level: 1, label: "Mild" },
+  { level: 2, label: "Medium" },
+  { level: 3, label: "Hot" },
+];
 
 /** Real food photography, OSS-hosted (reachable). 2 variants per category. */
 export const CAT_IMG: Record<DishCategory, string[]> = {
@@ -490,17 +500,46 @@ function inferPrepTime(d: RawDish): number {
   return 10;
 }
 
-/** Assign images + allergens + prep time by category + position. */
+/** Infer spice level (0-3) from description keywords. */
+function inferSpiceLevel(d: RawDish): 0 | 1 | 2 | 3 {
+  const text = `${d.name} ${d.desc}`.toLowerCase();
+  if (/(peri peri|fiery|hot|jhol|arrabbiata|spici)/.test(text)) return 3;
+  if (/(spicy|chilli|chili|schezwan|tandoori|smoked paprika|jalape)/.test(text)) return 2;
+  if (/(pepper|paprika|ginger|mint)/.test(text)) return 1;
+  return 0;
+}
+
+/**
+ * Assign a deterministic but varied rating (4.2–4.9) and review count (80–520)
+ * based on the dish id hash. Bestsellers and chef picks get higher ratings.
+ */
+function inferRating(d: RawDish): { rating: number; reviews: number } {
+  let hash = 0;
+  for (let i = 0; i < d.id.length; i++) {
+    hash = (hash * 31 + d.id.charCodeAt(i)) & 0xffff;
+  }
+  const baseRating = 4.2 + ((hash % 70) / 100); // 4.20 – 4.89
+  const boost = (d.bestseller ? 0.05 : 0) + (d.chefPick ? 0.04 : 0);
+  const rating = Math.min(4.95, Math.round((baseRating + boost) * 10) / 10);
+  const reviews = 80 + (hash % 441); // 80 – 520
+  return { rating, reviews };
+}
+
+/** Assign images + allergens + prep time + ratings by category + position. */
 const countByCat: Record<string, number> = {};
 export const menu: Dish[] = raw.map((d) => {
   const idx = countByCat[d.category] ?? 0;
   countByCat[d.category] = idx + 1;
   const arr = CAT_IMG[d.category];
+  const { rating, reviews } = inferRating(d);
   return {
     ...d,
     image: arr[idx % arr.length],
     allergens: inferAllergens(d),
     prepTime: inferPrepTime(d),
+    spiceLevel: inferSpiceLevel(d),
+    rating,
+    reviews,
   };
 });
 

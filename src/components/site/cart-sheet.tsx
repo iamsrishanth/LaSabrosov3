@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/sheet";
 import { TrashSimple, InstagramLogo as Instagram, ShoppingBagOpen, X } from "@phosphor-icons/react";
 import { useCart } from "@/lib/cart-store";
+import { useCartWithToast } from "@/lib/use-cart-with-toast";
 import { brand } from "@/data/brand";
 import { VegTag } from "@/components/site/primitives";
 import { usePrefersReducedMotion } from "@/hooks/use-media";
@@ -25,8 +26,7 @@ export function CartSheet({
   onOpenChange: (v: boolean) => void;
 }) {
   const items = useCart((s) => s.items);
-  const remove = useCart((s) => s.remove);
-  const clear = useCart((s) => s.clear);
+  const { remove, clear } = useCartWithToast();
   const reduce = usePrefersReducedMotion();
 
   const total = items.reduce((sum, i) => sum + i.price, 0);

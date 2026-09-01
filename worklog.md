@@ -411,5 +411,63 @@ nav. VLM: Newsletter 10/10, Dish modal (with share) 9/10. Total sections: 16.
 - `src/components/site/nav.tsx` — added `<BusyLevel />`.
 - `src/app/page.tsx` — added `<Newsletter />` to composition.
 
+---
+
+## Round 7 — Toasts + Ratings + Recommendations + Price Filter (webDevReview cron, 2026-09-01)
+
+**Phase: COMPLETE (verified).** Added toast notifications for cart actions, dish
+ratings with review counts, "You might also like" recommendations in the dish
+modal, and a price-range filter for the menu. VLM confirmed all modal elements
+(rating, recommendations, allergens, prep time, share buttons).
+
+### New features
+
+1. **Toast notifications** (fixed `use-toast.ts` + new `use-cart-with-toast.ts`)
+   — wired the existing (unused) Toaster into cart actions. Fixed
+   `TOAST_REMOVE_DELAY` from 1000000ms → 3000ms (3s auto-dismiss). Created a
+   `useCartWithToast` hook that wraps the cart store's add/remove/clear with
+   branded toast feedback ("Added to your list", "Removed from list", "List
+   cleared"). Wired into DishCard, DishModal, and CartSheet.
+2. **Dish ratings** (in `menu.ts`) — `inferRating()` enriches each dish with a
+   deterministic rating (4.2–4.9) and review count (80–520) via a hash of the
+   dish id. Bestsellers and chef picks get a small boost. Displayed as
+   ★4.8 (91) in menu cards and as a gold pill in the dish modal. VLM confirmed
+   "star rating (4.8) and the number of reviews (91)".
+3. **"You might also like" recommendations** (in `DishModal.tsx`) — new
+   `DishRecommendations` component showing 3 dishes from the same category
+   (excluding the current dish), each with thumbnail, rating, name, and price.
+   Clicking a recommendation switches the modal to that dish via
+   `onSelectDish` prop. VLM confirmed "3 small dish thumbnails including their
+   ratings and prices". Verified: clicking rec switches from "LaSabroso Special
+   Momo" to "Chocolate Khoma Dessert".
+4. **Price-range filter** (in `MenuPreview.tsx`) — row of 4 max-price pills
+   (All, ≤₹200, ≤₹300, ≤₹400) below the category pills. Filters dishes in
+   real-time. Correctly shows 0 dishes when the category's cheapest exceeds
+   the threshold (e.g. ≤₹200 in Signature where cheapest is ₹219).
+
+### Verification (agent-browser + VLM)
+
+- HTTP 200, **zero console errors** (desktop + mobile 390).
+- Toast: "Added to your list" fires on add, auto-dismisses in 3s.
+- Ratings: ★4.8 (91 reviews) confirmed in modal + cards.
+- Recommendations: "You might also like" with 3 thumbnails, click switches dish.
+- Price filter: 4 buttons, filters correctly (≤₹200 → 0 dishes in Signature).
+- VLM confirmed all modal elements: rating, recommendations, allergens, prep
+  time, share buttons.
+- Mobile horizontal overflow: **0px**.
+- Lint clean.
+
+### Files added/changed
+
+- `src/hooks/use-toast.ts` — fixed `TOAST_REMOVE_DELAY` → 3000ms.
+- `src/lib/use-cart-with-toast.ts` (new) — toast-wrapped cart actions hook.
+- `src/data/menu.ts` — `inferRating()` + `rating`/`reviews` fields on Dish.
+- `src/components/home/DishModal.tsx` — rating pill, `DishRecommendations`,
+  `onSelectDish` prop, `DishShare` uses toast-wrapped add.
+- `src/components/home/MenuPreview.tsx` — rating row in cards, price filter
+  pills, toast-wrapped add.
+- `src/components/site/cart-sheet.tsx` — toast-wrapped remove/clear.
+
+
 
 

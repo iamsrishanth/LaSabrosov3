@@ -7,20 +7,23 @@ import { InstagramLogo as Instagram, Flame, Star, X, Plus, Check, WhatsappLogo, 
 import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogClose } from "@/components/ui/dialog";
 import { VegTag, Badge } from "@/components/site/primitives";
 import { brand } from "@/data/brand";
-import { categories, ALLERGEN_LABELS, type Dish } from "@/data/menu";
+import { categories, ALLERGEN_LABELS, SPICE_LEVELS, menu, type Dish } from "@/data/menu";
 import { useCart } from "@/lib/cart-store";
+import { useCartWithToast } from "@/lib/use-cart-with-toast";
 import { Timer } from "@phosphor-icons/react";
 
 /** Dish quick-view modal. Opens with full details + Instagram DM deep-link. */
 export function DishModal({
   dish,
   onClose,
+  onSelectDish,
 }: {
   dish: Dish | null;
   onClose: () => void;
+  onSelectDish?: (d: Dish) => void;
 }) {
   const open = dish !== null;
-  const add = useCart((s) => s.add);
+  const { add } = useCartWithToast();
   const cartHas = useCart((s) => s.has);
   const inCart = dish ? cartHas(dish.id) : false;
 
@@ -75,10 +78,8 @@ export function DishModal({
                   <span className="text-xs font-bold uppercase tracking-[0.18em] text-terracotta-deep">
                     {categories.find((c) => c.id === dish.category)?.label}
                   </span>
-                  {dish.spicy && (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-terracotta/15 px-2 py-0.5 text-[10px] font-bold text-terracotta-deep">
-                      <Flame size={10} weight="fill" /> Spicy
-                    </span>
+                  {dish.spiceLevel && dish.spiceLevel > 0 && (
+                    <SpiceMeter level={dish.spiceLevel} />
                   )}
                 </div>
                 <h2 className="text-2xl font-extrabold text-forest sm:text-3xl">{dish.name}</h2>
@@ -90,6 +91,13 @@ export function DishModal({
                   </span>
                   {dish.bestseller && (
                     <Badge variant="forest">Bestseller</Badge>
+                  )}
+                  {dish.rating && (
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-gold/15 px-2.5 py-1">
+                      <Star size={13} weight="fill" className="text-gold" />
+                      <span className="text-sm font-bold text-forest-deep">{dish.rating.toFixed(1)}</span>
+                      <span className="text-[10px] text-muted">({dish.reviews})</span>
+                    </span>
                   )}
                 </div>
 
@@ -174,6 +182,9 @@ export function DishModal({
                   <DishShare dish={dish} />
                 </div>
               </div>
+
+              {/* You might also like */}
+              <DishRecommendations dish={dish} onSelect={onSelectDish} />
             </div>
           </>
         )}
@@ -249,5 +260,82 @@ function DishShare({ dish }: { dish: Dish | null }) {
         </button>
       </div>
     </div>
+  );
+}
+
+/** "You might also like" — 3 recommended dishes from the same category. */
+function DishRecommendations({
+  dish,
+  onSelect,
+}: {
+  dish: Dish;
+  onSelect?: (d: Dish) => void;
+}) {
+  const recs = menu
+    .filter((d) => d.category === dish.category && d.id !== dish.id)
+    .slice(0, 3);
+
+  if (recs.length === 0) return null;
+
+  return (
+    <div className="border-t border-forest/10 px-6 py-5 sm:px-8">
+      <p className="mb-3 text-[11px] font-bold uppercase tracking-wide text-muted">
+        You might also like
+      </p>
+      <div className="grid grid-cols-3 gap-2">
+        {recs.map((r) => (
+          <button
+            key={r.id}
+            onClick={() => onSelect?.(r)}
+            className="group flex flex-col gap-1.5 rounded-xl border border-forest/8 bg-cream-soft p-2 text-left transition-all hover:-translate-y-0.5 hover:border-forest/20 hover:shadow-sm"
+          >
+            <div className="relative aspect-square overflow-hidden rounded-lg">
+              <Image
+                src={r.image}
+                alt={r.name}
+                fill
+                sizes="120px"
+                className="food-img object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+            </div>
+            <div className="flex items-center gap-1">
+              <Star size={10} weight="fill" className="text-gold" />
+              <span className="text-[10px] font-bold text-forest">
+                {r.rating?.toFixed(1)}
+              </span>
+            </div>
+            <p className="line-clamp-1 text-[11px] font-semibold text-forest">
+              {r.name}
+            </p>
+            <p className="font-display text-xs font-bold text-terracotta-deep">
+              ₹{r.price}
+            </p>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/** Visual spice-level meter — 3 flame icons, filled to the level. */
+function SpiceMeter({ level }: { level: 1 | 2 | 3 }) {
+  const label = SPICE_LEVELS.find((s) => s.level === level)?.label ?? "Spicy";
+  return (
+    <span
+      className="inline-flex items-center gap-1 rounded-full bg-terracotta/12 px-2 py-0.5"
+      title={`Spice: ${label}`}
+    >
+      <span className="flex items-center gap-0.5">
+        {[1, 2, 3].map((n) => (
+          <Flame
+            key={n}
+            size={11}
+            weight="fill"
+            className={n <= level ? "text-terracotta-deep" : "text-terracotta/20"}
+          />
+        ))}
+      </span>
+      <span className="text-[10px] font-bold text-terracotta-deep">{label}</span>
+    </span>
   );
 }

@@ -1,6 +1,7 @@
 import { Hero } from "@/components/home/Hero";
 import { OfferStrip } from "@/components/home/OfferStrip";
 import { Specialties } from "@/components/home/Specialties";
+import { ChefStory } from "@/components/home/ChefStory";
 import { BrandStory } from "@/components/home/BrandStory";
 import { StatsBand } from "@/components/home/StatsBand";
 import { NeonSignBand } from "@/components/home/scene/NeonSignBand";
@@ -25,6 +26,7 @@ export default function HomePage() {
       <Hero />
       <OfferStrip />
       <Specialties />
+      <ChefStory />
       <BrandStory />
       <StatsBand />
       <NeonSignBand />
