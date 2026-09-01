@@ -158,7 +158,7 @@ function DishCard({ dish, onOpen }: { dish: Dish; onOpen: () => void }) {
             alt={dish.name}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className="object-cover transition-transform duration-700 group-hover:scale-105"
+            className="food-img object-cover transition-transform duration-700 group-hover:scale-105"
           />
           <div className="absolute left-3 top-3 flex gap-1.5">
             <VegTag veg={dish.veg} />

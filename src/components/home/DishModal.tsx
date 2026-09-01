@@ -52,7 +52,7 @@ export function DishModal({
                   alt={dish.name}
                   fill
                   sizes="(max-width: 640px) 100vw, 50vw"
-                  className="object-cover"
+                  className="food-img object-cover"
                 />
                 <div className="absolute left-3 top-3 flex gap-1.5">
                   <VegTag veg={dish.veg} />

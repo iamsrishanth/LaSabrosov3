@@ -165,3 +165,83 @@ Stumptown/Blue Bottle").
 - `src/app/layout.tsx` — added `<FloatingActions />`.
 - `src/app/globals.css` — mobile footer bottom-padding for sticky CTA.
 
+---
+
+## Round 3 — Editorial Polish + Conversion Sections (webDevReview cron, 2026-09-01)
+
+**Phase: COMPLETE (verified).** Added 2 new sections + redesigned Hero & Specialties
++ testimonial-card polish. VLM section scores: Hero 9/10, Specialties 9/10,
+StatsBand 10/10; full page 8.5/10 (strengths: cohesive brand, visual hierarchy,
+micro-interactions).
+
+### New sections
+
+1. **Hero redesign** (`Hero.tsx`) — glassmorphism trust bar (frosted-glass 3-col
+   grid: 4.3★ Zomato, 11–11 daily, Madhapur), floating food image accent (tilted
+   dessert card, desktop xl+), scroll-driven parallax (`useScroll` + `useTransform`
+   on bg image + content, reduced-motion safe), entrance animations on sticker/
+   headline/trust-bar.
+2. **Specialties bento redesign** (`Specialties.tsx`) — eliminated the visual void
+   with a 4-dish bento grid (1 feature card spanning 2 cols/rows + 3 supporting).
+   Full-bleed images with gradient scrims, chef-pick/bestseller badges, hover
+   "View →" overlay, per-card "Order →" link to Instagram. Image-filled cards
+   instead of image-above-text.
+3. **StatsBand** (new `StatsBand.tsx`, between BrandStory and NeonSign) — 4 animated
+   count-up stat cards (39 dishes, 8 categories, 4.3★ rating, 11–11 hours) with
+   Phosphor icons, hover lift + corner-accent scale, whileInView reveals. VLM 10/10.
+4. **ReserveCTA** (new `ReserveCTA.tsx`, before Contact) — full-bleed café table
+   image with forest gradient overlay, "Your table is waiting / in the boho
+   courtyard" headline, Instagram + phone CTAs, glassmorphism quick-facts card
+   (hours, cost, address, best-for) + "send detailed enquiry" link to #contact.
+
+### Polish
+
+- **Testimonials card** — changed from heavy forest card to airy cream-gradient
+  card with forest text + gold stars; controls restyled (forest-fill buttons,
+  forest active dots). Decorative top accent line.
+- **Menu image crop** — added `.food-img` CSS class (`object-position: center 40%`)
+  applied to menu cards + dish modal for consistent food-photo cropping.
+- **Safe-area** — moved inline `style={{paddingBottom}}` to `.safe-bottom` CSS class
+  (grep-gate compliance; only motion `style={{scaleX}}` binding remains — that's
+  the idiomatic motion/react API).
+
+### Page composition (updated `page.tsx`)
+
+Hero → OfferStrip → Specialties → BrandStory → **StatsBand** → NeonSignBand →
+MenuPreview → Partners → Events → Moments → Testimonials → **ReserveCTA** →
+Contact → Footer. (13 sections.)
+
+### Verification (agent-browser + VLM)
+
+- HTTP 200, **zero console errors** (desktop + mobile 390).
+- 13 sections render (was 12). All new sections in SSR HTML confirmed
+  (Dishes/Categories/Rating/Hours labels; "Your table is waiting" text present).
+- Specialties bento: 4 articles. Partners: 5 tiles + green deal banner (VLM
+  confirmed "visually full"). StatsBand: VLM 10/10.
+- Mobile horizontal overflow: **0px**. No broken internal links.
+- Lint clean. Grep gates: 0 hex in brand tsx; only motion `style={{scaleX}}`
+  binding (idiomatic API) in nav.
+- VLM scores: Hero 9/10, Specialties 9/10, StatsBand 10/10, full page 8.5/10.
+
+### Files added/changed
+
+- `src/components/home/Hero.tsx` (rewritten) — glassmorphism trust bar, floating
+  food accent, scroll parallax, entrance animations.
+- `src/components/home/Specialties.tsx` (rewritten) — 4-dish bento grid, image-
+  filled cards, hover overlays, order links.
+- `src/components/home/StatsBand.tsx` (new) — animated count-up stats.
+- `src/components/home/ReserveCTA.tsx` (new) — full-bleed conversion band.
+- `src/components/home/Testimonials.tsx` — lighter cream card + restyled controls.
+- `src/components/home/MenuPreview.tsx` — `food-img` crop class.
+- `src/components/home/DishModal.tsx` — `food-img` crop class.
+- `src/components/site/floating-actions.tsx` — `.safe-bottom` class (no inline style).
+- `src/app/page.tsx` — added StatsBand + ReserveCTA to composition.
+- `src/app/globals.css` — `.food-img` and `.safe-bottom` utility classes.
+
+### Known artifacts (not bugs)
+
+- Full-page VLM screenshots sometimes show lower sections as "empty" due to
+  lazy-image load timing during the scroll-through capture; section-level
+  screenshots + DOM text checks confirm all sections render fully.
+
+

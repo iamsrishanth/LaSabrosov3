@@ -54,8 +54,7 @@ export function FloatingActions() {
             animate={reduce ? { opacity: 1 } : { opacity: 1, y: 0 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: 60 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-x-0 bottom-0 z-40 border-t border-forest/15 bg-cream/95 backdrop-blur-md lg:hidden"
-            style={{ paddingBottom: "max(env(safe-area-inset-bottom), 0px)" }}
+            className="safe-bottom fixed inset-x-0 bottom-0 z-40 border-t border-forest/15 bg-cream/95 backdrop-blur-md lg:hidden"
           >
             <div className="container-edge flex items-center justify-between gap-3 py-3">
               <div className="flex flex-col leading-none">

@@ -38,12 +38,14 @@ export function Testimonials() {
       </div>
 
       <div className="mx-auto max-w-3xl">
-        <div className="relative overflow-hidden rounded-3xl border border-forest/12 bg-forest p-8 text-cream shadow-[0_30px_60px_-30px_rgba(22,101,52,0.6)] sm:p-12">
+        <div className="relative overflow-hidden rounded-3xl border border-forest/12 bg-gradient-to-b from-cream-soft to-white p-8 shadow-[0_30px_60px_-35px_rgba(22,101,52,0.45)] sm:p-12">
           <Quote
-            size={64}
+            size={96}
             weight="fill"
-            className="absolute -right-2 -top-2 text-cream/10"
+            className="absolute -right-3 -top-3 text-forest/8"
           />
+          {/* decorative top accent */}
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-forest/30 to-transparent" />
 
           <div className="relative min-h-[180px]">
             <AnimatePresence mode="wait">
@@ -61,16 +63,16 @@ export function Testimonials() {
                       key={i}
                       size={18}
                       weight="fill"
-                      className={i < active.rating ? "text-gold" : "text-cream/20"}
+                      className={i < active.rating ? "text-gold" : "text-forest/15"}
                     />
                   ))}
                 </div>
-                <blockquote className="font-display text-xl italic leading-relaxed text-cream sm:text-2xl">
+                <blockquote className="font-display text-xl italic leading-relaxed text-forest sm:text-2xl">
                   “{active.quote}”
                 </blockquote>
                 <figcaption className="mt-5">
-                  <p className="font-bold text-gold">{active.name}</p>
-                  <p className="text-xs uppercase tracking-wide text-cream/60">
+                  <p className="font-bold text-forest">{active.name}</p>
+                  <p className="text-xs uppercase tracking-wide text-muted">
                     {active.role}
                   </p>
                 </figcaption>
@@ -90,7 +92,7 @@ export function Testimonials() {
                   role="tab"
                   className={cn(
                     "h-2 rounded-full transition-all",
-                    i === idx ? "w-7 bg-gold" : "w-2 bg-cream/30 hover:bg-cream/50"
+                    i === idx ? "w-7 bg-forest" : "w-2 bg-forest/20 hover:bg-forest/35"
                   )}
                 />
               ))}
@@ -99,14 +101,14 @@ export function Testimonials() {
               <button
                 onClick={() => go(-1)}
                 aria-label="Previous testimonial"
-                className="grid h-10 w-10 place-items-center rounded-full border border-cream/25 text-cream transition-colors hover:bg-cream/10"
+                className="grid h-10 w-10 place-items-center rounded-full border border-forest/20 text-forest transition-colors hover:bg-forest hover:text-cream"
               >
                 <ArrowLeft size={18} weight="bold" />
               </button>
               <button
                 onClick={() => go(1)}
                 aria-label="Next testimonial"
-                className="grid h-10 w-10 place-items-center rounded-full border border-cream/25 text-cream transition-colors hover:bg-cream/10"
+                className="grid h-10 w-10 place-items-center rounded-full border border-forest/20 text-forest transition-colors hover:bg-forest hover:text-cream"
               >
                 <ArrowRight size={18} weight="bold" />
               </button>

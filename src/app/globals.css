@@ -208,6 +208,12 @@
   mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
 }
 
+/* Standardized food-photo crop — centers the dish, avoids awkward whitespace */
+.food-img { object-position: center 40%; }
+
+/* Mobile safe-area inset bottom padding */
+.safe-bottom { padding-bottom: max(env(safe-area-inset-bottom), 0px); }
+
 /* Reveal animation (CSS scroll-driven fallback under reduced motion off-path) */
 @media (prefers-reduced-motion: no-preference) {
   .reveal-up {
