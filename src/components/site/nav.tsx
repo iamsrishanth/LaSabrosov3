@@ -1,25 +1,34 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { useState, useEffect, useMemo } from "react";
+import { motion, AnimatePresence, useScroll, useSpring } from "motion/react";
 import { InstagramLogo as Instagram, Phone, List as MenuIcon, X } from "@phosphor-icons/react";
 import { brand } from "@/data/brand";
 import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetClose } from "@/components/ui/sheet";
+import { OpenStatusPill } from "@/components/site/open-status";
+import { useScrollspy } from "@/hooks/use-scrollspy";
 
 const LINKS = [
-  { href: "#specialties", label: "Specialties" },
-  { href: "#menu", label: "Menu" },
-  { href: "#partners", label: "Order" },
-  { href: "#events", label: "Events" },
-  { href: "#moments", label: "Moments" },
-  { href: "#about", label: "About" },
+  { href: "specialties", label: "Specialties" },
+  { href: "menu", label: "Menu" },
+  { href: "partners", label: "Order" },
+  { href: "events", label: "Events" },
+  { href: "moments", label: "Moments" },
+  { href: "about", label: "About" },
 ] as const;
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+
+  // reading progress bar
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.3 });
+
+  const ids = useMemo(() => LINKS.map((l) => l.href), []);
+  const activeId = useScrollspy(ids, 80);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -40,9 +49,13 @@ export function Nav() {
       <nav className="container-edge flex h-[68px] items-center justify-between gap-4">
         {/* Wordmark */}
         <Link href="#top" className="group flex items-center gap-2.5" aria-label="LaSabroso home">
-          <span className="grid h-9 w-9 place-items-center rounded-full bg-forest text-cream shadow-sm">
+          <motion.span
+            whileHover={{ rotate: -8, scale: 1.05 }}
+            transition={{ type: "spring", stiffness: 300, damping: 15 }}
+            className="grid h-9 w-9 place-items-center rounded-full bg-forest text-cream shadow-sm"
+          >
             <span className="font-script text-xl leading-none">L</span>
-          </span>
+          </motion.span>
           <span className="flex flex-col leading-none">
             <span className="font-script text-2xl font-bold text-forest tracking-tight">
               LaSabroso
@@ -53,23 +66,36 @@ export function Nav() {
           </span>
         </Link>
 
-        {/* Desktop links */}
-        <ul className="hidden items-center gap-1 lg:flex">
-          {LINKS.map((l) => (
-            <li key={l.href}>
-              <Link
-                href={l.href}
-                className="relative rounded-full px-3.5 py-2 text-sm font-semibold text-ink/80 transition-colors hover:text-forest"
-              >
-                <span className="relative z-10">{l.label}</span>
-                <span className="absolute inset-0 rounded-full bg-forest/0 transition-colors hover:bg-forest/8" />
-              </Link>
-            </li>
-          ))}
+        {/* Desktop links with scrollspy */}
+        <ul className="hidden items-center gap-0.5 lg:flex">
+          {LINKS.map((l) => {
+            const on = activeId === l.href;
+            return (
+              <li key={l.href}>
+                <Link
+                  href={`#${l.href}`}
+                  className={cn(
+                    "relative rounded-full px-3.5 py-2 text-sm font-semibold transition-colors",
+                    on ? "text-forest" : "text-ink/70 hover:text-forest"
+                  )}
+                >
+                  <span className="relative z-10">{l.label}</span>
+                  {on && (
+                    <motion.span
+                      layoutId="nav-active"
+                      className="absolute inset-0 rounded-full bg-forest/10"
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
 
         {/* CTAs */}
         <div className="flex items-center gap-2">
+          <OpenStatusPill />
           <a
             href={`tel:${brand.phone}`}
             className="hidden h-10 w-10 place-items-center rounded-full border border-forest/20 text-forest transition-colors hover:bg-forest/5 sm:grid"
@@ -109,18 +135,27 @@ export function Nav() {
                   </SheetClose>
                 </div>
                 <ul className="flex flex-col gap-1 px-4 py-4">
-                  {LINKS.map((l) => (
-                    <li key={l.href}>
-                      <SheetClose asChild>
-                        <Link
-                          href={l.href}
-                          className="block rounded-2xl px-4 py-3.5 text-base font-semibold text-ink transition-colors hover:bg-forest/8 hover:text-forest"
-                        >
-                          {l.label}
-                        </Link>
-                      </SheetClose>
-                    </li>
-                  ))}
+                  {LINKS.map((l) => {
+                    const on = activeId === l.href;
+                    return (
+                      <li key={l.href}>
+                        <SheetClose asChild>
+                          <Link
+                            href={`#${l.href}`}
+                            className={cn(
+                              "flex items-center justify-between rounded-2xl px-4 py-3.5 text-base font-semibold transition-colors",
+                              on
+                                ? "bg-forest/10 text-forest"
+                                : "text-ink hover:bg-forest/8 hover:text-forest"
+                            )}
+                          >
+                            {l.label}
+                            {on && <span className="h-1.5 w-1.5 rounded-full bg-forest" />}
+                          </Link>
+                        </SheetClose>
+                      </li>
+                    );
+                  })}
                 </ul>
                 <div className="mt-auto space-y-3 border-t border-forest/12 px-6 py-5">
                   <Link
@@ -147,15 +182,15 @@ export function Nav() {
         </div>
       </nav>
 
-      {/* mobile scroll progress hairline */}
+      {/* reading progress bar */}
       <AnimatePresence>
         {scrolled && (
-          <motion.div
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            exit={{ scaleX: 0 }}
-            className="h-px origin-left bg-gradient-to-r from-forest via-gold to-forest"
-          />
+          <motion.div className="absolute inset-x-0 bottom-0 h-0.5 origin-left bg-gradient-to-r from-forest via-gold to-forest">
+            <motion.div
+              className="h-full origin-left bg-gradient-to-r from-forest via-gold to-forest"
+              style={{ scaleX: progress }}
+            />
+          </motion.div>
         )}
       </AnimatePresence>
     </header>

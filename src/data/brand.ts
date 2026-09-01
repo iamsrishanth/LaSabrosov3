@@ -62,6 +62,11 @@ export const events = [
   },
 ] as const;
 
+export const eventsAtmosphere = {
+  image: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/1f9d8d218b10.jpg",
+  caption: "The courtyard set for a birthday evening",
+};
+
 export const moments = [
   {
     title: "Laso Delights",

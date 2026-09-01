@@ -88,9 +88,80 @@ Tailwind v4 + shadcn/ui, `motion/react` (Framer Motion), `three` +
 
 - Swap Dancing Script → Histerm .woff2 when available; re-enable
   `@react-three/postprocessing` Bloom if RAM is increased.
-- Replace image-search OSS placeholders with verified Petpooja CDN item photos.
+- Replace image-search OSS placeholders with verified Petpooja CDN item photos
+  (some images carry source watermarks — e.g. "alamy" — that look unprofessional
+  in production; swap to clean Petpooja CDN photos when re-extracted).
 - License partner logos (Zomato/Swiggy/magicpin) to replace colored-chip
   fallback tiles.
-- Add a "Back to top" floating button and an "Open now" status pill in the
-  nav (11AM–11PM IST).
-- Add per-dish "Add to cart" → Instagram DM deep-link with pre-filled message.
+- Standardize menu image aspect ratios / object-position for tighter grid.
+
+---
+
+## Round 2 — Features + Polish (webDevReview cron, 2026-09-01)
+
+**Phase: COMPLETE (verified).** Added 6 new features + micro-interaction polish.
+VLM polish score: **7.5 → 8.5/10** ("clearly premium execution, comparable to
+Stumptown/Blue Bottle").
+
+### New features
+
+1. **"Open now" live status pill** in nav (`src/components/site/open-status.tsx`).
+   Computes open/closed from IST (Asia/Kolkata, 11AM–11PM), re-checks every 60s,
+   shows "Open now · Closes in Xh Ym" (green, pulsing dot) or "Closed now · Opens
+   11:00 AM" (terracotta). SSR-safe placeholder until mounted.
+2. **Scrollspy active-section highlight** (`src/hooks/use-scrollspy.ts`). Nav
+   links highlight the current section with a `layoutId` sliding background pill
+   (motion/react). IntersectionObserver with a thin top detection band — no scroll
+   listeners. Verified: all 6 sections correctly highlight on scroll.
+3. **Reading progress bar** in nav — `useScroll` + `useSpring` (motion/react)
+   drives a gradient (forest→gold→forest) progress hairline at the nav bottom.
+4. **Dish quick-view modal** (`src/components/home/DishModal.tsx`). Click any
+   menu card → Radix Dialog with large image, full description, price, veg tag,
+   chef-pick badge, spicy indicator, diet/made-to-order info, and **"Order on
+   Instagram" deep-link** with pre-filled message
+   (`?msg=Hi LaSabroso! I'd like to order: {dish} (₹{price})…`). Body-scroll
+   lock on open. Hover reveals a "View" overlay on cards.
+5. **Back-to-top floating button** (desktop, bottom-right) — forest-filled,
+   appears after scrolling past 70vh, smooth-scrolls to top. Reduced-motion safe.
+6. **Mobile sticky reserve CTA bar** — fixed bottom bar (appears after hero)
+   with brand wordmark + "Reserve your table" button, respects safe-area-inset.
+   Added mobile footer bottom-padding so content isn't hidden behind the bar.
+
+### Polish / micro-interactions
+
+- Nav wordmark logo: spring hover (rotate -8°, scale 1.05).
+- Menu spicy icon: emoji 🌶 → Phosphor `Flame` (filled, terracotta).
+- Menu cards: hover reveals a cream "View" pill on the image (opacity transition).
+- Events section: **atmosphere lifestyle image** (birthday table setup) added
+  as a 2-col split with the discount counter; +60 seats-max stat; "Bookable now"
+  badge; icon hover rotation. Events image: `eventsAtmosphere` in brand.ts.
+- Back-to-top button: made more visible (forest fill, cream icon, hover scale).
+
+### Verification (agent-browser)
+
+- HTTP 200, **zero console errors** (desktop + mobile 390).
+- Scrollspy: all 6 sections correctly highlight (Specialties→Menu→Order→
+  Events→Moments→About).
+- Dish modal: opens with image + "Order on Instagram" link confirmed.
+- Mobile sticky CTA: "Reserve your table" appears on scroll.
+- Mobile horizontal overflow: **0px** (no horizontal scroll).
+- Lint clean (`bun run lint` → 0 errors).
+- VLM: dish modal 8/10, events section 9/10, full page 8.5/10.
+
+### Files added/changed
+
+- `src/lib/hours.ts` (new) — IST open-status computation.
+- `src/hooks/use-scrollspy.ts` (new) — IntersectionObserver scrollspy.
+- `src/components/site/open-status.tsx` (new) — live "Open now" pill.
+- `src/components/site/floating-actions.tsx` (new) — back-to-top + mobile CTA.
+- `src/components/home/DishModal.tsx` (new) — dish quick-view modal.
+- `src/components/site/nav.tsx` (rewritten) — OpenStatusPill, scrollspy,
+  reading progress, layoutId active pill.
+- `src/components/home/MenuPreview.tsx` (rewritten) — clickable cards,
+  DishModal integration, Phosphor Flame, hover "View" overlay.
+- `src/components/home/Events.tsx` (rewritten) — atmosphere image split,
+  +60 seats stat, icon hover.
+- `src/data/brand.ts` — added `eventsAtmosphere` image + caption.
+- `src/app/layout.tsx` — added `<FloatingActions />`.
+- `src/app/globals.css` — mobile footer bottom-padding for sticky CTA.
+

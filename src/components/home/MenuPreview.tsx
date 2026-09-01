@@ -3,10 +3,11 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
-import { MagnifyingGlass as Search, X, Sparkle, Leaf } from "@phosphor-icons/react";
+import { MagnifyingGlass as Search, X, Sparkle, Leaf, Flame, Plus } from "@phosphor-icons/react";
 import { Section, SectionEyebrow } from "@/components/site/section";
 import { VegTag, Badge } from "@/components/site/primitives";
-import { categories, dishesByCategory, type DishCategory, menu } from "@/data/menu";
+import { categories, dishesByCategory, type DishCategory, type Dish, menu } from "@/data/menu";
+import { DishModal, useDishModal } from "@/components/home/DishModal";
 import { cn } from "@/lib/utils";
 
 /** Menu preview — La.Revi tabbed pattern. Default category SSR'd into HTML. */
@@ -14,6 +15,7 @@ export function MenuPreview() {
   const [active, setActive] = useState<DishCategory>("signature");
   const [query, setQuery] = useState("");
   const [vegOnly, setVegOnly] = useState(false);
+  const { dish, setDish } = useDishModal();
 
   const base = query
     ? menu.filter(
@@ -120,52 +122,7 @@ export function MenuPreview() {
           className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
         >
           {dishes.map((d) => (
-            <motion.article
-              layout
-              key={d.id}
-              className="group flex flex-col overflow-hidden rounded-2xl border border-forest/10 bg-white shadow-[0_12px_30px_-20px_rgba(22,101,52,0.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_50px_-22px_rgba(22,101,52,0.5)]"
-            >
-              <div className="relative aspect-[4/3] overflow-hidden">
-                <Image
-                  src={d.image}
-                  alt={d.name}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute left-3 top-3 flex gap-1.5">
-                  <VegTag veg={d.veg} />
-                  {d.chefPick && (
-                    <Badge variant="gold" className="shadow-sm">
-                      <Sparkle size={11} weight="fill" /> Chef’s pick
-                    </Badge>
-                  )}
-                </div>
-                {d.bestseller && (
-                  <span className="absolute bottom-3 right-3 rounded-full bg-forest px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-cream">
-                    Bestseller
-                  </span>
-                )}
-              </div>
-              <div className="flex flex-1 flex-col gap-1.5 p-4">
-                <div className="flex items-baseline gap-2">
-                  <h3 className="text-base font-bold text-forest">{d.name}</h3>
-                  {d.spicy && <span className="text-xs" title="Spicy">🌶</span>}
-                </div>
-                <p className="line-clamp-2 text-xs leading-relaxed text-muted">
-                  {d.desc}
-                </p>
-                <div className="mt-auto flex items-baseline pt-2">
-                  <span className="font-display text-lg font-semibold text-terracotta-deep">
-                    ₹{d.price}
-                  </span>
-                  <span className="dotted-leader" aria-hidden />
-                  <span className="text-[11px] uppercase tracking-wide text-muted">
-                    {categories.find((c) => c.id === d.category)?.label}
-                  </span>
-                </div>
-              </div>
-            </motion.article>
+            <DishCard key={d.id} dish={d} onOpen={() => setDish(d)} />
           ))}
         </motion.div>
       </AnimatePresence>
@@ -181,6 +138,71 @@ export function MenuPreview() {
           </p>
         </div>
       )}
+
+      <DishModal dish={dish} onClose={() => setDish(null)} />
     </Section>
+  );
+}
+
+/** Dish card — clickable, opens quick-view modal. Hover reveals "View" button. */
+function DishCard({ dish, onOpen }: { dish: Dish; onOpen: () => void }) {
+  return (
+    <motion.article
+      layout
+      className="group flex flex-col overflow-hidden rounded-2xl border border-forest/10 bg-white shadow-[0_12px_30px_-20px_rgba(22,101,52,0.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_50px_-22px_rgba(22,101,52,0.5)]"
+    >
+      <button onClick={onOpen} className="flex flex-1 flex-col text-left" aria-label={`View ${dish.name}`}>
+        <div className="relative aspect-[4/3] overflow-hidden">
+          <Image
+            src={dish.image}
+            alt={dish.name}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div className="absolute left-3 top-3 flex gap-1.5">
+            <VegTag veg={dish.veg} />
+            {dish.chefPick && (
+              <Badge variant="gold" className="shadow-sm">
+                <Sparkle size={11} weight="fill" /> Chef’s pick
+              </Badge>
+            )}
+          </div>
+          {dish.bestseller && (
+            <span className="absolute bottom-3 right-3 rounded-full bg-forest px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-cream">
+              Bestseller
+            </span>
+          )}
+          {/* hover "view" overlay */}
+          <div className="pointer-events-none absolute inset-0 flex items-end justify-end bg-gradient-to-t from-forest-deep/40 to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-cream px-3 py-1.5 text-xs font-bold text-forest-deep shadow-lg">
+              <Plus size={12} weight="bold" /> View
+            </span>
+          </div>
+        </div>
+        <div className="flex flex-1 flex-col gap-1.5 p-4">
+          <div className="flex items-baseline gap-2">
+            <h3 className="text-base font-bold text-forest">{dish.name}</h3>
+            {dish.spicy && (
+              <span className="inline-flex items-center text-terracotta-deep" title="Spicy">
+                <Flame size={13} weight="fill" />
+              </span>
+            )}
+          </div>
+          <p className="line-clamp-2 text-xs leading-relaxed text-muted">
+            {dish.desc}
+          </p>
+          <div className="mt-auto flex items-baseline pt-2">
+            <span className="font-display text-lg font-semibold text-terracotta-deep">
+              ₹{dish.price}
+            </span>
+            <span className="dotted-leader" aria-hidden />
+            <span className="text-[11px] uppercase tracking-wide text-muted">
+              {categories.find((c) => c.id === dish.category)?.label}
+            </span>
+          </div>
+        </div>
+      </button>
+    </motion.article>
   );
 }

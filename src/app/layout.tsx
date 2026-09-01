@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
 import { Providers } from "@/components/site/providers";
+import { FloatingActions } from "@/components/site/floating-actions";
 import { neon } from "@/data/palette";
 import { cn } from "@/lib/utils";
 
@@ -95,6 +96,7 @@ export default function RootLayout({
           <Nav />
           <Providers>
             <main className="page-main">{children}</main>
+            <FloatingActions />
           </Providers>
           <Footer />
         </div>

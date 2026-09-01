@@ -169,6 +169,13 @@
   .page-main { @apply flex-1; }
 }
 
+/* Mobile: add bottom padding so sticky CTA bar doesn't cover footer */
+@media (max-width: 1023px) {
+  .page-shell > footer {
+    padding-bottom: 90px;
+  }
+}
+
 /* Neon band ambient grain (hex lives here, not in tsx) */
 .neon-ambient {
   background-image:
