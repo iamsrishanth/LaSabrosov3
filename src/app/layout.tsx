@@ -10,6 +10,8 @@ import { FloatingActions } from "@/components/site/floating-actions";
 import { CartButton } from "@/components/site/cart-button";
 import { neon } from "@/data/palette";
 import { cn } from "@/lib/utils";
+import { SITE_URL } from "@/lib/site";
+import { LaSabrosoSchema } from "@/components/seo/schema";
 
 const histerm = localFont({
   src: "../../public/fonts/Histerm.woff2",
@@ -39,10 +41,11 @@ const dancing = Dancing_Script({
   display: "swap",
 });
 
-const SITE_URL = "https://lasabroso.example";
-
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  alternates: {
+    canonical: "/",
+  },
   title: {
     default: "LaSabroso · Boho Café in Madhapur, Hyderabad",
     template: "%s · LaSabroso",
@@ -68,12 +71,21 @@ export const metadata: Metadata = {
     siteName: "LaSabroso",
     type: "website",
     locale: "en_IN",
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "LaSabroso — Boho Café in Madhapur, Hyderabad",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "LaSabroso · Boho Café in Madhapur, Hyderabad",
     description:
       "Handcrafted coffee, signature momos and dessert labs. Open 11 AM to 11 PM.",
+    images: ["/og.png"],
   },
   icons: {
     icon: "/favicon.svg",
@@ -101,6 +113,7 @@ export default function RootLayout({
           "font-sans antialiased bg-cream text-ink"
         )}
       >
+        <LaSabrosoSchema />
         <div className="page-shell">
           <a
             href="#top"

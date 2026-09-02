@@ -42,7 +42,10 @@ export function HappyHourCountdown({ className }: { className?: string }) {
       <span className="hidden sm:inline">{status.label}</span>
       <span className="text-muted/60">·</span>
       <span>{status.target}</span>
-      <span className="tabular-nums font-extrabold tracking-tight text-forest">
+      <span
+        className="tabular-nums font-extrabold tracking-tight text-forest"
+        suppressHydrationWarning
+      >
         {formatCountdown(status.secondsLeft)}
       </span>
     </div>

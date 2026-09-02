@@ -1,0 +1,18 @@
+# LaSabroso
+
+> Boho café in Madhapur, Hyderabad — handcrafted coffee, signature momos, wood-fired pizzas and a live dessert lab. Open daily 11:00–23:00.
+
+LaSabroso is a hybrid-boho café in Madhapur, Hyderabad (500019). Famous for chocolate khoma, veg steam momos, wood-fired pizzas and single-origin coffee. Rated 4.3★ on Zomato (1,158 reviews). Cost for two ₹1,200–₹2,000. Pet-friendly courtyard, free parking.
+
+## Core Website
+
+- [Home](https://lasabroso.srishanth.com/): One-page site — specialties, menu, events, moments, contact, reservations
+- [Order & Deals](https://lasabroso.srishanth.com/#menu): Menu of 121 dishes across 20 categories with prices (searchable)
+- [Events & Private Hosting](https://lasabroso.srishanth.com/#events): Bulk-event bookings (20+ guests), couples-night offers
+- [Contact & Reservations](https://lasabroso.srishanth.com/#contact): Call +91 91828 01364, reserve a table in the courtyard
+
+## Elsewhere
+
+- [Instagram](https://www.instagram.com/lasabroso_cafe/): Photos, reels, daily specials
+- [Zomato](https://www.zomato.com/hyderabad/la-sabroso-madhapur): 4.3★, 1,158 reviews
+- [Magicpin](https://magicpin.in/Hyderabad/Madhapur/Restaurant/La-Sabroso/store/15825a3): 4.6★ local listings

@@ -471,3 +471,39 @@ modal, and a price-range filter for the menu. VLM confirmed all modal elements
 
 
 
+
+## 2026-09-02 — Menu switched to live Petpooja data (121 items / 20 cats)
+
+- Extraction: dinein.petpooja.com/orders/category/fm32c9qw/19 via in-page getMenu
+  replay (browser_console fetch with X-Requested-With). 121 items, all prices,
+  82 veg / 39 non-veg, 41 real gumlet CDN photos (80 default_item.png → null).
+  Canonical snapshot: src/data/live-menu.json (2026-09-02).
+- menu.ts now imports live-menu.json: cleanName (strip trailing dot / dbl space),
+  cleanDesc (sentence-case ALL-CAPS rows), chefPick = La Sabroso Favourites,
+  bestseller = duplicated-across-category names + Chocolate Khoma, image fallback
+  to per-category pool when the live item has no photo.
+- Specialties picks are name-based w/ category fallback (was hardcoded sig-/cof- ids).
+- StatsBand (121/20) + BrandStory (20+ Categories) now derive from the live menu.
+- MenuPreview default tab → favourites. Committed 4c868d9, pushed to origin/main.
+- Deploy: npm run build (standalone) + systemctl --user restart lasabroso.service.
+  Live-green: HTTP 200, favourites grid renders real names/prices, stats band 121/20.
+
+## 2026-09-02 — SEO + GEO audit fixes (plan lasabroso-seo-geo-audit)
+
+- SITE_URL centralized in src/lib/site.ts (NEXT_PUBLIC_SITE_URL ?? https://lasabroso.srishanth.com);
+  layout.tsx / sitemap.ts / robots.ts import it — kills the lasabroso.example placeholder (A1).
+- Canonical added (layout metadata alternates.canonical) (A2).
+- sitemap.ts: single real-domain entry, no hash fragments (A3).
+- JSON-LD added (src/components/seo/schema.tsx): CafeOrCoffeeShop + Organization + WebSite
+  + QAPage (FAQPage retired by Google, guardrail respected). NAP sourced from brand.ts (A4/A12).
+- GEO artifacts now real static files: public/llms.txt, public/llms-full.txt,
+  public/.well-known/ai.txt (were 200-SPA-shell traps) (A5).
+- public/robots.txt curated (search + AI-reference engines allowed, scrapers blocked,
+  Sitemap line). robots.ts route aligned. CF Managed robots.txt still prepends at edge —
+  dashboard toggle remains the one owner-side action (A6).
+- OG image: public/og.png 1200x630 built from brand logo (SVG→sharp), wired into
+  openGraph.images + twitter.images (A8).
+- Hydration fixes: happy-hour countdown span suppressHydrationWarning (A9);
+  StatsBand initializes useState(to) so SSR/crawlers see 121/20/4.3 instead of 0 (A10).
+- Deploy: npm run build (standalone) + systemctl --user restart lasabroso.service.
+  Live AC1-AC12 battery passed; browser console 0 errors; Lighthouse re-run committed.

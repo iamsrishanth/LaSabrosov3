@@ -1,14 +1,47 @@
+# LaSabroso — robots.txt (curated; audit A6)
+# Content-Signal: search=yes, ai-train=no, use=reference
+#
+# GEO policy: major search engines AND AI reference engines (Perplexity,
+# Claude, GPT) are allowed to crawl; `ai-train=no, use=reference` reserves
+# copyright while permitting search indexing and AI grounding/citation.
+# Known scrapers/harvesters stay blocked.
+#
+# NOTE: if Cloudflare "Managed robots.txt" is enabled for this zone, the CF
+# blocklist is PREPENDED to this file at the edge. Disable it in the CF
+# dashboard for this policy to take full effect.
+
+User-agent: *
+Content-Signal: search=yes, ai-train=no, use=reference
+Allow: /
+
 User-agent: Googlebot
 Allow: /
 
 User-agent: Bingbot
 Allow: /
 
-User-agent: Twitterbot
+User-agent: PerplexityBot
 Allow: /
 
-User-agent: facebookexternalhit
+User-agent: ClaudeBot
 Allow: /
 
-User-agent: *
+User-agent: GPTBot
 Allow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: meta-externalagent
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+Sitemap: https://lasabroso.srishanth.com/sitemap.xml

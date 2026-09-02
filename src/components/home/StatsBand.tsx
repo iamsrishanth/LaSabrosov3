@@ -89,7 +89,9 @@ function CountUp({
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const reduce = usePrefersReducedMotion();
-  const [val, setVal] = useState(0);
+  // Initialize at the final value so SSR/crawlers see the real stat (e.g. "121")
+  // instead of a baked-in 0; the count-up animation still replays 0→N on reveal.
+  const [val, setVal] = useState(to);
 
   useEffect(() => {
     if (!inView || reduce) return;
