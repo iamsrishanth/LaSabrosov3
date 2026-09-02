@@ -11,6 +11,7 @@ import { neon } from "@/data/palette";
 import { cn } from "@/lib/utils";
 import { SITE_URL } from "@/lib/site";
 import { LaSabrosoSchema } from "@/components/seo/schema";
+import { Analytics } from "@vercel/analytics/next";
 
 const histerm = localFont({
   src: "../../public/fonts/Histerm.woff2",
@@ -128,6 +129,7 @@ export default function RootLayout({
           <Footer />
         </div>
         <Toaster />
+        <Analytics />
       </body>
     </html>
   );
