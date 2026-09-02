@@ -6,11 +6,17 @@ import { motion, AnimatePresence } from "motion/react";
 import { MagnifyingGlass as Search, X, Sparkle, Leaf, Flame, Plus, CaretDown, Check, Star } from "@phosphor-icons/react";
 import { Section, SectionEyebrow } from "@/components/site/section";
 import { VegTag, Badge } from "@/components/site/primitives";
+import dynamic from "next/dynamic";
 import { categories, dishesByCategory, type DishCategory, type Dish, menu } from "@/data/menu";
-import { DishModal, useDishModal } from "@/components/home/DishModal";
+import { useDishModal } from "@/components/home/DishModal";
 import { useCart } from "@/lib/cart-store";
 import { useCartWithToast } from "@/lib/use-cart-with-toast";
 import { cn } from "@/lib/utils";
+
+const DishModal = dynamic(
+  () => import("@/components/home/DishModal").then((m) => m.DishModal),
+  { ssr: false }
+);
 
 type SortKey = "default" | "price-asc" | "price-desc" | "chef";
 
@@ -118,7 +124,6 @@ export function MenuPreview() {
             <button
               onClick={() => setSortOpen((v) => !v)}
               aria-expanded={sortOpen}
-              aria-label="Sort dishes"
               className="inline-flex h-11 shrink-0 items-center gap-1.5 rounded-full border border-forest/20 bg-cream-soft px-3.5 text-sm font-semibold text-muted transition-colors hover:text-forest"
             >
               <span className="hidden sm:inline">{SORT_LABELS[sort]}</span>
@@ -175,7 +180,7 @@ export function MenuPreview() {
                 {c.label}
                 <span
                   className={`rounded-full px-1.5 py-0.5 text-[10px] font-bold ${
-                    on ? "bg-cream/20 text-cream" : "bg-forest/10 text-forest"
+                    on ? "bg-forest-deep text-cream" : "bg-forest/10 text-forest"
                   }`}
                 >
                   {dishesByCategory(c.id).length}
@@ -256,7 +261,7 @@ function DishCard({ dish, onOpen }: { dish: Dish; onOpen: () => void }) {
       layout
       className="group flex flex-col overflow-hidden rounded-2xl border border-forest/10 bg-white shadow-[0_12px_30px_-20px_rgba(22,101,52,0.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_50px_-22px_rgba(22,101,52,0.5)]"
     >
-      <button onClick={onOpen} className="flex flex-1 flex-col text-left" aria-label={`View ${dish.name}`}>
+      <button onClick={onOpen} className="flex flex-1 flex-col text-left">
         <div className="relative aspect-[4/3] overflow-hidden">
           <Image
             src={dish.image}

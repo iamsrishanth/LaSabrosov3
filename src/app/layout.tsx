@@ -6,8 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
 import { Providers } from "@/components/site/providers";
-import { FloatingActions } from "@/components/site/floating-actions";
-import { CartButton } from "@/components/site/cart-button";
+import { FloatingIsland } from "@/components/site/floating-island";
 import { neon } from "@/data/palette";
 import { cn } from "@/lib/utils";
 import { SITE_URL } from "@/lib/site";
@@ -124,8 +123,7 @@ export default function RootLayout({
           <Nav />
           <Providers>
             <main className="page-main">{children}</main>
-            <FloatingActions />
-            <CartButton />
+            <FloatingIsland />
           </Providers>
           <Footer />
         </div>

@@ -18,7 +18,7 @@
   --color-gold: #FFD700;
   --color-mint: #D5F5E3;
   --color-terracotta: #E57A4F;
-  --color-terracotta-deep: #C9623A;
+  --color-terracotta-deep: #B8532B;
 
   /* shadcn semantic mapping (in-brand) */
   --color-background: var(--background);
@@ -67,7 +67,7 @@
   --muted-foreground: #4E584E;
   --accent: #D5F5E3;              /* mint */
   --accent-foreground: #14532D;
-  --destructive: #C9623A;
+  --destructive: #B8532B;
   --border: rgba(22, 101, 52, 0.16);
   --input: rgba(22, 101, 52, 0.22);
   --ring: #166534;

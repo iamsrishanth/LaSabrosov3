@@ -62,7 +62,7 @@ export function FAQ() {
                 <h3 className="font-display text-2xl italic text-gold sm:text-3xl">
                   Still have a question?
                 </h3>
-                <p className="text-sm text-cream/75">
+                <p className="text-sm text-cream/90">
                   We are most responsive on Instagram. Send a DM and we will get
                   back to you within minutes during open hours.
                 </p>

@@ -25,16 +25,16 @@ export function Footer() {
             </span>
             <span className="font-histerm text-3xl font-bold text-cream">LaSabroso</span>
           </div>
-          <p className="font-display text-lg italic text-cream/80">
+          <p className="font-display text-lg italic text-cream/90">
             {brand.tagline}
           </p>
           <div className="flex items-center gap-1.5">
             <Star size={16} weight="fill" className="text-gold" />
             <span className="text-sm font-semibold text-cream">
-              4.3 <span className="text-cream/60">· 1,158 Zomato reviews</span>
+              4.3 <span className="text-cream/85">· 1,158 Zomato reviews</span>
             </span>
           </div>
-          <p className="text-sm text-cream/70">
+          <p className="text-sm text-cream/90">
             A hybrid-boho café in Madhapur. Handcrafted coffee, signature momos,
             wood-fired pizzas and a live dessert lab.
           </p>
@@ -57,7 +57,7 @@ export function Footer() {
               <li key={l.href}>
                 <Link
                   href={l.href}
-                  className="text-cream/75 transition-colors hover:text-gold"
+                  className="text-cream/90 transition-colors hover:text-gold"
                 >
                   {l.label}
                 </Link>
@@ -74,14 +74,14 @@ export function Footer() {
           <ul className="space-y-3.5 text-sm">
             <li className="flex gap-3">
               <MapPin size={18} weight="duotone" className="mt-0.5 shrink-0 text-gold" />
-              <span className="text-cream/80">{brand.address}</span>
+              <span className="text-cream/90">{brand.address}</span>
             </li>
             <li className="flex gap-3">
               <Clock size={18} weight="duotone" className="mt-0.5 shrink-0 text-gold" />
-              <span className="text-cream/80">
+              <span className="text-cream/90">
                 {brand.hours}
                 <br />
-                <span className="text-cream/55">{brand.hoursNote}</span>
+                <span className="text-cream/85">{brand.hoursNote}</span>
               </span>
             </li>
             {/* live today's-hours widget */}
@@ -90,7 +90,7 @@ export function Footer() {
             </li>
             <li className="flex gap-3">
               <Phone size={18} weight="duotone" className="mt-0.5 shrink-0 text-gold" />
-              <a href={`tel:${brand.phone}`} className="text-cream/80 hover:text-gold">
+              <a href={`tel:${brand.phone}`} className="text-cream/90 hover:text-gold">
                 {brand.phoneDisplay}
               </a>
             </li>
@@ -100,7 +100,7 @@ export function Footer() {
                 href={brand.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-cream/80 hover:text-gold"
+                className="text-cream/90 hover:text-gold"
               >
                 {brand.instagramHandle}
               </a>
@@ -114,7 +114,7 @@ export function Footer() {
             {brand.franchiseModel} Franchise
           </h3>
           <div className="rounded-2xl border border-cream/15 bg-cream/5 p-4">
-            <p className="text-sm leading-relaxed text-cream/80">
+            <p className="text-sm leading-relaxed text-cream/90">
               Own a LaSabroso under the {brand.franchiseModel} model.
               Franchise-owned, company-operated. Inquiry opens soon.
             </p>
@@ -132,7 +132,7 @@ export function Footer() {
             {partners.slice(0, 3).map((p) => (
               <span
                 key={p.name}
-                className="rounded-full border border-cream/15 px-2.5 py-1 text-[11px] font-semibold text-cream/70"
+                className="rounded-full border border-cream/20 px-2.5 py-1 text-[11px] font-semibold text-cream/90"
               >
                 {p.name}
               </span>
@@ -142,7 +142,7 @@ export function Footer() {
       </div>
 
       <div className="border-t border-cream/12">
-        <div className="container-edge flex flex-col items-center justify-between gap-3 py-5 text-xs text-cream/55 sm:flex-row">
+        <div className="container-edge flex flex-col items-center justify-between gap-3 py-5 text-xs text-cream/85 sm:flex-row">
           <p>© {new Date().getFullYear()} LaSabroso. Handcrafted in Madhapur, Hyderabad.</p>
           <p className="flex items-center gap-1.5">
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-gold" />
@@ -186,7 +186,7 @@ function FooterHoursWidget() {
         />
       </span>
       <span className="text-cream/90">{status.label}</span>
-      <span className="text-cream/60">· {status.detail}</span>
+      <span className="text-cream/85">· {status.detail}</span>
     </div>
   );
 }

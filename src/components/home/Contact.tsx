@@ -39,10 +39,14 @@ export function Contact() {
 
   const field = (k: keyof FormState, label: string, type = "text") => (
     <div className="flex flex-col gap-1.5">
-      <label className="text-xs font-semibold uppercase tracking-wide text-muted">
+      <label
+        htmlFor={`contact-${k}`}
+        className="text-xs font-semibold uppercase tracking-wide text-muted"
+      >
         {label}
       </label>
       <input
+        id={`contact-${k}`}
         type={type}
         value={form[k]}
         onChange={(e) => setForm({ ...form, [k]: e.target.value })}
@@ -136,10 +140,14 @@ export function Contact() {
                 {field("guests", "Guests", "number")}
               </div>
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-semibold uppercase tracking-wide text-muted">
+                <label
+                  htmlFor="contact-note"
+                  className="text-xs font-semibold uppercase tracking-wide text-muted"
+                >
                   Note (optional)
                 </label>
                 <textarea
+                  id="contact-note"
                   value={form.note}
                   onChange={(e) => setForm({ ...form, note: e.target.value })}
                   rows={3}

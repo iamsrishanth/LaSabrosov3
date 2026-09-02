@@ -24,7 +24,7 @@ function CountUp({
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const reduce = usePrefersReducedMotion();
-  const [val, setVal] = useState(0);
+  const [val, setVal] = useState(to);
 
   useEffect(() => {
     if (!inView) return;
@@ -96,7 +96,7 @@ export function Events() {
               <p className="font-display text-3xl italic leading-tight text-cream sm:text-4xl lg:text-5xl">
                 Up to <CountUp to={35} suffix="%" /> off on bulk events
               </p>
-              <p className="text-sm text-cream/70">
+              <p className="text-sm text-cream/85">
                 Corporate offsites, birthdays, team dinners. 20+ guests.
               </p>
               <div className="flex items-center gap-4 pt-2">
@@ -104,7 +104,7 @@ export function Events() {
                   <span className="font-display text-3xl font-bold text-gold">
                     <CountUp to={150} suffix="+" />
                   </span>
-                  <span className="text-[10px] uppercase tracking-wide text-cream/70">
+                  <span className="text-[10px] uppercase tracking-wide text-cream/85">
                     events hosted
                   </span>
                 </div>
@@ -112,7 +112,7 @@ export function Events() {
                   <span className="font-display text-3xl font-bold text-gold">
                     <CountUp to={60} suffix="+" />
                   </span>
-                  <span className="text-[10px] uppercase tracking-wide text-cream/70">
+                  <span className="text-[10px] uppercase tracking-wide text-cream/85">
                     seats max
                   </span>
                 </div>

@@ -111,7 +111,7 @@ export function Hero() {
         </div>
 
         {/* glassmorphism trust bar */}
-        <motion.dl
+        <motion.div
           initial={reduce ? undefined : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
@@ -136,13 +136,13 @@ export function Hero() {
             label="Hyderabad"
             sub="500019"
           />
-        </motion.dl>
+        </motion.div>
       </motion.div>
 
       {/* scroll cue */}
       <a
         href="#specialties"
-        className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 text-cream/70 transition-colors hover:text-gold"
+        className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 text-cream/85 transition-colors hover:text-gold"
         aria-label="Scroll to specialties"
       >
         <ArrowDown size={22} className="animate-bounce" weight="duotone" />
@@ -174,10 +174,10 @@ function TrustStat({
           {value}
           {suffix && <span className="ml-0.5 text-gold">{suffix}</span>}
         </span>
-        <span className="text-[11px] font-semibold uppercase tracking-wide text-cream/70">
+        <span className="text-[11px] font-semibold uppercase tracking-wide text-cream/85">
           {label}
         </span>
-        <span className="hidden text-[10px] text-cream/50 sm:block">{sub}</span>
+        <span className="hidden text-[10px] text-cream/80 sm:block">{sub}</span>
       </div>
     </div>
   );

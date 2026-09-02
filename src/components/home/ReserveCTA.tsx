@@ -38,7 +38,7 @@ export function ReserveCTA() {
             Your table is waiting
             <span className="block font-script text-gold">in the boho courtyard</span>
           </h2>
-          <p className="max-w-md text-cream/80">
+          <p className="max-w-md text-cream/90">
             DM us on Instagram to reserve. We confirm within minutes during open
             hours, and we will hold your table for 15 minutes past the booking time.
           </p>
@@ -81,7 +81,7 @@ export function ReserveCTA() {
               { k: "Best for", v: "Coffee, dates, small groups" },
             ].map((row) => (
               <div key={row.k} className="flex items-start justify-between gap-4 border-b border-cream/12 pb-3 last:border-0">
-                <dt className="text-xs font-semibold uppercase tracking-wide text-cream/60">
+                <dt className="text-xs font-semibold uppercase tracking-wide text-cream/85">
                   {row.k}
                 </dt>
                 <dd className="text-right text-sm font-semibold text-cream">

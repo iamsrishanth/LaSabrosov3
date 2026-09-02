@@ -51,7 +51,7 @@ export function Nav() {
     >
       <nav className="container-edge flex h-[68px] items-center justify-between gap-4">
         {/* Wordmark */}
-        <Link href="#top" className="group flex items-center gap-3" aria-label="LaSabroso home">
+        <Link href="#top" className="group flex items-center gap-3">
           <motion.span
             whileHover={{ rotate: -8, scale: 1.05 }}
             transition={{ type: "spring", stiffness: 300, damping: 15 }}

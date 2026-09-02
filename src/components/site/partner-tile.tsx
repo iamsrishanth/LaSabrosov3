@@ -45,13 +45,13 @@ export function PartnerMarqueeRow() {
     "EazyDiner",
   ];
   return (
-    <div className="marquee-mask flex w-full overflow-hidden">
+    <div className="marquee-mask flex w-full overflow-hidden" aria-hidden="true">
       <div className="marquee-track gap-10 pr-10">
         {[...words, ...words].map((w, i) => (
           <span
             key={i}
             className={cn(
-              "font-script text-3xl font-bold text-forest/30",
+              "font-script text-3xl font-bold text-forest/65",
               "whitespace-nowrap"
             )}
           >

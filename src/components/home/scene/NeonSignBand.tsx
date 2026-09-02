@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState, lazy, Suspense } from "react";
+import { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import { brand } from "@/data/brand";
 import { ArrowUpRight } from "@phosphor-icons/react";
 import {
@@ -10,7 +11,10 @@ import {
   useIsDesktop,
 } from "@/hooks/use-media";
 
-const NeonSign = lazy(() => import("./NeonSign"));
+const NeonSign = dynamic(() => import("./NeonSign"), {
+  ssr: false,
+  loading: () => <CSSNeon text={brand.name} />,
+});
 
 /** CSS neon fallback — warm cream glow */
 function CSSNeon({ text }: { text: string }) {
@@ -66,7 +70,7 @@ export function NeonSignBand() {
             The Sign of Madhapur
           </h2>
 
-          <p className="max-w-xl text-sm text-cream/70 sm:text-base">
+          <p className="max-w-xl text-sm text-cream/85 sm:text-base">
             Where Madhapur slows down. The warm, unhurried glow that says you have arrived.
           </p>
         </div>
@@ -81,14 +85,12 @@ export function NeonSignBand() {
             {!mounted || !webgl ? (
               <CSSNeon text={brand.name} />
             ) : (
-              <Suspense fallback={<CSSNeon text={brand.name} />}>
-                <NeonSign
-                  reducedMotion={reduced}
-                  parallax={parallax}
-                  active={active}
-                  text={brand.name}
-                />
-              </Suspense>
+              <NeonSign
+                reducedMotion={reduced}
+                parallax={parallax}
+                active={active}
+                text={brand.name}
+              />
             )}
           </div>
         </div>

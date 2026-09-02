@@ -57,7 +57,7 @@ export function Testimonials() {
                 transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                 className="flex flex-col items-center text-center"
               >
-                <div className="mb-4 flex gap-1" aria-label={`${active.rating} out of 5 stars`}>
+                <div className="mb-4 flex gap-1" role="img" aria-label={`${active.rating} out of 5 stars`}>
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star
                       key={i}
@@ -82,7 +82,7 @@ export function Testimonials() {
 
           {/* controls */}
           <div className="mt-8 flex items-center justify-between">
-            <div className="flex gap-1.5" role="tablist" aria-label="Choose testimonial">
+            <div className="flex gap-1" role="tablist" aria-label="Choose testimonial">
               {testimonials.map((_, i) => (
                 <button
                   key={i}
@@ -90,11 +90,15 @@ export function Testimonials() {
                   aria-label={`Testimonial ${i + 1}`}
                   aria-selected={i === idx}
                   role="tab"
-                  className={cn(
-                    "h-2 rounded-full transition-all",
-                    i === idx ? "w-7 bg-forest" : "w-2 bg-forest/20 hover:bg-forest/35"
-                  )}
-                />
+                  className="flex h-8 min-w-[28px] items-center justify-center p-1"
+                >
+                  <span
+                    className={cn(
+                      "h-2 rounded-full transition-all",
+                      i === idx ? "w-7 bg-forest" : "w-2 bg-forest/20 hover:bg-forest/35"
+                    )}
+                  />
+                </button>
               ))}
             </div>
             <div className="flex gap-2">

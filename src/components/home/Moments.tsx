@@ -63,7 +63,6 @@ export function Moments() {
                 "group relative block w-full overflow-hidden rounded-2xl border border-forest/10 bg-white shadow-[0_12px_30px_-22px_rgba(22,101,52,0.4)] transition-all duration-300 hover:shadow-[0_24px_50px_-22px_rgba(22,101,52,0.5)]",
                 i % 3 === 0 ? "aspect-[3/4]" : i % 3 === 1 ? "aspect-square" : "aspect-[4/3]"
               )}
-              aria-label={`Open ${m.title}`}
             >
               <Image
                 src={m.image}
@@ -73,13 +72,13 @@ export function Moments() {
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <span className="absolute inset-0 bg-gradient-to-t from-forest-deep/80 via-transparent to-transparent opacity-80" />
-              <figcaption className="absolute inset-x-0 bottom-0 p-4 text-left">
+              <div className="absolute inset-x-0 bottom-0 p-4 text-left">
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-cream/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-cream backdrop-blur-sm">
                   {m.cluster}
                 </span>
                 <p className="mt-2 text-base font-bold text-cream">{m.title}</p>
-                <p className="text-xs text-cream/70">{m.desc}</p>
-              </figcaption>
+                <p className="text-xs text-cream/85">{m.desc}</p>
+              </div>
             </button>
           </StaggerItem>
         ))}
@@ -136,12 +135,12 @@ export function Moments() {
           </div>
           {open !== null && (
             <div className="flex items-center justify-between gap-4 p-5">
-              <figcaption>
+              <div>
                 <p className="font-display text-xl italic text-forest">
                   {moments[open].title}
                 </p>
                 <p className="text-sm text-muted">{moments[open].desc}</p>
-              </figcaption>
+              </div>
               <span className="rounded-full bg-mint/50 px-3 py-1 text-xs font-bold text-forest-deep">
                 {moments[open].cluster}
               </span>

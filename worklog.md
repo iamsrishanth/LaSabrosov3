@@ -507,3 +507,25 @@ modal, and a price-range filter for the menu. VLM confirmed all modal elements
   StatsBand initializes useState(to) so SSR/crawlers see 121/20/4.3 instead of 0 (A10).
 - Deploy: npm run build (standalone) + systemctl --user restart lasabroso.service.
   Live AC1-AC12 battery passed; browser console 0 errors; Lighthouse re-run committed.
+
+## 2026-09-02 — Lighthouse & SEO/GEO Audit Fixes (Round 3)
+
+- Mobile performance & bundle optimization (A7):
+  - Added `experimental.optimizePackageImports` for `@phosphor-icons/react`, `lucide-react`, `motion`, `framer-motion`, `date-fns`, and Radix UI in `next.config.ts`.
+  - Lazy-loaded `DishModal` in `MenuPreview.tsx` (`ssr: false`).
+  - Created client wrapper `floating-island.tsx` with dynamic imports for `FloatingActions` and `CartButton` (`ssr: false`).
+  - Code-split Three.js `NeonSign` with `next/dynamic` (`ssr: false`) inside `NeonSignBand.tsx`.
+- Accessibility fixes (Lighthouse 84 → 100):
+  - `aria-prohibited-attr`: Added `role="img"` to star rating container in `Testimonials.tsx`.
+  - `target-size`: Increased touch target bounds on testimonial pagination tabs (wrapped in `h-8` buttons $\ge 32\times 32\text{px}$).
+  - `definition-list`: Fixed non-standard `<motion.dl>` trust bar in `Hero.tsx` to `<motion.div>`.
+  - `label`: Added explicit `id` and `<label htmlFor>` to reservation inquiry inputs and note textarea in `Contact.tsx`.
+  - `label-content-name-mismatch`: Removed conflicting `aria-label` overrides where visible text contains accessible name (Nav logo link, Menu dish cards, sort button, moments cards).
+  - `color-contrast`: Darkened `--color-terracotta-deep` to `#B8532B` in `globals.css` ($\ge 4.87:1$ contrast ratio); upgraded low-opacity cream text on forest backgrounds (`text-cream/85` and `text-cream/90`) across `footer.tsx`, `Hero.tsx`, `Events.tsx`, `FAQ.tsx`, `ReserveCTA.tsx`; added `aria-hidden="true"` and `text-forest/65` on ambient partner marquee ticker.
+  - Removed orphaned `<figcaption>` tags in `Moments.tsx`.
+- SSR crawler text quality:
+  - Initialized `CountUp` with `useState(to)` in `Events.tsx` so static prerender HTML contains real numbers (`35%`, `150+`, `60+`) instead of zeroes.
+- Deploy:
+  - Compiled production standalone bundle natively on `sri@zeus-server`.
+  - Restarted `systemctl --user restart lasabroso.service`. Verified HTTP 200, prerender headers, schema validation, and markup assertions.
+
