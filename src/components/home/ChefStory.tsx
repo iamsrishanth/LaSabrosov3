@@ -1,4 +1,6 @@
-import { ChefHat, Quote } from "@phosphor-icons/react";
+"use client";
+
+import { ChefHat, Quotes } from "@phosphor-icons/react";
 import { Section } from "@/components/site/section";
 import { Reveal } from "@/components/site/reveal";
 
@@ -12,7 +14,7 @@ export function ChefStory() {
             <span className="grid h-14 w-14 place-items-center rounded-2xl bg-forest/8 text-forest">
               <ChefHat size={28} weight="duotone" />
             </span>
-            <Quote
+            <Quotes
               size={40}
               weight="fill"
               className="text-forest/15"
