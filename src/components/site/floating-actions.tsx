@@ -61,7 +61,7 @@ export function FloatingActions() {
                 <span className="text-[10px] font-bold uppercase tracking-wide text-muted">
                   Open 11–11
                 </span>
-                <span className="font-script text-lg font-bold text-forest">
+                <span className="font-histerm text-lg font-bold text-forest">
                   LaSabroso
                 </span>
               </div>

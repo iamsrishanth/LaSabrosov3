@@ -11,6 +11,8 @@ import { OpenStatusPill } from "@/components/site/open-status";
 import { BusyLevel } from "@/components/site/busy-level";
 import { useScrollspy } from "@/hooks/use-scrollspy";
 
+import { BrandLogoMark } from "@/components/site/BrandLogo";
+
 const LINKS = [
   { href: "specialties", label: "Specialties" },
   { href: "menu", label: "Menu" },
@@ -49,19 +51,19 @@ export function Nav() {
     >
       <nav className="container-edge flex h-[68px] items-center justify-between gap-4">
         {/* Wordmark */}
-        <Link href="#top" className="group flex items-center gap-2.5" aria-label="LaSabroso home">
+        <Link href="#top" className="group flex items-center gap-3" aria-label="LaSabroso home">
           <motion.span
             whileHover={{ rotate: -8, scale: 1.05 }}
             transition={{ type: "spring", stiffness: 300, damping: 15 }}
-            className="grid h-9 w-9 place-items-center rounded-full bg-forest text-cream shadow-sm"
+            className="flex h-11 w-11 shrink-0 items-center justify-center text-forest"
           >
-            <span className="font-script text-xl leading-none">L</span>
+            <BrandLogoMark />
           </motion.span>
           <span className="flex flex-col leading-none">
-            <span className="font-script text-2xl font-bold text-forest tracking-tight">
+            <span className="font-histerm text-3xl font-bold text-forest tracking-tight leading-none">
               LaSabroso
             </span>
-            <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted mt-1">
               Madhapur · Hyderabad
             </span>
           </span>
@@ -129,7 +131,12 @@ export function Nav() {
               <SheetTitle className="sr-only">Navigation</SheetTitle>
               <div className="flex h-full flex-col">
                 <div className="flex items-center justify-between border-b border-forest/12 px-6 py-5">
-                  <span className="font-script text-2xl font-bold text-forest">LaSabroso</span>
+                  <div className="flex items-center gap-2">
+                    <span className="flex h-7 w-7 items-center justify-center text-forest">
+                      <BrandLogoMark />
+                    </span>
+                    <span className="font-histerm text-2xl font-bold text-forest">LaSabroso</span>
+                  </div>
                   <SheetClose asChild>
                     <button className="grid h-9 w-9 place-items-center rounded-full text-forest hover:bg-forest/5" aria-label="Close menu">
                       <X size={20} />

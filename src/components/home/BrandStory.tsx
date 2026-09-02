@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Section, SectionEyebrow } from "@/components/site/section";
 import { Reveal } from "@/components/site/reveal";
 import { brand } from "@/data/brand";
+import { categories } from "@/data/menu";
 
 /** Brand story — aberration split; Playfair quote framed by real photography. */
 export function BrandStory() {
@@ -49,7 +50,7 @@ export function BrandStory() {
 
           <div className="grid grid-cols-2 gap-4 pt-2 sm:grid-cols-4">
             {[
-              { k: "23+", v: "Categories" },
+              { k: `${categories.length}+`, v: "Categories" },
               { k: "4.3★", v: "Zomato" },
               { k: "11–11", v: "Daily hours" },
               { k: "₹1,200", v: "For two" },

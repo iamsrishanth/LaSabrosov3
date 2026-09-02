@@ -23,7 +23,7 @@ const SORT_LABELS: Record<SortKey, string> = {
 
 /** Menu preview — La.Revi tabbed pattern. Default category SSR'd into HTML. */
 export function MenuPreview() {
-  const [active, setActive] = useState<DishCategory>("signature");
+  const [active, setActive] = useState<DishCategory>("favourites");
   const [query, setQuery] = useState("");
   const [vegOnly, setVegOnly] = useState(false);
   const [sort, setSort] = useState<SortKey>("default");

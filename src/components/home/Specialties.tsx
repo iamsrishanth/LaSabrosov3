@@ -6,7 +6,7 @@ import { ArrowRight, Flame, Star } from "@phosphor-icons/react";
 import { Section, SectionEyebrow } from "@/components/site/section";
 import { Reveal } from "@/components/site/reveal";
 import { Badge } from "@/components/site/primitives";
-import { menu, type Dish } from "@/data/menu";
+import { menu, dishesByCategory, type Dish } from "@/data/menu";
 import { brand } from "@/data/brand";
 import { usePrefersReducedMotion } from "@/hooks/use-media";
 
@@ -16,11 +16,15 @@ import { usePrefersReducedMotion } from "@/hooks/use-media";
  */
 export function Specialties() {
   const reduce = usePrefersReducedMotion();
+  // Name-based picks against the LIVE menu, with category fallback so the
+  // section never breaks when the extraction drifts.
+  const byName = (n: string) => menu.find((d) => d.name.toLowerCase().includes(n.toLowerCase()));
+  const fallback = (cat: Parameters<typeof dishesByCategory>[0]) => dishesByCategory(cat)[0];
   const picks: Dish[] = [
-    menu.find((d) => d.id === "sig-2")!, // Chocolate Khoma
-    menu.find((d) => d.id === "sig-3")!, // Truffle Mushroom Pizza
-    menu.find((d) => d.id === "sig-1")!, // LaSabroso Special Momo
-    menu.find((d) => d.id === "cof-2")!, // Spanish Latte
+    byName("Chocolate Khoma") ?? fallback("desserts"),
+    byName("Green Garden Veg Pizza") ?? fallback("pizza"),
+    byName("Veg Steam Momos") ?? fallback("momos"),
+    byName("Spanish Latte") ?? fallback("iced-coffee"),
   ];
 
   return (

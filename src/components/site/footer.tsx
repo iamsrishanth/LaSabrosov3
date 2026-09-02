@@ -5,6 +5,7 @@ import Link from "next/link";
 import { InstagramLogo as Instagram, Phone, MapPin, Clock, Star } from "@phosphor-icons/react";
 import { brand, partners } from "@/data/brand";
 import { getOpenStatus } from "@/lib/hours";
+import { BrandLogoMark } from "@/components/site/BrandLogo";
 
 export function Footer() {
   return (
@@ -19,10 +20,10 @@ export function Footer() {
         {/* Brand col */}
         <div className="space-y-4">
           <div className="flex items-center gap-2.5">
-            <span className="grid h-10 w-10 place-items-center rounded-full bg-cream/10">
-              <span className="font-script text-2xl leading-none text-gold">L</span>
+            <span className="flex h-8 w-8 items-center justify-center text-gold">
+              <BrandLogoMark />
             </span>
-            <span className="font-script text-3xl font-bold text-cream">LaSabroso</span>
+            <span className="font-histerm text-3xl font-bold text-cream">LaSabroso</span>
           </div>
           <p className="font-display text-lg italic text-cream/80">
             {brand.tagline}

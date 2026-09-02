@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Outfit, Playfair_Display, Dancing_Script } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { Nav } from "@/components/site/nav";
@@ -9,6 +10,12 @@ import { FloatingActions } from "@/components/site/floating-actions";
 import { CartButton } from "@/components/site/cart-button";
 import { neon } from "@/data/palette";
 import { cn } from "@/lib/utils";
+
+const histerm = localFont({
+  src: "../../public/fonts/Histerm.woff2",
+  variable: "--font-histerm",
+  display: "swap",
+});
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -90,6 +97,7 @@ export default function RootLayout({
           outfit.variable,
           playfair.variable,
           dancing.variable,
+          histerm.variable,
           "font-sans antialiased bg-cream text-ink"
         )}
       >

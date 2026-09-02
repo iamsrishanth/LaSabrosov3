@@ -42,6 +42,7 @@
   --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-playfair), Georgia, serif;
   --font-script: var(--font-dancing), "Brush Script MT", cursive;
+  --font-histerm: var(--font-histerm), "Histerm", cursive;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -126,6 +127,7 @@
    ============================================================ */
 @layer components {
   .font-script { font-family: var(--font-script); }
+  .font-histerm { font-family: var(--font-histerm); }
   .font-display { font-family: var(--font-display); }
 
   /* Dotted leader for menu price rows */
@@ -141,11 +143,11 @@
     color: #FFFDD0;
     text-shadow:
       0 0 4px #FFFDD0,
-      0 0 11px #FFFDD0,
-      0 0 19px #166534,
-      0 0 40px #166534,
-      0 0 80px #166534,
-      0 0 110px #166534;
+      0 0 10px #FFFDD0,
+      0 0 22px #FFF8D6,
+      0 0 45px #FDE68A,
+      0 0 85px #F59E0B,
+      0 0 120px rgba(245, 158, 11, 0.35);
   }
 
   /* Subtle paper grain for cream sections */

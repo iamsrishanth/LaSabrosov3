@@ -1,20 +1,39 @@
 /**
  * LaSabroso menu — typed single source of truth.
- * Mirrors the Petpooja extraction. Counts asserted below.
  *
- * Image strategy: real food photography re-hosted on OSS (guaranteed reachable)
- * via the image-search service. See docs/assets/README.md.
+ * Driven by LIVE Petpooja extraction (src/data/live-menu.json), fetched from
+ * dinein.petpooja.com/orders/category/fm32c9qw/19 on 2026-09-02.
+ * 121 items / 20 categories; 41 items carry real Petpooja CDN photos
+ * (dineinpetweb.gumlet.io), the rest fall back to per-category pool images.
+ *
+ * Re-extraction: re-run the in-page getMenu replay (see
+ * software-development/ultracode/references/live-business-data-extraction.md),
+ * drop the resulting JSON into src/data/live-menu.json, rebuild.
  */
 
+import live from "./live-menu.json";
+
 export type DishCategory =
-  | "signature"
+  | "favourites"
+  | "burgers"
+  | "soups"
+  | "quick"
+  | "veg-starters"
+  | "nonveg-starters"
   | "momos"
-  | "pasta"
+  | "veg-pasta"
+  | "nonveg-pasta"
   | "pizza"
+  | "focaccia"
+  | "healthy"
+  | "mains-veg"
+  | "mains-nonveg"
+  | "hot-coffee"
   | "desserts"
-  | "coffee"
-  | "starters"
-  | "mocktails";
+  | "iced-coffee"
+  | "cold-coffee"
+  | "beverages"
+  | "milkshakes";
 
 export interface Dish {
   id: string;
@@ -52,17 +71,45 @@ export const SPICE_LEVELS: { level: 0 | 1 | 2 | 3; label: string }[] = [
   { level: 3, label: "Hot" },
 ];
 
-/** Real food photography, OSS-hosted (reachable). 2 variants per category. */
+/**
+ * Per-category fallback image pools. Used only when the live Petpooja item
+ * has no photo (default_item.png → null in the extraction). Real CDN photos
+ * win when present via the `image` field on each live item.
+ */
 export const CAT_IMG: Record<DishCategory, string[]> = {
-  signature: [
+  favourites: [
     "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/91d277b184a0.jpg",
     "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/7490336dda08.jpg",
+  ],
+  burgers: [
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/bfe2f380d1f4.jpg",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/1a7e3638681d.jpg",
+  ],
+  soups: [
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/bfe2f380d1f4.jpg",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/1a7e3638681d.jpg",
+  ],
+  quick: [
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/bfe2f380d1f4.jpg",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/1a7e3638681d.jpg",
+  ],
+  "veg-starters": [
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/bfe2f380d1f4.jpg",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/1a7e3638681d.jpg",
+  ],
+  "nonveg-starters": [
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/bfe2f380d1f4.jpg",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/1a7e3638681d.jpg",
   ],
   momos: [
     "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/32a25c8e3886.jpg",
     "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/cdef4a9a99ab.jpg",
   ],
-  pasta: [
+  "veg-pasta": [
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/33e6a5a23c36.jpg",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/800b1e107028.jpg",
+  ],
+  "nonveg-pasta": [
     "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/33e6a5a23c36.jpg",
     "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/800b1e107028.jpg",
   ],
@@ -70,19 +117,43 @@ export const CAT_IMG: Record<DishCategory, string[]> = {
     "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/c3a7d4f5e18e.jpg",
     "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/de76d4d168e7.jpg",
   ],
+  focaccia: [
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/bfe2f380d1f4.jpg",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/1a7e3638681d.jpg",
+  ],
+  healthy: [
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/bfe2f380d1f4.jpg",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/1a7e3638681d.jpg",
+  ],
+  "mains-veg": [
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/33e6a5a23c36.jpg",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/800b1e107028.jpg",
+  ],
+  "mains-nonveg": [
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/33e6a5a23c36.jpg",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/800b1e107028.jpg",
+  ],
+  "hot-coffee": [
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/7906fe358e3b.png",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/fa61d96b1a27.jpg",
+  ],
   desserts: [
     "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/91d277b184a0.jpg",
     "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/7490336dda08.jpg",
   ],
-  coffee: [
+  "iced-coffee": [
     "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/7906fe358e3b.png",
     "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/fa61d96b1a27.jpg",
   ],
-  starters: [
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/bfe2f380d1f4.jpg",
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/1a7e3638681d.jpg",
+  "cold-coffee": [
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/7906fe358e3b.png",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/fa61d96b1a27.jpg",
   ],
-  mocktails: [
+  beverages: [
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/08f2996844aa.jpg",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/8d49cd0c6246.jpg",
+  ],
+  milkshakes: [
     "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/08f2996844aa.jpg",
     "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/8d49cd0c6246.jpg",
   ],
@@ -94,418 +165,131 @@ export const categories: {
   blurb: string;
   emoji: string;
 }[] = [
-  { id: "signature", label: "Signature", blurb: "House originals", emoji: "★" },
+  { id: "favourites", label: "La Sabroso Favourites", blurb: "House originals", emoji: "★" },
+  { id: "burgers", label: "Burgers", blurb: "Stacked & saucy", emoji: "🍔" },
+  { id: "soups", label: "Soups", blurb: "Slow simmered", emoji: "🍲" },
+  { id: "quick", label: "Quick Bites", blurb: "Snack fixes", emoji: "⚡" },
+  { id: "veg-starters", label: "Veg Starters", blurb: "Small plates", emoji: "🥦" },
+  { id: "nonveg-starters", label: "Non Veg Starters", blurb: "Small plates", emoji: "🍗" },
   { id: "momos", label: "Momos", blurb: "Steamed & fried", emoji: "◉" },
-  { id: "pasta", label: "Pasta", blurb: "Wood-fired sauces", emoji: "✦" },
-  { id: "pizza", label: "Pizza", blurb: "Hand-tossed", emoji: "◈" },
+  { id: "veg-pasta", label: "Veg Pasta", blurb: "Wood-fired sauces", emoji: "✦" },
+  { id: "nonveg-pasta", label: "Non Veg Pasta", blurb: "Wood-fired sauces", emoji: "✦" },
+  { id: "pizza", label: "Pizza (Thin Crust)", blurb: "Hand-tossed", emoji: "◈" },
+  { id: "focaccia", label: "Focaccia Sandwiches", blurb: "Soft baked", emoji: "🥪" },
+  { id: "healthy", label: "Healthy Meals", blurb: "Light bowls", emoji: "🥗" },
+  { id: "mains-veg", label: "Main Course Veg", blurb: "Big plates", emoji: "🍛" },
+  { id: "mains-nonveg", label: "Main Course Non Veg", blurb: "Big plates", emoji: "🍛" },
+  { id: "hot-coffee", label: "Hot Coffee", blurb: "Single origin", emoji: "☕" },
   { id: "desserts", label: "Desserts", blurb: "Dessert lab", emoji: "❋" },
-  { id: "coffee", label: "Coffee", blurb: "Single origin", emoji: "☕" },
-  { id: "starters", label: "Starters", blurb: "Small plates", emoji: "▸" },
-  { id: "mocktails", label: "Mocktails", blurb: "Cold pressed", emoji: "❖" },
+  { id: "iced-coffee", label: "Iced Coffee", blurb: "Chilled brews", emoji: "🧊" },
+  { id: "cold-coffee", label: "Signature Cold Coffee", blurb: "House cold coffees", emoji: "🥤" },
+  { id: "beverages", label: "Cold Beverages", blurb: "Cold pressed", emoji: "🍸" },
+  { id: "milkshakes", label: "Milkshakes", blurb: "Thick shakes", emoji: "🥛" },
 ];
 
-/** Raw dish data (image assigned per-category below). */
-type RawDish = Omit<Dish, "image">;
+/** Petpooja raw category name → typed id. */
+const CAT_MAP: Record<string, DishCategory> = {
+  "La Sabroso Favourites": "favourites",
+  Burgers: "burgers",
+  Soups: "soups",
+  "Quick Bites": "quick",
+  "Veg Starters": "veg-starters",
+  "Non Veg Starters": "nonveg-starters",
+  Momos: "momos",
+  "Veg Pasta": "veg-pasta",
+  "Non Veg Pasta": "nonveg-pasta",
+  "pizza's ( Thin-Crust )": "pizza",
+  "Focaccia Sandwiches": "focaccia",
+  "Healthy Meals": "healthy",
+  "Main Course Veg": "mains-veg",
+  "Main Course Non Veg": "mains-nonveg",
+  "Hot Coffee": "hot-coffee",
+  Desserts: "desserts",
+  "iced cofffee": "iced-coffee",
+  "Signature Cold Coffee": "cold-coffee",
+  "Cold Beverages": "beverages",
+  Milkshakes: "milkshakes",
+};
 
-const raw: RawDish[] = [
-  // ---- Signature ----
-  {
-    id: "sig-1",
-    name: "LaSabroso Special Momo",
-    desc: "Steamed dim-sum filled with spiced cottage cheese, served with smoked schezwan",
-    price: 229,
-    veg: true,
-    category: "signature",
-    chefPick: true,
-    bestseller: true,
-  },
-  {
-    id: "sig-2",
-    name: "Chocolate Khoma Dessert",
-    desc: "Warm chocolate soil, hazelnut praline and salted caramel pearls",
-    price: 249,
-    veg: true,
-    category: "signature",
-    chefPick: true,
-    bestseller: true,
-  },
-  {
-    id: "sig-3",
-    name: "Truffle Mushroom Pizza",
-    desc: "Hand-tossed base, wild mushrooms, truffle oil, mozzarella, thyme",
-    price: 389,
-    veg: true,
-    category: "signature",
-    chefPick: true,
-  },
-  {
-    id: "sig-4",
-    name: "House Cold Brew Tonic",
-    desc: "Single origin cold brew, elderflower tonic, orange peel",
-    price: 219,
-    veg: true,
-    category: "signature",
-    bestseller: true,
-  },
-  {
-    id: "sig-5",
-    name: "Peri Peri Paneer Tikka",
-    desc: "Char-grilled cottage cheese, smoked peri peri, mint chaas foam",
-    price: 269,
-    veg: true,
-    category: "signature",
-    spicy: true,
-  },
+/** Id prefix per category for stable dish ids. */
+const CAT_PREFIX: Record<DishCategory, string> = {
+  favourites: "fav",
+  burgers: "bur",
+  soups: "sou",
+  quick: "qui",
+  "veg-starters": "vst",
+  "nonveg-starters": "nst",
+  momos: "mom",
+  "veg-pasta": "vpa",
+  "nonveg-pasta": "npa",
+  pizza: "piz",
+  focaccia: "foc",
+  healthy: "hea",
+  "mains-veg": "mve",
+  "mains-nonveg": "mno",
+  "hot-coffee": "hco",
+  desserts: "des",
+  "iced-coffee": "ico",
+  "cold-coffee": "cco",
+  beverages: "bev",
+  milkshakes: "mil",
+};
 
-  // ---- Momos ----
-  {
-    id: "mom-1",
-    name: "Steamed Veg Momos",
-    desc: "Classic Tibetan steamed parcels, burnt garlic chutney",
-    price: 149,
-    veg: true,
-    category: "momos",
-    bestseller: true,
-  },
-  {
-    id: "mom-2",
-    name: "Tandoori Momos",
-    desc: "Char-grilled momos in smoky tandoori marinade",
-    price: 199,
-    veg: true,
-    category: "momos",
-    spicy: true,
-    chefPick: true,
-  },
-  {
-    id: "mom-3",
-    name: "Cheesy Fried Momos",
-    desc: "Golden fried, molten cheese centre, schezwan dip",
-    price: 209,
-    veg: true,
-    category: "momos",
-    bestseller: true,
-  },
-  {
-    id: "mom-4",
-    name: "Jhol Momo",
-    desc: "Nepalese-style momos drowned in fiery sesame-tomato broth",
-    price: 219,
-    veg: true,
-    category: "momos",
-    spicy: true,
-  },
-  {
-    id: "mom-5",
-    name: "Chocolate Momos",
-    desc: "Dessert momos, molten dark chocolate, icing sugar",
-    price: 189,
-    veg: true,
-    category: "momos",
-    chefPick: true,
-  },
-  {
-    id: "mom-6",
-    name: "Chicken Steamed Momos",
-    desc: "Juicy minced chicken, ginger, burnt garlic chutney",
-    price: 189,
-    veg: false,
-    category: "momos",
-    bestseller: true,
-  },
+type LiveItem = (typeof live.items)[number];
 
-  // ---- Pasta ----
-  {
-    id: "pas-1",
-    name: "Smoked Al Fredo Penne",
-    desc: "Creamy parmesan, smoked paprika, charred peppers",
-    price: 279,
-    veg: true,
-    category: "pasta",
-    chefPick: true,
-  },
-  {
-    id: "pas-2",
-    name: "Arrabbiata Spaghetti",
-    desc: "Fiery tomato, garlic, basil, chilli oil",
-    price: 259,
-    veg: true,
-    category: "pasta",
-    spicy: true,
-  },
-  {
-    id: "pas-3",
-    name: "Pesto Fusilli",
-    desc: "House basil pesto, pine nuts, sun-dried tomato",
-    price: 289,
-    veg: true,
-    category: "pasta",
-  },
-  {
-    id: "pas-4",
-    name: "Pink Sauce Rigatoni",
-    desc: "Tomato-cream, oregano, cracked pepper",
-    price: 269,
-    veg: true,
-    category: "pasta",
-    bestseller: true,
-  },
+/** Normalize item display: strip trailing ".", collapse double spaces. */
+function cleanName(raw: string): string {
+  return raw.replace(/\.+$/, "").replace(/\s{2,}/g, " ").trim();
+}
 
-  // ---- Pizza ----
-  {
-    id: "piz-1",
-    name: "Margherita Classica",
-    desc: "San Marzano, fior di latte, fresh basil, EVOO",
-    price: 299,
-    veg: true,
-    category: "pizza",
-  },
-  {
-    id: "piz-2",
-    name: "Farmhouse Garden",
-    desc: "Bell pepper, onion, mushroom, sweet corn, double cheese",
-    price: 349,
-    veg: true,
-    category: "pizza",
-    bestseller: true,
-  },
-  {
-    id: "piz-3",
-    name: "Truffle Mushroom",
-    desc: "Wild mushroom, truffle oil, mozzarella, thyme",
-    price: 389,
-    veg: true,
-    category: "pizza",
-    chefPick: true,
-  },
-  {
-    id: "piz-4",
-    name: "Peri Peri Paneer",
-    desc: "Smoked peri peri paneer, onion, coriander drizzle",
-    price: 359,
-    veg: true,
-    category: "pizza",
-    spicy: true,
-  },
-  {
-    id: "piz-5",
-    name: "Chicken Tikka Pizza",
-    desc: "Tandoori chicken tikka, onion, mint, double cheese",
-    price: 429,
-    veg: false,
-    category: "pizza",
-    bestseller: true,
-  },
+/** Normalize description casing: Petpooja renders some ALL-CAPS; keep sentence case. */
+function cleanDesc(raw: string): string {
+  const t = raw.replace(/\s{2,}/g, " ").trim();
+  if (!t) return t;
+  const hasLower = /[a-z]/.test(t);
+  if (hasLower) return t;
+  // All-caps pass → sentence case.
+  return t.charAt(0).toUpperCase() + t.slice(1).toLowerCase();
+}
 
-  // ---- Desserts ----
-  {
-    id: "des-1",
-    name: "Chocolate Khoma",
-    desc: "Warm chocolate soil, hazelnut praline, salted caramel pearls",
-    price: 249,
-    veg: true,
-    category: "desserts",
-    chefPick: true,
-    bestseller: true,
-  },
-  {
-    id: "des-2",
-    name: "Tiramisu Jar",
-    desc: "Mascarpone, espresso-soaked ladyfingers, cocoa",
-    price: 219,
-    veg: true,
-    category: "desserts",
-  },
-  {
-    id: "des-3",
-    name: "Molten Lava Cake",
-    desc: "Dark chocolate fondant, vanilla bean gelato",
-    price: 229,
-    veg: true,
-    category: "desserts",
-    bestseller: true,
-  },
-  {
-    id: "des-4",
-    name: "Cheesecake Berry Compote",
-    desc: "Baked vanilla cheesecake, seasonal berry compote",
-    price: 239,
-    veg: true,
-    category: "desserts",
-    chefPick: true,
-  },
-  {
-    id: "des-5",
-    name: "Rolled Ice Cream Lab",
-    desc: "Choose your base and mix-ins, rolled live at the counter",
-    price: 199,
-    veg: true,
-    category: "desserts",
-  },
-
-  // ---- Coffee ----
-  {
-    id: "cof-1",
-    name: "House Cold Brew",
-    desc: "18-hour single origin, smooth, low-acid",
-    price: 179,
-    veg: true,
-    category: "coffee",
-    bestseller: true,
-  },
-  {
-    id: "cof-2",
-    name: "Spanish Latte",
-    desc: "Double shot, condensed milk, velvet microfoam",
-    price: 189,
-    veg: true,
-    category: "coffee",
-    chefPick: true,
-  },
-  {
-    id: "cof-3",
-    name: "Hazelnut Mocha",
-    desc: "Dark chocolate, hazelnut praline, double espresso",
-    price: 199,
-    veg: true,
-    category: "coffee",
-  },
-  {
-    id: "cof-4",
-    name: "Pour Over Single Origin",
-    desc: "Rotating estate, hand-poured to order",
-    price: 219,
-    veg: true,
-    category: "coffee",
-    chefPick: true,
-  },
-  {
-    id: "cof-5",
-    name: "Iced Salted Caramel",
-    desc: "Salted caramel, cold milk, espresso shot",
-    price: 209,
-    veg: true,
-    category: "coffee",
-    bestseller: true,
-  },
-
-  // ---- Starters ----
-  {
-    id: "sta-1",
-    name: "Loaded Nachos Supreme",
-    desc: "Corn nachos, cheese sauce, salsa, jalapeño, sour cream",
-    price: 219,
-    veg: true,
-    category: "starters",
-    bestseller: true,
-  },
-  {
-    id: "sta-2",
-    name: "Crispy Corn Kernels",
-    desc: "Crunchy corn, garlic butter, smoked paprika",
-    price: 169,
-    veg: true,
-    category: "starters",
-    spicy: true,
-  },
-  {
-    id: "sta-3",
-    name: "Cheesy Garlic Bread",
-    desc: "Wood-fired, mozzarella, herb butter",
-    price: 159,
-    veg: true,
-    category: "starters",
-  },
-  {
-    id: "sta-4",
-    name: "Hummus & Pita Platter",
-    desc: "Beetroot hummus, olive oil, warm pita, olives",
-    price: 199,
-    veg: true,
-    category: "starters",
-    chefPick: true,
-  },
-  {
-    id: "sta-5",
-    name: "Smoked Chicken Wings",
-    desc: "Char-grilled, peri peri glaze, blue cheese dip",
-    price: 259,
-    veg: false,
-    category: "starters",
-    spicy: true,
-  },
-
-  // ---- Mocktails ----
-  {
-    id: "moc-1",
-    name: "Virgin Mojito",
-    desc: "Mint, lime, soda, brown sugar",
-    price: 149,
-    veg: true,
-    category: "mocktails",
-    bestseller: true,
-  },
-  {
-    id: "moc-2",
-    name: "Berry Bliss",
-    desc: "Mixed berry crush, lime, soda",
-    price: 169,
-    veg: true,
-    category: "mocktails",
-  },
-  {
-    id: "moc-3",
-    name: "Cold Brew Tonic",
-    desc: "Single origin cold brew, elderflower tonic, orange",
-    price: 219,
-    veg: true,
-    category: "mocktails",
-    chefPick: true,
-  },
-  {
-    id: "moc-4",
-    name: "Watermelon Cooler",
-    desc: "Fresh watermelon, mint, lime",
-    price: 159,
-    veg: true,
-    category: "mocktails",
-  },
-];
+/** Dish shape the inference helpers need (no image required). */
+type Inferable = Pick<Dish, "name" | "desc" | "category"> & Partial<Pick<Dish, "id" | "price" | "veg">>;
 
 /**
- * Infer allergens + prep time from dish description + category.
+ * Infer allergens from dish name + description.
  * Keeps the raw data clean while enriching it at module load.
  */
-function inferAllergens(d: RawDish): AllergenTag[] {
+function inferAllergens(d: Inferable): AllergenTag[] {
   const text = `${d.name} ${d.desc}`.toLowerCase();
   const tags: AllergenTag[] = [];
   if (/(momo|dim.?sum|wheat|flour|nacho|bread|pasta|pizza|crust|base|pita)/.test(text))
     tags.push("gluten");
   if (/(cheese|cream|milk|mozzarella|mascarpone|condensed|yogurt|chaas|gelato|latte|caramel)/.test(text))
     tags.push("dairy");
-  if (/(chocolate|hazelnut|praline|nut|walnut|almond|pistachio)/.test(text))
+  if (/(chocolate|hazelnut|praline|nut|walnut|almond|pistachio|nutella|biscoff)/.test(text))
     tags.push("nuts");
   if (/(egg|ladyfinger)/.test(text)) tags.push("egg");
-  if (/(soy|schezwan|schezwan|soya)/.test(text)) tags.push("soy");
-  if (/(coffee|espresso|cold brew|caffe|mocha|cappuccino)/.test(text))
+  if (/(soy|schezwan|soya)/.test(text)) tags.push("soy");
+  if (/(coffee|espresso|cold brew|caffe|mocha|cappuccino|matcha|latte)/.test(text))
     tags.push("caffeine");
   return tags;
 }
 
-function inferPrepTime(d: RawDish): number {
-  if (d.category === "coffee" || d.category === "mocktails") return 5;
+function inferPrepTime(d: Inferable): number {
+  if (d.category === "iced-coffee" || d.category === "cold-coffee" || d.category === "beverages" || d.category === "milkshakes" || d.category === "hot-coffee")
+    return 5;
   if (d.category === "desserts") return 8;
   if (d.category === "momos") return 12;
-  if (d.category === "pizza" || d.category === "pasta") return 15;
+  if (d.category === "pizza" || d.category === "veg-pasta" || d.category === "nonveg-pasta") return 15;
   return 10;
 }
 
 /** Infer spice level (0-3) from description keywords. */
-function inferSpiceLevel(d: RawDish): 0 | 1 | 2 | 3 {
+function inferSpiceLevel(d: Inferable): 0 | 1 | 2 | 3 {
   const text = `${d.name} ${d.desc}`.toLowerCase();
-  if (/(peri peri|fiery|hot|jhol|arrabbiata|spici)/.test(text)) return 3;
-  if (/(spicy|chilli|chili|schezwan|tandoori|smoked paprika|jalape)/.test(text)) return 2;
-  if (/(pepper|paprika|ginger|mint)/.test(text)) return 1;
+  if (/(peri peri|fiery|hot|jhol|arrabbiata|spici|mountain fire)/.test(text)) return 3;
+  if (/(spicy|chilli|chili|schezwan|tandoori|smoked paprika|jalape|kheema)/.test(text)) return 2;
+  if (/(pepper|paprika|ginger|mint|basil)/.test(text)) return 1;
   return 0;
 }
 
@@ -513,7 +297,7 @@ function inferSpiceLevel(d: RawDish): 0 | 1 | 2 | 3 {
  * Assign a deterministic but varied rating (4.2–4.9) and review count (80–520)
  * based on the dish id hash. Bestsellers and chef picks get higher ratings.
  */
-function inferRating(d: RawDish): { rating: number; reviews: number } {
+function inferRating(d: Dish): { rating: number; reviews: number } {
   let hash = 0;
   for (let i = 0; i < d.id.length; i++) {
     hash = (hash * 31 + d.id.charCodeAt(i)) & 0xffff;
@@ -525,30 +309,61 @@ function inferRating(d: RawDish): { rating: number; reviews: number } {
   return { rating, reviews };
 }
 
-/** Assign images + allergens + prep time + ratings by category + position. */
-const countByCat: Record<string, number> = {};
-export const menu: Dish[] = raw.map((d) => {
-  const idx = countByCat[d.category] ?? 0;
-  countByCat[d.category] = idx + 1;
-  const arr = CAT_IMG[d.category];
-  const { rating, reviews } = inferRating(d);
+/** Dishes that appear in multiple Petpooja categories read as bestsellers. */
+const DUPLICATED_NAMES = new Set<string>();
+{
+  const seen = new Map<string, number>();
+  for (const it of live.items) {
+    const key = cleanName(it.name).toLowerCase();
+    seen.set(key, (seen.get(key) ?? 0) + 1);
+  }
+  for (const [name, count] of seen) if (count > 1) DUPLICATED_NAMES.add(name);
+}
+const EXTRA_BESTSELLERS = new Set(["chocolate khoma"]);
+
+/** Counts of real CDN images per category (for assignment). */
+const imgIdxByCat: Record<string, number> = {};
+
+export const menu: Dish[] = live.items.map((it, i) => {
+  const category: DishCategory = CAT_MAP[it.category] ?? "favourites";
+  const count = (imgIdxByCat[category] ?? 0) + 1;
+  imgIdxByCat[category] = count;
+  const name = cleanName(it.name);
+  const desc = cleanDesc(it.desc);
+  const raw: Omit<Dish, "image"> = {
+    id: `${CAT_PREFIX[category]}-${i + 1}`,
+    name,
+    desc,
+    price: it.price,
+    veg: it.veg,
+    category,
+    chefPick: category === "favourites",
+    bestseller:
+      category === "favourites" ||
+      DUPLICATED_NAMES.has(name.toLowerCase()) ||
+      EXTRA_BESTSELLERS.has(name.toLowerCase()),
+    spicy: inferSpiceLevel({ id: "", name, desc, price: it.price, veg: it.veg, category }) >= 2,
+  };
+  const idx = count - 1;
+  const pool = CAT_IMG[category];
   return {
-    ...d,
-    image: arr[idx % arr.length],
-    allergens: inferAllergens(d),
-    prepTime: inferPrepTime(d),
-    spiceLevel: inferSpiceLevel(d),
-    rating,
-    reviews,
+    ...raw,
+    image: it.img || pool[idx % pool.length],
+    allergens: inferAllergens(raw),
+    prepTime: inferPrepTime(raw as Dish),
+    spiceLevel: inferSpiceLevel(raw as Dish),
+    ...inferRating({ ...raw, image: "" } as Dish),
   };
 });
 
-/* ---- Asserted counts (spec: recompute from data after Petpooja re-extraction) ---- */
+/* ---- Asserted counts (recomputed from live Petpooja data) ---- */
 export const menuCounts = {
   total: menu.length,
   veg: menu.filter((d) => d.veg).length,
+  nonveg: menu.filter((d) => !d.veg).length,
   chefPicks: menu.filter((d) => d.chefPick).length,
   bestsellers: menu.filter((d) => d.bestseller).length,
+  withLiveImage: menu.filter((d) => d.image.startsWith("https://dineinpetweb.gumlet.io")).length,
   byCategory: categories.reduce<Record<string, number>>((acc, c) => {
     acc[c.id] = menu.filter((d) => d.category === c.id).length;
     return acc;
@@ -557,4 +372,8 @@ export const menuCounts = {
 
 export function dishesByCategory(cat: DishCategory): Dish[] {
   return menu.filter((d) => d.category === cat);
+}
+
+export function findByExactName(name: string): Dish | undefined {
+  return menu.find((d) => d.name.toLowerCase() === name.toLowerCase());
 }

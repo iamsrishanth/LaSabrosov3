@@ -5,20 +5,20 @@ import { motion, useInView, animate } from "motion/react";
 import { BowlFood, ForkKnife, Star, CalendarHeart } from "@phosphor-icons/react";
 import { Section } from "@/components/site/section";
 import { usePrefersReducedMotion } from "@/hooks/use-media";
-import { menu } from "@/data/menu";
+import { menu, categories } from "@/data/menu";
 
 /** Animated stats band — count-up stats with icons. Sits between BrandStory and NeonSign. */
 export function StatsBand() {
   const stats = [
     {
       icon: BowlFood,
-      value: 39,
+      value: menu.length,
       suffix: "",
       label: "Dishes on the menu",
     },
     {
       icon: ForkKnife,
-      value: 8,
+      value: categories.length,
       suffix: "",
       label: "Categories crafted",
     },
