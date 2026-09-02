@@ -35,7 +35,7 @@ export function Badge({
   const variants = {
     gold: "bg-gold/15 text-forest-deep border-gold/40",
     mint: "bg-mint/60 text-forest-deep border-mint",
-    terracotta: "bg-terracotta/15 text-terracotta-deep border-terracotta/40",
+    terracotta: "bg-terracotta/10 text-terracotta-deep border-terracotta/30",
     forest: "bg-forest text-cream border-forest",
   } as const;
   return (

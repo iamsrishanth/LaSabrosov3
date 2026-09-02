@@ -17,7 +17,7 @@ export const brand = {
   reserveUrl: "https://instagram.com/lasabroso_cafe",
   reserveLabel: "Reserve your table",
   ratings: [
-    { source: "Zomato", value: 4.3, count: 1158 },
+    { source: "Zomato", value: 4.3, count: 1207 },
     { source: "EazyDiner", value: 4.4, count: 1200 },
     { source: "Swiggy Dineout", value: 4.4, count: null },
     { source: "magicpin", value: 4.6, count: null },
@@ -63,7 +63,7 @@ export const events = [
 ] as const;
 
 export const eventsAtmosphere = {
-  image: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/1f9d8d218b10.jpg",
+  image: "/images/brand/1f9d8d218b10.jpg",
   caption: "The courtyard set for a birthday evening",
 };
 
@@ -71,37 +71,37 @@ export const moments = [
   {
     title: "Laso Delights",
     desc: "Signature dessert counter",
-    image: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/91d277b184a0.jpg",
+    image: "/images/brand/91d277b184a0.jpg",
     cluster: "Desserts",
   },
   {
     title: "Ice Cream Lab",
     desc: "Nitro and rolled creations",
-    image: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/ee070bf2768f.jpg",
+    image: "/images/brand/ee070bf2768f.jpg",
     cluster: "Ice Cream",
   },
   {
     title: "Courtyard Evenings",
     desc: "Fairy-lit boho outdoor seating",
-    image: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/13a0b1df40d7.jpg",
+    image: "/images/brand/13a0b1df40d7.jpg",
     cluster: "Vibes",
   },
   {
     title: "Coffee Bar",
     desc: "Single-origin pour-overs",
-    image: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/89cf361c1b33.jpg",
+    image: "/images/brand/89cf361c1b33.jpg",
     cluster: "Coffee",
   },
   {
     title: "Wood-fired Pass",
     desc: "Hand-tossed pizzas, live",
-    image: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/c3a7d4f5e18e.jpg",
+    image: "/images/brand/c3a7d4f5e18e.jpg",
     cluster: "Food",
   },
   {
     title: "Chandelier Nook",
     desc: "The most photographed corner",
-    image: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/f6ca31dd8993.jpg",
+    image: "/images/brand/f6ca31dd8993.jpg",
     cluster: "Vibes",
   },
 ] as const;
@@ -165,32 +165,32 @@ export const faqs = [
 
 export const instagramFeed = [
   {
-    image: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/91d277b184a0.jpg",
+    image: "/images/brand/91d277b184a0.jpg",
     caption: "Chocolate Khoma, fresh from the lab",
     likes: 412,
   },
   {
-    image: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/89cf361c1b33.jpg",
+    image: "/images/brand/89cf361c1b33.jpg",
     caption: "Spanish latte, double shot",
     likes: 328,
   },
   {
-    image: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/c3a7d4f5e18e.jpg",
+    image: "/images/brand/c3a7d4f5e18e.jpg",
     caption: "Wood-fired, hand-tossed",
     likes: 501,
   },
   {
-    image: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/13a0b1df40d7.jpg",
+    image: "/images/brand/13a0b1df40d7.jpg",
     caption: "Courtyard evenings, fairy-lit",
     likes: 389,
   },
   {
-    image: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/f6ca31dd8993.jpg",
+    image: "/images/brand/f6ca31dd8993.jpg",
     caption: "The chandelier nook",
     likes: 445,
   },
   {
-    image: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/ee070bf2768f.jpg",
+    image: "/images/brand/ee070bf2768f.jpg",
     caption: "Rolled ice cream, made live",
     likes: 367,
   },

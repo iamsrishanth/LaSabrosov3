@@ -31,7 +31,7 @@ export function Footer() {
           <div className="flex items-center gap-1.5">
             <Star size={16} weight="fill" className="text-gold" />
             <span className="text-sm font-semibold text-cream">
-              4.3 <span className="text-cream/85">· 1,158 Zomato reviews</span>
+              4.3 <span className="text-cream/85">· 1,207 Zomato reviews</span>
             </span>
           </div>
           <p className="text-sm text-cream/90">

@@ -30,22 +30,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "dineinpetweb.gumlet.io",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
         hostname: "images.unsplash.com",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "z-cdn.chatglm.cn",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "sfile.chatglm.cn",
         pathname: "/**",
       },
     ],

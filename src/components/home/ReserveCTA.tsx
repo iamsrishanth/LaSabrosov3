@@ -13,7 +13,7 @@ export function ReserveCTA() {
     <section className="relative w-full overflow-hidden">
       {/* full-bleed image */}
       <Image
-        src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/f20824b7f85b.jpg"
+        src="/images/brand/f20824b7f85b.jpg"
         alt="A warm café table set for an evening reservation"
         fill
         sizes="100vw"

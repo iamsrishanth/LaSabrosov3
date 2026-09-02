@@ -105,10 +105,11 @@ export function MenuPreview() {
               </button>
             )}
           </div>
+          {/* veg toggle */}
           <button
             onClick={() => setVegOnly((v) => !v)}
             aria-pressed={vegOnly}
-            aria-label="Toggle veg-only filter"
+            aria-label="Vegetarian dishes only"
             className={cn(
               "inline-flex h-11 shrink-0 items-center gap-1.5 rounded-full border px-3.5 text-sm font-semibold transition-colors",
               vegOnly
@@ -117,13 +118,14 @@ export function MenuPreview() {
             )}
           >
             <Leaf size={15} weight="fill" />
-            <span className="hidden sm:inline">Veg</span>
+            <span className="hidden sm:inline">Veg only</span>
           </button>
           {/* sort dropdown */}
           <div className="relative">
             <button
               onClick={() => setSortOpen((v) => !v)}
               aria-expanded={sortOpen}
+              aria-label={`Sort dishes: ${SORT_LABELS[sort]}`}
               className="inline-flex h-11 shrink-0 items-center gap-1.5 rounded-full border border-forest/20 bg-cream-soft px-3.5 text-sm font-semibold text-muted transition-colors hover:text-forest"
             >
               <span className="hidden sm:inline">{SORT_LABELS[sort]}</span>

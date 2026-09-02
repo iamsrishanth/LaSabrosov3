@@ -529,3 +529,24 @@ modal, and a price-range filter for the menu. VLM confirmed all modal elements
   - Compiled production standalone bundle natively on `sri@zeus-server`.
   - Restarted `systemctl --user restart lasabroso.service`. Verified HTTP 200, prerender headers, schema validation, and markup assertions.
 
+## 2026-09-02 — Round 3 Audit Remediation (Self-hosted Images, Mobile A11y, Stats Freshness)
+
+- R3-1 (HIGH) Image localization & resilience:
+  - Downloaded all 62 active remote images (22 from `z-cdn.chatglm.cn`, 40 from `dineinpetweb.gumlet.io`) locally into `public/images/brand/` and `public/images/menu/`.
+  - Replaced hotlinked URLs with local `/images/...` paths across `Hero.tsx`, `BrandStory.tsx`, `ReserveCTA.tsx`, `brand.ts`, `menu.ts`, and `live-menu.json`.
+  - Handled 1 expired Gumlet S3 image ("Veg Alfredo Pasta") by routing it to the local pasta fallback pool in `live-menu.json`.
+  - Dropped third-party CDN hostnames (`z-cdn.chatglm.cn`, `dineinpetweb.gumlet.io`, `sfile.chatglm.cn`) from `next.config.ts` `remotePatterns`.
+- R3-6 LCP priority hint:
+  - Added `fetchPriority="high"` to Hero LCP `<Image>` in `Hero.tsx`.
+- R3-2 & R3-4 Mobile button accessible name & Agentic Browsing:
+  - Added persistent `aria-label={`Sort dishes: ${SORT_LABELS[sort]}`}` and `Veg only` label to prevent button-name failure on mobile viewports.
+- R3-3 Desktop badge contrast:
+  - Darkened `--color-terracotta-deep` and `--destructive` to `#A84A25` in `globals.css` ($\ge 5.2:1$ contrast); updated badge background to `bg-terracotta/10` in `primitives.tsx`.
+- R3-5 Stats freshness (1,158 → 1,207 reviews):
+  - Updated Zomato review count to `1,207` across `brand.ts`, `schema.tsx` (auto-derived), `Hero.tsx`, `footer.tsx`, `llms.txt`, and `llms-full.txt`.
+- Verification & Deployment:
+  - Executed adversarial integrity test suite: 0 errors detected across syntax, file existence, and URL cleanliness.
+  - Compiled production standalone bundle on `sri@zeus-server` in 22.7s.
+  - Restarted `systemctl --user restart lasabroso.service`. Verified live HTTP 200, 0 remote CDN URLs, local image serving, and updated stats.
+
+

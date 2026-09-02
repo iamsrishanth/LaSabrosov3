@@ -14,7 +14,7 @@ export function BrandStory() {
           <div className="relative">
             <div className="relative aspect-[4/5] overflow-hidden rounded-3xl shadow-[0_30px_60px_-25px_rgba(22,101,52,0.5)]">
               <Image
-                src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/f6ca31dd8993.jpg"
+                src="/images/brand/f6ca31dd8993.jpg"
                 alt="The chandelier nook at LaSabroso"
                 fill
                 sizes="(max-width: 1024px) 100vw, 40vw"

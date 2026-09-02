@@ -29,10 +29,11 @@ export function Hero() {
       {/* LCP background image with parallax */}
       <motion.div style={reduce ? undefined : { y: yImg }} className="absolute inset-0 -z-10">
         <Image
-          src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/a57f07411e62.jpg"
+          src="/images/brand/a57f07411e62.jpg"
           alt="Warm boho café interior at LaSabroso in Madhapur, Hyderabad"
           fill
           priority
+          fetchPriority="high"
           sizes="100vw"
           className="object-cover"
         />
@@ -49,7 +50,7 @@ export function Hero() {
         className="pointer-events-none absolute right-[6%] top-[18%] z-10 hidden h-44 w-44 overflow-hidden rounded-3xl border-4 border-cream/40 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.7)] xl:block"
       >
         <Image
-          src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/dbc1969df7dd.jpg"
+          src="/images/brand/dbc1969df7dd.jpg"
           alt="Signature chocolate dessert"
           fill
           sizes="176px"
@@ -122,7 +123,7 @@ export function Hero() {
             value="4.3"
             suffix="★"
             label="Zomato"
-            sub="1,158 reviews"
+            sub="1,207 reviews"
           />
           <TrustStat
             icon={<Clock size={16} weight="duotone" className="text-gold" />}

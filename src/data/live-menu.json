@@ -30,7 +30,7 @@
    "price": 544,
    "desc": "Crispy fried chicken tenders drenched in a rich honey lemon pepper sauce",
    "veg": false,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17816798790_2026_06_17_12_33_43_Honey_Lemon_Pepper_chicken_Tenders.jpeg"
+   "img": "/images/menu/thumb_17816798790_2026_06_17_12_33_43_Honey_Lemon_Pepper_chicken_Tenders.jpeg"
   },
   {
    "category": "La Sabroso Favourites",
@@ -94,7 +94,7 @@
    "price": 524,
    "desc": "pasta tossed in a Red Bell Pepper puree and cream, and served with garlic bread.",
    "veg": true,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17816219070_2026_06_16_20_28_19_Masala_Mafia_Pasta.JPG"
+   "img": "/images/menu/thumb_17816219070_2026_06_16_20_28_19_Masala_Mafia_Pasta.JPG"
   },
   {
    "category": "La Sabroso Favourites",
@@ -110,7 +110,7 @@
    "price": 484,
    "desc": "A crispy veg patty layered with fresh lettuce, and a smoky chipotle mayo",
    "veg": true,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17818578920_2026_06_19_14_00_56_Burger.jpg"
+   "img": "/images/menu/thumb_17818578920_2026_06_19_14_00_56_Burger.jpg"
   },
   {
    "category": "Burgers",
@@ -158,7 +158,7 @@
    "price": 304,
    "desc": "Slow-Roasted Tomatoes Blended With Garlic, Onions, And Fresh Basil For A Smooth, Comforting Classic Soup.",
    "veg": true,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17568360690_2025_09_02_23_31_05_e99e653f_48a4_471c_bd27_c39be1f1778e.jpg"
+   "img": "/images/menu/thumb_17568360690_2025_09_02_23_31_05_e99e653f_48a4_471c_bd27_c39be1f1778e.jpg"
   },
   {
    "category": "Soups",
@@ -190,7 +190,7 @@
    "price": 424,
    "desc": "Golden Garlic Bread Topped With A Creamy, Velvety Alfredo Sauce And Paired With Tender, Grilled Chicken.",
    "veg": false,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17816219600_2026_06_16_20_29_07_Chicken_Alfredo_Garlic_Bread.JPG"
+   "img": "/images/menu/thumb_17816219600_2026_06_16_20_29_07_Chicken_Alfredo_Garlic_Bread.JPG"
   },
   {
    "category": "Quick Bites",
@@ -214,7 +214,7 @@
    "price": 394,
    "desc": "Paneer Tossed With colourfull Bell peppers, In A Bold, Spicy Garlic-Basil Sauce.",
    "veg": true,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17568357180_2025_09_02_23_25_13_84ac4819_e34b_4e0a_b731_a06ee8ebabfa.jpg"
+   "img": "/images/menu/thumb_17568357180_2025_09_02_23_25_13_84ac4819_e34b_4e0a_b731_a06ee8ebabfa.jpg"
   },
   {
    "category": "Veg Starters",
@@ -270,7 +270,7 @@
    "price": 544,
    "desc": "Crispy Fried Chicken Tenders Drenched In A Rich Honey Lemon Pepper Sauce",
    "veg": false,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17816797950_2026_06_17_12_32_49_Honey_Lemon_Pepper_chicken_Tenders.jpeg"
+   "img": "/images/menu/thumb_17816797950_2026_06_17_12_32_49_Honey_Lemon_Pepper_chicken_Tenders.jpeg"
   },
   {
    "category": "Non Veg Starters",
@@ -342,7 +342,7 @@
    "price": 494,
    "desc": "Pasta Tossed In A Vibrant Tomato Sauce Infused With Garlic, Fresh Basil And Parmesan Cheese, Offers A Spicy And Tangy Flavor.",
    "veg": true,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17568356700_2025_09_02_23_24_26_bf17f7e2_067f_429a_8454_b70c2a2d6bb6.jpg"
+   "img": "/images/menu/thumb_17568356700_2025_09_02_23_24_26_bf17f7e2_067f_429a_8454_b70c2a2d6bb6.jpg"
   },
   {
    "category": "Veg Pasta",
@@ -350,7 +350,7 @@
    "price": 504,
    "desc": "Pasta Is Generously Coated In A Rich And Velvety Alfredo Sauce Made From Butter, Heavy Cream, And Freshly Grated Parmesan Cheese",
    "veg": true,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17568361240_2025_09_02_23_31_58_IMG_3408.JPG"
+   "img": null
   },
   {
    "category": "Veg Pasta",
@@ -358,7 +358,7 @@
    "price": 524,
    "desc": "Pasta Tossed In A Red Bell Pepper Puree Sauce, White Sauce And Served With Garlic Bread.",
    "veg": true,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17568356880_2025_09_02_23_24_43_Screenshot_2025_09_02_232343.png"
+   "img": "/images/menu/thumb_17568356880_2025_09_02_23_24_43_Screenshot_2025_09_02_232343.png"
   },
   {
    "category": "Veg Pasta",
@@ -374,7 +374,7 @@
    "price": 574,
    "desc": "Pasta Tossed In A Pink Sauce And Baked To Perfection.",
    "veg": true,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17816157900_2026_06_16_18_46_10_DSC00566.JPG"
+   "img": "/images/menu/thumb_17816157900_2026_06_16_18_46_10_DSC00566.JPG"
   },
   {
    "category": "Non Veg Pasta",
@@ -382,7 +382,7 @@
    "price": 544,
    "desc": "Pasta and Chicken Tossed In A Vibrant Tomato Sauce Infused With Garlic, Fresh Basil And Parmesan Cheese, Offers A Spicy And Tangy Flavor.",
    "veg": false,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17568355550_2025_09_02_23_22_29_bf17f7e2_067f_429a_8454_b70c2a2d6bb6.jpg"
+   "img": "/images/menu/thumb_17568355550_2025_09_02_23_22_29_bf17f7e2_067f_429a_8454_b70c2a2d6bb6.jpg"
   },
   {
    "category": "Non Veg Pasta",
@@ -398,7 +398,7 @@
    "price": 574,
    "desc": "Pasta and chicken  Tossed In A Red Bell Pepper Puree Sauce, White Sauce And Served With Garlic Bread.",
    "veg": false,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17568356430_2025_09_02_23_23_55_Screenshot_2025_09_02_232343.png"
+   "img": "/images/menu/thumb_17568356430_2025_09_02_23_23_55_Screenshot_2025_09_02_232343.png"
   },
   {
    "category": "Non Veg Pasta",
@@ -414,7 +414,7 @@
    "price": 614,
    "desc": "Pasta  and chicken Tossed In A Pink Sauce And Baked To Perfection.",
    "veg": false,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17816158320_2026_06_16_18_47_08_DSC00566.JPG"
+   "img": "/images/menu/thumb_17816158320_2026_06_16_18_47_08_DSC00566.JPG"
   },
   {
    "category": "pizza's ( Thin-Crust )",
@@ -422,7 +422,7 @@
    "price": 504,
    "desc": "Signature Desi-style pizza topped with paneer cubes , basil , red paprika, and bell peppers.",
    "veg": true,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17568347900_2025_09_02_23_09_42_0cb8c51a_954d_4909_be37_512a7a8e617d.jpg"
+   "img": "/images/menu/thumb_17568347900_2025_09_02_23_09_42_0cb8c51a_954d_4909_be37_512a7a8e617d.jpg"
   },
   {
    "category": "pizza's ( Thin-Crust )",
@@ -430,7 +430,7 @@
    "price": 524,
    "desc": "A veggie lover's dream topped with broccoli, basil , baby corn , mushroom , spinach and bell peppers.",
    "veg": true,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17815103890_2026_06_15_13_29_16_DSC00078.JPG"
+   "img": "/images/menu/thumb_17815103890_2026_06_15_13_29_16_DSC00078.JPG"
   },
   {
    "category": "pizza's ( Thin-Crust )",
@@ -446,7 +446,7 @@
    "price": 624,
    "desc": "Crispy, thin artisan crust generously topped with spiced mutton kheema and bubbling melted cheese, baked to golden perfection for a rich, savory indulgence.",
    "veg": false,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17568349900_2025_09_02_23_13_05_80e3d71f_e276_489b_903f_92afc3a71097.jpg"
+   "img": "/images/menu/thumb_17568349900_2025_09_02_23_13_05_80e3d71f_e276_489b_903f_92afc3a71097.jpg"
   },
   {
    "category": "pizza's ( Thin-Crust )",
@@ -454,7 +454,7 @@
    "price": 550,
    "desc": "Spicy chicken pizza topped with peri peri chicken , basil and bell peppers.",
    "veg": false,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17568348470_2025_09_02_23_10_35_80e3d71f_e276_489b_903f_92afc3a71097.jpg"
+   "img": "/images/menu/thumb_17568348470_2025_09_02_23_10_35_80e3d71f_e276_489b_903f_92afc3a71097.jpg"
   },
   {
    "category": "Focaccia Sandwiches",
@@ -510,7 +510,7 @@
    "price": 594,
    "desc": "quinoa tossed with saut",
    "veg": false,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17568353450_2025_09_02_23_18_51_1d62fe54_aee5_4b53_8c7e_7f2e1a2dcc08.jpg"
+   "img": "/images/menu/thumb_17568353450_2025_09_02_23_18_51_1d62fe54_aee5_4b53_8c7e_7f2e1a2dcc08.jpg"
   },
   {
    "category": "Main Course Veg",
@@ -534,7 +534,7 @@
    "price": 524,
    "desc": "Classic Italian Dish Made With Arborio Rice Simmered In Rich Creamy Tomato Sauce.",
    "veg": true,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17815107890_2026_06_15_13_35_58_Spicy_Mozzarella_Rissoto.JPG"
+   "img": "/images/menu/thumb_17815107890_2026_06_15_13_35_58_Spicy_Mozzarella_Rissoto.JPG"
   },
   {
    "category": "Main Course Veg",
@@ -558,7 +558,7 @@
    "price": 554,
    "desc": "Tender Pieces Of Chicken Are Marinated And Cooked In A Fragrant Curry Leaf-Infused Sauce, And Served With Coriander Rice",
    "veg": false,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17568346870_2025_09_02_23_07_53_IMG_3501.JPG"
+   "img": "/images/menu/thumb_17568346870_2025_09_02_23_07_53_IMG_3501.JPG"
   },
   {
    "category": "Main Course Non Veg",
@@ -566,7 +566,7 @@
    "price": 594,
    "desc": "Tender, Juicy Chicken Breasts and mushroom Are Cooked To Perfection And Smothered In A Creamy Sun-Dried Tomato And Basil Sauce.",
    "veg": false,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17568347180_2025_09_02_23_08_27_cf166018_46df_43c3_ba9b_7283287ca6dc.jpg"
+   "img": "/images/menu/thumb_17568347180_2025_09_02_23_08_27_cf166018_46df_43c3_ba9b_7283287ca6dc.jpg"
   },
   {
    "category": "Main Course Non Veg",
@@ -582,7 +582,7 @@
    "price": 604,
    "desc": "Tuscan Chicken Is An Italian Inspired Dish Consisting Of Chicken In A Creamy Sauce Flavoured With Parmesan Cheese, Garlic, mushroom  And Spinach.",
    "veg": false,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17816224690_2026_06_16_20_35_43_Tuscan_Chicken.JPG"
+   "img": "/images/menu/thumb_17816224690_2026_06_16_20_35_43_Tuscan_Chicken.JPG"
   },
   {
    "category": "Main Course Non Veg",
@@ -590,7 +590,7 @@
    "price": 604,
    "desc": "Rice Cooked In Rich And Creamy Red Sauce Infused With Italian Herbs And A Hint Of Garlic And Topped With Juicy stuffed Chicken rolls",
    "veg": false,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17568346330_2025_09_02_23_06_57_c414d3fb_7a07_447e_83b1_c1221e0393c5.jpg"
+   "img": "/images/menu/thumb_17568346330_2025_09_02_23_06_57_c414d3fb_7a07_447e_83b1_c1221e0393c5.jpg"
   },
   {
    "category": "Main Course Non Veg",
@@ -622,7 +622,7 @@
    "price": 274,
    "desc": "Perfect balance of espresso, steamed milk and frothed milk",
    "veg": true,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17568345450_2025_09_02_23_05_35_chandan_8.jpeg"
+   "img": "/images/menu/thumb_17568345450_2025_09_02_23_05_35_chandan_8.jpeg"
   },
   {
    "category": "Hot Coffee",
@@ -638,7 +638,7 @@
    "price": 294,
    "desc": "Espresso, chocolate, and steamed milk come together in this sweet, creamy favorite.",
    "veg": true,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17815112060_2026_06_15_13_42_57_DSC09116.JPG"
+   "img": "/images/menu/thumb_17815112060_2026_06_15_13_42_57_DSC09116.JPG"
   },
   {
    "category": "Hot Coffee",
@@ -678,7 +678,7 @@
    "price": 324,
    "desc": "Premium matcha blended with steamed milk for a comforting, luxurious cup.",
    "veg": true,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17815105260_2026_06_15_13_31_39_Matcha_Latte_Hot.JPG"
+   "img": "/images/menu/thumb_17815105260_2026_06_15_13_31_39_Matcha_Latte_Hot.JPG"
   },
   {
    "category": "Hot Coffee",
@@ -694,7 +694,7 @@
    "price": 284,
    "desc": "Velvety, creamy cheesecake with a buttery, delicate crust—a timeless indulgence that melts in your mouth.",
    "veg": true,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17568364860_2025_09_02_23_37_55_chandan_7.jpeg"
+   "img": "/images/menu/thumb_17568364860_2025_09_02_23_37_55_chandan_7.jpeg"
   },
   {
    "category": "Desserts",
@@ -702,7 +702,7 @@
    "price": 324,
    "desc": "Decadent cheesecake infused with Nutella, crowned with a silky chocolate-hazelnut finish—pure indulgence in every bite.",
    "veg": true,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17568365540_2025_09_02_23_39_07_chandan_7.jpeg"
+   "img": "/images/menu/thumb_17568365540_2025_09_02_23_39_07_chandan_7.jpeg"
   },
   {
    "category": "Desserts",
@@ -710,7 +710,7 @@
    "price": 314,
    "desc": "Creamy cheesecake adorned with vibrant blueberry compote, a luxurious burst of fruity sweetness.",
    "veg": true,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17568365870_2025_09_02_23_39_40_chandan_7.jpeg"
+   "img": "/images/menu/thumb_17568365870_2025_09_02_23_39_40_chandan_7.jpeg"
   },
   {
    "category": "Desserts",
@@ -718,7 +718,7 @@
    "price": 324,
    "desc": "French hot chocolate with coffee is a rich, creamy drink made with dark chocolate and a shot of strong coffee.",
    "veg": true,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17568341080_2025_09_02_22_57_56_1fc7ed85_5522_4dcb_9392_3ea9974ef2a8.jpg"
+   "img": "/images/menu/thumb_17568341080_2025_09_02_22_57_56_1fc7ed85_5522_4dcb_9392_3ea9974ef2a8.jpg"
   },
   {
    "category": "Desserts",
@@ -734,7 +734,7 @@
    "price": 324,
    "desc": "",
    "veg": true,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17568342810_2025_09_02_23_01_02_f0f3eca6_3e26_496c_8db6_5499b254b45d.jpg"
+   "img": "/images/menu/thumb_17568342810_2025_09_02_23_01_02_f0f3eca6_3e26_496c_8db6_5499b254b45d.jpg"
   },
   {
    "category": "iced cofffee",
@@ -742,7 +742,7 @@
    "price": 314,
    "desc": "Chilled espresso kissed with a hint of tangy cranberry, creating a refreshingly sophisticated sip.",
    "veg": true,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17568364170_2025_09_02_23_36_46_chandan_4.jpeg"
+   "img": "/images/menu/thumb_17568364170_2025_09_02_23_36_46_chandan_4.jpeg"
   },
   {
    "category": "iced cofffee",
@@ -782,7 +782,7 @@
    "price": 324,
    "desc": "Rich chocolate and chilled espresso combine into a decadent, smooth indulgence.",
    "veg": true,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17816230810_2026_06_16_20_47_55_Iced_Mocha.JPG"
+   "img": "/images/menu/thumb_17816230810_2026_06_16_20_47_55_Iced_Mocha.JPG"
   },
   {
    "category": "iced cofffee",
@@ -790,7 +790,7 @@
    "price": 355,
    "desc": "Premium matcha blended with chilled milk, vibrant, smooth, and subtly sweet—a refreshing green delight.",
    "veg": true,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17816230420_2026_06_16_20_47_16_Iced_Matcha.jpg"
+   "img": "/images/menu/thumb_17816230420_2026_06_16_20_47_16_Iced_Matcha.jpg"
   },
   {
    "category": "Signature Cold Coffee",
@@ -798,7 +798,7 @@
    "price": 344,
    "desc": "Smooth, creamy, perfectly chilled—our signature cold coffee is a timeless indulgence.",
    "veg": true,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17568363720_2025_09_02_23_35_59_cef472dc_c2f2_4037_bedf_49bea1bb7fb2.jpg"
+   "img": "/images/menu/thumb_17568363720_2025_09_02_23_35_59_cef472dc_c2f2_4037_bedf_49bea1bb7fb2.jpg"
   },
   {
    "category": "Signature Cold Coffee",
@@ -814,7 +814,7 @@
    "price": 374,
    "desc": "Signature cold coffee infused with nutty, caramelized Lotus Biscoff, layered with creamy richness.",
    "veg": true,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17568363050_2025_09_02_23_34_54_1000104879.jpg"
+   "img": "/images/menu/thumb_17568363050_2025_09_02_23_34_54_1000104879.jpg"
   },
   {
    "category": "Signature Cold Coffee",
@@ -830,7 +830,7 @@
    "price": 384,
    "desc": "Creamy, rich cold coffee infused with Nutella for a heavenly chocolate-hazelnut experience.",
    "veg": true,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17568362600_2025_09_02_23_34_12_IMG_3461.JPG"
+   "img": "/images/menu/thumb_17568362600_2025_09_02_23_34_12_IMG_3461.JPG"
   },
   {
    "category": "Signature Cold Coffee",
@@ -838,7 +838,7 @@
    "price": 394,
    "desc": "",
    "veg": true,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17568362280_2025_09_02_23_33_36_IMG_3469.JPG"
+   "img": "/images/menu/thumb_17568362280_2025_09_02_23_33_36_IMG_3469.JPG"
   },
   {
    "category": "Cold Beverages",
@@ -846,7 +846,7 @@
    "price": 324,
    "desc": "Sweet blueberries, refreshing mint, and sparkling soda.",
    "veg": true,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17816235680_2026_06_16_20_55_53_Blueberry_Mojito.jpg"
+   "img": "/images/menu/thumb_17816235680_2026_06_16_20_55_53_Blueberry_Mojito.jpg"
   },
   {
    "category": "Cold Beverages",
@@ -854,7 +854,7 @@
    "price": 324,
    "desc": "Juicy strawberries meet zesty mint over sparkling refreshment.",
    "veg": true,
-   "img": "https://dineinpetweb.gumlet.io/homewebsite/104812/thumb_17568359300_2025_09_02_23_28_42_99c9833d_a592_4a6f_b6b9_ae5decc65cc2.jpg"
+   "img": "/images/menu/thumb_17568359300_2025_09_02_23_28_42_99c9833d_a592_4a6f_b6b9_ae5decc65cc2.jpg"
   },
   {
    "category": "Cold Beverages",

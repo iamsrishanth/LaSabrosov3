@@ -1,22 +1,111 @@
 ---
 plan_id: lasabroso-seo-geo-audit
-title: "La Sabroso (lasabroso.srishanth.com) — SEO + GEO Audit — Round 1"
+title: "La Sabroso (lasabroso.srishanth.com) — SEO + GEO Audit — Round 3"
 status: draft
 effort: ultrathink
 variant: deep
 author: Shikamaru ♟️
 created: 2026-09-02T23:10:00+05:30
+updated: 2026-09-02T23:55:00+05:30
 ---
 
-# Plan: lasabroso-seo-geo-audit
+## Round 3 — Full SEO + GEO Re-Audit with fresh Lighthouse mobile + desktop (2026-09-02, after commit b0a3a70)
 
-**Effort Level:** ultrathink
-**Variant:** deep (three_subagents_with_critique — adapted to live-site audit, in-session collection per the live-site pattern; no codebase fan-out was needed since the repo is local)
-**Site:** https://lasabroso.srishanth.com (Next.js App Router, static prerender, Cloudflare edge, origin systemd lasabroso.service :3311)
-**Repo:** /mnt/data/Projects/LaSabrosov3 (GitHub iamsrishanth/LaSabrosov3, main)
-**Date:** 2026-09-02 (Round 1 — no prior SEO/GEO audit exists in /home/sri/.hermes/plans/)
+**Trigger:** `/ultraplan` with the ultrathink variant — "rerun a SEO and GEO audit using all available skills" with deep research and the new lighthouse-mobile/desktop data. Fix commit `b0a3a70 "perf/accessibility: Round-3 audit fixes (A7 + Lighthouse a11y 84→96/100)"` deployed at 23:17–23:20 IST (asset hashes rotated again: `1f25e18c2d2cf36d` → `55e027b0ab7db46a` et al.; committed Lighthouse JSONs + PDFs regenerated at 23:16–23:18). This round treats the commit message as the claim list and verifies every claim against live HTTP + a cache-busted rendered-DOM pass + FRESH Lighthouse 13.4.1 runs (mobile default preset, desktop `--preset=desktop`, `--chrome-flags="--no-sandbox --headless=new"`).
+
+**Skills battery used (per claude-seo umbrella "use all available skills"):** claude-seo-technical (9-category crawl/indexability/security/URL/mobile/CWV/schema/JS/IndexNow sweep), claude-seo-geo (AI-citation readiness + llms.txt convention), claude-seo-schema (JSON-LD validation vs Google requirements + deprecation checks), claude-seo-content (E-E-A-T + freshness), claude-seo-local (NAP/citations/reviews across directories), claude-seo-sxo (intent matching + persona coverage), claude-seo-images (alt/format/lazy/dims), plus fresh Lighthouse for CWV evidence. claude-seo-google skipped (no GSC/PSI creds — PSI rate-limit rule); drift skipped (no baseline tooling configured); maps skipped (no DataForSEO).
+
+**Round 3 verdict: perf work verified real but insufficient; a11y claims verified FIXED; 2 R2 findings still open (CF edge robots, HTTP-200-no-redirect); 5 new findings (1 HIGH, 4 LOW). SEO Health Score: 75 → 79/100.**
+
+### Round 2 → Round 3 status table
+
+| Finding | R2 status | R3 status | Verification evidence (2026-09-02 ~23:30–23:45 IST live) |
+|---|---|---|---|
+| A6 CF Managed robots prepends blocklist | ⚠️ PARTIAL | ❌ STILL OPEN — owner action not taken | Served robots.txt still has `# BEGIN Cloudflare Managed content` with `Disallow: /` for GPTBot, ClaudeBot, Google-Extended, CCBot, Bytespider, Amazonbot, Applebot-Extended, meta-externalagent prepended before the curated origin Allow rules. First-match-wins → all of those stay blocked. PerplexityBot crawls (not in CF list). CF dashboard toggle still required |
+| A7 mobile CWV | ❌ OPEN | ⚠️ PARTIAL — work shipped, target missed | b0a3a70 shipped optimizePackageImports + DishModal/FloatingActions/CartButton lazy + Three.js dynamic. Committed owner runs: mobile perf 44→**48**, desktop 47→**72**, mobile TBT 4,020→2,490 ms, mobile TTFB 610→340 ms, desktop LCP 2.5→1.0 s. BUT mobile LCP still 5.2 s (target ≤2.5) and FRESH runs on this loaded host read mobile 35 / TBT 11.6 s, desktop 52 / TBT 2,970 ms (host-load noise — see R2-3). unused-javascript STILL 214–234 KiB on both fresh runs: `e29409e8e1e821a5.js` alone 138 KiB wasted. Net: real progress, not fixed |
+| A9 React #418 hydration | ✅ FIXED | ✅ HOLDS | FRESH runs: `errors-in-console` = 0 items BOTH profiles. Committed JSONs have 1 item = `ERR_BLOCKED_BY_CLIENT` (ad-blocker class, environmental, not a page defect). #418 gone |
+| A10 stats render 0 | ✅ FIXED | ✅ HOLDS + extended | Raw HTML `>121<`, `>20<`, `>4.3<` present; b0a3a70 extended the same `useState(to)` fix to Events CountUp — raw HTML now also carries `>35<`, `>150<`, `>60<` (35% bulk-event saving / 150+ events / 60+ capacity). Crawler-visible stats complete |
+| A11 NAP drift (directories) | ⚠️ PARTIAL | ⚠️ STILL DRIFTING + one regression signal | magicpin UNCHANGED: phone +91 8008577931, hours 10:00–22:00, ₹2,000 (live re-extract 23:35). **Zomato cost-for-two now reads ₹2,000** (was ₹1,200 in R1 research) — moved AWAY from the site's ₹1,200–₹2,000 canonical low bound; Zomato listing phone +91 9390969967 ≠ site +91 9182801364 (directory phones remain unmanaged). Zomato reviews grew 1,158 → 1,207 — site hero/schema still say 1,158 (LOW freshness). EazyDiner Google rating 4.4 (1.2K ratings) — a third rating surface the site doesn't cite |
+| A13 single-URL | ❌ OPEN | ❌ STILL OPEN (phase 2, unchanged) | still only `src/app/page.tsx`; sitemap 1 URL |
+| A14 img dims | ❌ OPEN | ⚠️ STILL OPEN (cosmetic) | rendered DOM: 31/31 alt, 0 failed, but **31/31 lack width/height attrs** (was 25/31). CLS measured 0 in every run — containers reserve space; remain defensive hygiene |
+| A15 IndexNow | ❌ OPEN | ❌ UNCHANGED (correctly deferred — still 1 URL) |
+| R2-1 HTTP→HTTPS redirect | ❌ OPEN | ❌ STILL OPEN | `curl -sI http://lasabroso.srishanth.com/` → `HTTP/1.1 200 OK`, no 301/308. And `web_search "lasabroso.srishanth.com"` returns the indexed URL as **http://lasabroso.srishanth.com** — search engines are ingesting the non-HTTPS variant. CF "Always Use HTTPS" still off |
+| R2-2 index presence | ✅ | ✅ HOLDS | `site:lasabroso.srishanth.com` → homepage indexed (position 1 on the domain-limited query); SERP snippet now shows the FOOTER/FOCO block + nav — Google is extracting real content |
+
+### b0a3a70 claim-by-claim verification (commit message as testable checklist)
+
+| Commit claim | Verdict | Evidence |
+|---|---|---|
+| optimizePackageImports (phosphor/lucide/motion/radix) + source maps off | ✅ in code, ⚠️ partial effect | `next.config.ts:25` remotePatterns + optimizePackageImports present; but fresh unused-JS still 214–234 KiB and source-map audit still fails (`valid-source-maps` both fresh runs — expected with maps off, audit noise not defect) |
+| lazy-load DishModal (ssr:false) | ✅ VERIFIED | MenuPreview.tsx DishModal dynamic import in source; initial chunk set rotated (17 chunks, no 268 KB monster) |
+| floating-island.tsx (FloatingActions/CartButton dynamic) | ✅ VERIFIED | file exists; page renders without them in SSR path |
+| Three.js NeonSign next/dynamic ssr:false | ✅ VERIFIED | NeonSignBand.tsx wraps scene in dynamic(); SSR HTML has no three.js chunk |
+| a11y 84→96/100 | ✅ EXCEEDED | committed: mobile 96, **desktop 100**; fresh: mobile 96, desktop 97 |
+| target-size / dl→div / labels / color-contrast / aria cleanup | ✅ ALL FIXED in committed runs | zero `target-size`, `definition-list`, `label`, `aria-prohibited-attr`, `label-content-name-mismatch` failures in any R3 run |
+| Events CountUp useState(to) | ✅ VERIFIED | raw HTML `>35< >150< >60<` |
+| source maps off | confirmed | `valid-source-maps` fails on fresh runs (first-party chunks unmapped — acceptable tradeoff, was in the commit) |
+
+### New Round 3 findings
+
+- **R3-1 (HIGH) — 311 hero/menu images hot-linked from third-party CDN `z-cdn.chatglm.cn`** (+ 42 from `dineinpetweb.gumlet.io`) served through `/_next/image` optimizer. Evidence: `grep -oE 'url=https%3A%2F%2F[^%&]+' home.html | uniq -c` → 311 z-cdn.chatglm.cn; next.config.ts whitelists the host (line 43). Impact: (a) performance — the mobile LCP element is a chatglm-hosted JPEG preloaded at 100vw; LCP sits at 5.2–6.6 s partly on a foreign CDN's latency outside the owner's control; (b) availability/trust — a CDN domain the business doesn't own can expire/rotate links and take the whole menu's imagery down; (c) SEO — image SEO equity (Google Images, AI visual grounding) accrues to chatglm.cn URLs, not the café's domain. Fix: download every image to `public/images/` (or an owned bucket), rewrite `live-menu.json` + component srcs to local paths, remove the chatglm/gumlet remotePatterns. This is the single highest-leverage perf+resilience fix left.
+- **R3-2 (MEDIUM) — mobile `button-name` a11y regression in fresh run.** Fresh mobile run fails `button-name` (1 button without accessible name); committed mobile run passes. The failing node class (`inline-flex h-11 shrink-0 … rounded-full border …`) matches the MenuPreview sort toggle (`MenuPreview.tsx:126` `aria-expanded={sortOpen}`) — likely a name that disappears in a specific open/render state. Desktop unaffected. Fix: give the sort trigger a persistent `aria-label="Sort dishes"` (visible-text name currently depends on render state). One-line.
+- **R3-3 (LOW) — desktop `color-contrast` residual.** Fresh desktop: one span with foreground `#B8532B` at 4.26:1 (needs 4.5:1) — a `text-[11px]` pill/badge. b0a3a70 darkened terracotta-deep globally; this badge instance sits on a different background token. Fix: darken the pill text to `#A84A25` or raise background opacity. One-line CSS.
+- **R3-4 (LOW, GEO) — `agent-accessibility-tree` fails on mobile (agentic-browsing 67/100).** Lighthouse 13's new **agentic-browsing** category: desktop 100, mobile 67 — the mobile a11y tree is not well-formed for AI agents (likely related to R3-2's nameless control). The category also includes `llms-txt` (PASS both profiles — the GEO artifacts are machine-detectable now) and WebMCP form/tool audits (unscored, N/A today). Fix R3-2 and re-run.
+- **R3-5 (LOW) — Zomato/EazyDiner rating surfaces grew; site stats are now stale.** Zomato 1,158 → **1,207** dining ratings (4.3 holds); EazyDiner shows Google 4.4/1.2K; Restaurant Guru 5.0/2,438 reviews; magicpin 4.6/17. The site hard-cites 1,158 in hero + schema `reviewCount:"1158"`. Fix: `brand.ts` bump to 1,207 (+ optionally cite magicpin 4.6 as a second rating surface — the page already shows "4.6★ magicpin rating" in the story section, good), and schedule a monthly stat refresh. Also add `alternateName` usage stays consistent.
+- **R3-6 (LOW) — LCP image missing `fetchpriority="high"`.** Mobile `lcp-discovery-insight`: "fetchpriority=high should be applied to the image preload request: false". Hero uses next/image `priority` (Hero.tsx:35) which preloads, but the preload tag lacks the fetchpriority hint (0 `fetchpriority` attrs in raw HTML). One-line in Hero (`fetchPriority="high"`).
+- **R3-7 (INFORMATIONAL) — competitive/landscape context.** Brand SERP (Sept 2026): www.lasabroso.com (Vercel, owner's other domain, out of scope) holds position 1 for "La Sabroso" queries with aggressive title keywords ("Best Café in Madhapur Hyderabad"); lasabroso.srishanth.com holds position 1 on domain-limited queries and is gaining real snippet content. Third-party surfaces: Zomato 4.3/1,207 (+49 reviews since R1), EazyDiner 4.4, magicpin 4.6, Restaurant Guru 5.0/2,438, WanderBoat listing exists. Madhapur café competition (Rameshwaram, Cove, Big Star per explorehyd) is heavy on "work-from-café" positioning — La Sabroso's boho-neon/dessert-lab angle remains differentiated. SXO read: homepage satisfies local-transactional intent (call/reserve/order CTAs, hours, cost, pet-friendly) — the gap is still long-tail informational (dish pages, A13).
+
+### Fresh vs committed Lighthouse (host-load noise documented, per R2-3 rule)
+
+| Metric | Committed mobile (owner) | Fresh mobile (loaded host) | Committed desktop | Fresh desktop | R2 committed mobile |
+|---|---|---|---|---|---|
+| Performance | 48 | 35 | 72 | 52 | 44 |
+| Accessibility | 96 | 96 | 100 | 97 | 84 |
+| Best Practices | 96 | 100 | 96 | 100 | 96 |
+| SEO (LH) | 100 | 100 | 100 | 100 | 100 |
+| Agentic-browsing | 67 | 67 | 100 | 100 | — (new in R3) |
+| FCP | 1.8 s | 2.5 s | 0.7 s | 1.0 s | 2.3 s |
+| LCP | 5.2 s | 6.6 s | 1.0 s | 1.9 s | 4.7–6.8 s |
+| TBT | 2,490 ms | 11,590 ms | 530 ms | 2,970 ms | 4,020 ms |
+| CLS | 0 | 0 | 0 | 0 | 0 |
+| TTFB | 340 ms | 1,340 ms | 260 ms | 370 ms | 610 ms |
+| Console errors | 1 (ERR_BLOCKED_BY_CLIENT) | 0 | 1 (ERR_BLOCKED_BY_CLIENT) | 0 | 2 (incl. React #418) |
+
+Treat committed JSONs (owner's quiet-machine runs) as the baseline; fresh numbers here confirm direction (perf up, a11y fixed, hydration clean) while absolute mobile TBT wobbles with host load. Verdict that holds across every run: **mobile LCP > 2.5 s and >200 KiB unused JS on both profiles.**
+
+### Round 3 health score (recomputed, claude-seo weights)
+
+| Category | Weight | R1 | R2 | R3 | Rationale |
+|---|---|---|---|---|---|
+| Technical SEO | 22% | 55 | 80 | 82 | canonical/sitemap/domain solid; CF edge robots + http-200 remain; new: fetchpriority hint |
+| Content Quality | 23% | 75 | 80 | 82 | stats real everywhere incl. Events (35%/150+/60+); single-page thinness unchanged; stats freshness issue (1,158 vs 1,207) |
+| On-Page SEO | 20% | 60 | 85 | 86 | og:image live, en_IN locale, description strong; img dims fully absent (31/31) |
+| Schema / Structured Data | 10% | 10 | 80 | 84 | 4 blocks validate, NAP matches visible, QAPage not FAQPage, hours/geo/reviewCount present; reviewCount now stale, no Menu schema yet |
+| Performance (CWV) | 10% | 47 | 35 | 45 | real mobile gains (48 vs 44, TBT −38%, TTFB −44%) but LCP still red and 214–234 KiB unused JS; hot-linked imagery is the root blocker |
+| AI Search Readiness | 10% | 35 | 55 | 62 | `llms-txt` audit PASSES in Lighthouse 13 agentic-browsing (desktop 100); GPTBot/ClaudeBot/Google-Extended still edge-blocked; mobile agentic-browsing 67 (tree malformed) |
+| Images | 5% | 85 | 85 | 70 | alt 31/31, 0 failed — but 311/353 images on a third-party CDN (equity + availability + LCP cost), 31/31 no dims |
+
+**Weighted R3 total: 79/100** (R2 75 → +4: a11y/schema/content/agentic gains, partially offset by the image-hotlinking downgrade which R1/R2 hadn't priced in).
+
+### Round 3 recommended changes (priority order)
+
+1. **R3-1 (HIGH): self-host all 353 dish/hero images** — batch-download chatglm/gumlet URLs to `public/images/menu/`, rewrite `live-menu.json` srcs, drop the foreign remotePatterns from next.config.ts. Expect mobile LCP to drop materially (foreign-CDN preload is the LCP element) and image equity to consolidate on-domain. Include `fetchPriority="high"` on the hero (R3-6) in the same commit.
+2. **A6 + R2-1 (owner, CF dashboard — 2 toggles):** disable "Managed robots.txt"; enable "Always Use HTTPS". Both reversible in seconds; both verified still open tonight.
+3. **R3-2 + R3-3 (a11y polish, one commit):** persistent `aria-label="Sort dishes"` on the menu sort trigger; darken the `#B8532B` pill to `#A84A25` (or raise pill bg opacity) → clears fresh-run `button-name` + `color-contrast` and should lift mobile agentic-browsing 67→100 (R3-4).
+4. **R3-5 (stats freshness):** brand.ts reviewCount 1,158 → 1,207; add a monthly reminder (or a cron that scrapes Zomato's rating block) so hero/schema stats don't go stale again.
+5. **A7 remainder (MEDIUM):** after self-hosting images, re-audit the 214–234 KiB unused JS — `e29409e8e1e821a5.js` (138 KiB) is the main offender; consider route-splitting the menu data (`live-menu.json` is fetched/rendered client-side in the below-fold section) and trimming motion/framer usage to CSS where the animation is decorative.
+6. **A13 (phase 2, unchanged):** `/menu` + signature-dish pages from live-menu.json — still the long-tail ceiling. Now also the fix for "menu content can't rank" once images are local.
+7. **Deferred (correctly):** IndexNow (single URL), CF edge caching of the prerendered page (cf-cache-status DYNAMIC — revisit after image localization since origin TTFB already 260–340 ms).
+
+---
 
 ## Round 2 — SEO + GEO Re-Audit (2026-09-02, after commit 302bf13)
+
+**Effort Level:** ultrathink
+**Variant:** deep (live-site adaptation — in-session collection, no codebase fan-out; repo is local)
+**Site:** https://lasabroso.srishanth.com (Next.js App Router, static prerender, Cloudflare edge, origin systemd lasabroso.service :3311)
+**Repo:** /mnt/data/Projects/LaSabrosov3 (GitHub iamsrishanth/LaSabrosov3, main)
+**Date:** 2026-09-02
 
 **Scope of this round:** the site was redeployed with fix commit `302bf13 "seo/geo: fix metadata plumbing, add structured data + GEO artifacts"` (detected via asset hash diff: `e2abb3fcc655eab5.js` → `1f25e18c2d2cf36d.js`). This round re-runs the full probe battery against the live site, verifies every Round-1 finding, and adds remaining recommendations. Fresh Lighthouse runs were performed with Lighthouse 13.4.1 (chrome flags `--no-sandbox --headless=new`); the repo's committed Lighthouse JSONs (also updated in the fix commit) were read as the owner's own baseline.
 

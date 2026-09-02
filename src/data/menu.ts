@@ -78,84 +78,84 @@ export const SPICE_LEVELS: { level: 0 | 1 | 2 | 3; label: string }[] = [
  */
 export const CAT_IMG: Record<DishCategory, string[]> = {
   favourites: [
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/91d277b184a0.jpg",
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/7490336dda08.jpg",
+    "/images/brand/91d277b184a0.jpg",
+    "/images/brand/7490336dda08.jpg",
   ],
   burgers: [
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/bfe2f380d1f4.jpg",
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/1a7e3638681d.jpg",
+    "/images/brand/bfe2f380d1f4.jpg",
+    "/images/brand/1a7e3638681d.jpg",
   ],
   soups: [
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/bfe2f380d1f4.jpg",
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/1a7e3638681d.jpg",
+    "/images/brand/bfe2f380d1f4.jpg",
+    "/images/brand/1a7e3638681d.jpg",
   ],
   quick: [
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/bfe2f380d1f4.jpg",
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/1a7e3638681d.jpg",
+    "/images/brand/bfe2f380d1f4.jpg",
+    "/images/brand/1a7e3638681d.jpg",
   ],
   "veg-starters": [
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/bfe2f380d1f4.jpg",
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/1a7e3638681d.jpg",
+    "/images/brand/bfe2f380d1f4.jpg",
+    "/images/brand/1a7e3638681d.jpg",
   ],
   "nonveg-starters": [
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/bfe2f380d1f4.jpg",
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/1a7e3638681d.jpg",
+    "/images/brand/bfe2f380d1f4.jpg",
+    "/images/brand/1a7e3638681d.jpg",
   ],
   momos: [
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/32a25c8e3886.jpg",
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/cdef4a9a99ab.jpg",
+    "/images/brand/32a25c8e3886.jpg",
+    "/images/brand/cdef4a9a99ab.jpg",
   ],
   "veg-pasta": [
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/33e6a5a23c36.jpg",
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/800b1e107028.jpg",
+    "/images/brand/33e6a5a23c36.jpg",
+    "/images/brand/800b1e107028.jpg",
   ],
   "nonveg-pasta": [
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/33e6a5a23c36.jpg",
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/800b1e107028.jpg",
+    "/images/brand/33e6a5a23c36.jpg",
+    "/images/brand/800b1e107028.jpg",
   ],
   pizza: [
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/c3a7d4f5e18e.jpg",
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/de76d4d168e7.jpg",
+    "/images/brand/c3a7d4f5e18e.jpg",
+    "/images/brand/de76d4d168e7.jpg",
   ],
   focaccia: [
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/bfe2f380d1f4.jpg",
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/1a7e3638681d.jpg",
+    "/images/brand/bfe2f380d1f4.jpg",
+    "/images/brand/1a7e3638681d.jpg",
   ],
   healthy: [
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/bfe2f380d1f4.jpg",
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/1a7e3638681d.jpg",
+    "/images/brand/bfe2f380d1f4.jpg",
+    "/images/brand/1a7e3638681d.jpg",
   ],
   "mains-veg": [
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/33e6a5a23c36.jpg",
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/800b1e107028.jpg",
+    "/images/brand/33e6a5a23c36.jpg",
+    "/images/brand/800b1e107028.jpg",
   ],
   "mains-nonveg": [
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/33e6a5a23c36.jpg",
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/800b1e107028.jpg",
+    "/images/brand/33e6a5a23c36.jpg",
+    "/images/brand/800b1e107028.jpg",
   ],
   "hot-coffee": [
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/7906fe358e3b.png",
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/fa61d96b1a27.jpg",
+    "/images/brand/7906fe358e3b.png",
+    "/images/brand/fa61d96b1a27.jpg",
   ],
   desserts: [
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/91d277b184a0.jpg",
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/7490336dda08.jpg",
+    "/images/brand/91d277b184a0.jpg",
+    "/images/brand/7490336dda08.jpg",
   ],
   "iced-coffee": [
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/7906fe358e3b.png",
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/fa61d96b1a27.jpg",
+    "/images/brand/7906fe358e3b.png",
+    "/images/brand/fa61d96b1a27.jpg",
   ],
   "cold-coffee": [
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/7906fe358e3b.png",
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/fa61d96b1a27.jpg",
+    "/images/brand/7906fe358e3b.png",
+    "/images/brand/fa61d96b1a27.jpg",
   ],
   beverages: [
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/08f2996844aa.jpg",
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/8d49cd0c6246.jpg",
+    "/images/brand/08f2996844aa.jpg",
+    "/images/brand/8d49cd0c6246.jpg",
   ],
   milkshakes: [
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/08f2996844aa.jpg",
-    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/8d49cd0c6246.jpg",
+    "/images/brand/08f2996844aa.jpg",
+    "/images/brand/8d49cd0c6246.jpg",
   ],
 };
 
@@ -363,7 +363,7 @@ export const menuCounts = {
   nonveg: menu.filter((d) => !d.veg).length,
   chefPicks: menu.filter((d) => d.chefPick).length,
   bestsellers: menu.filter((d) => d.bestseller).length,
-  withLiveImage: menu.filter((d) => d.image.startsWith("https://dineinpetweb.gumlet.io")).length,
+  withLiveImage: menu.filter((d) => d.image.startsWith("/images/menu/")).length,
   byCategory: categories.reduce<Record<string, number>>((acc, c) => {
     acc[c.id] = menu.filter((d) => d.category === c.id).length;
     return acc;
