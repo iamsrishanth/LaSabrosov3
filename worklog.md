@@ -549,4 +549,16 @@ modal, and a price-range filter for the menu. VLM confirmed all modal elements
   - Compiled production standalone bundle on `sri@zeus-server` in 22.7s.
   - Restarted `systemctl --user restart lasabroso.service`. Verified live HTTP 200, 0 remote CDN URLs, local image serving, and updated stats.
 
+## 2026-09-03 — OpenGraph Image & Transparent Logo Overhaul (Design Studio)
+
+- OpenGraph & Twitter Card Redesign (`public/og.png`, 1200×630):
+  - Overhauled social preview card from legacy opaque tan-block artifact to a high-end luxury editorial card matching the exact website design tokens.
+  - Background: Cosmic Latte Cream (`#FFFDD0`) base with subtle concentric boho arches and Double-Bezel luxury framing.
+  - Brand typography: High-contrast Playfair Display 800 with gold star (`#FFD700`) accent over 'o', terracotta italic kicker (`#A84A25`), and clean Outfit pill chips.
+  - Verified ratings & canonical NAP bar: Zomato 4.3★ (1,207 reviews), Swiggy Dineout 4.4★, hours (`11:00 AM - 11:00 PM`), and phone (`+91 91828 01364`).
+  - Right arch: Architectural Deep Forest gradient (`#166534` to `#0D3820`) housing the official interlocking heart-ribbon logo (`BrandLogoMark`) with 100% transparent vector background and warm luminous halo.
+  - Created companion night-luxury variant (`public/og-dark.png`) for dark-mode feeds.
+- Transparent Vector Logo (`public/logo.svg`):
+  - Stripped legacy opaque `#E3BD82` background rectangle; updated to clean, scalable transparent vector SVG (`viewBox="220 320 610 450"`) filled with brand forest green (`#166534`).
+
 
